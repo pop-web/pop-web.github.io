@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>DB | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/db/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sat, 19 Jun 2021 05:05:49 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>DB | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>昇順と降順の覚え方とasc,descの意味について</title>
+		<link>https://blog.popweb.dev/programming/db/asc-desc/</link>
+					<comments>https://blog.popweb.dev/programming/db/asc-desc/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 01 Apr 2020 14:17:19 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=895</guid>
+
+					<description><![CDATA[<p>SQLやプログラミングで並び替えするときなど、昇順、降順をいった言葉よく出てくる。 でも、どっちがどっちだったけ？ということはよくあるので、その覚え方を説明する。 目次 昇順と降順のそもそもの意味について覚え方asc,d [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/asc-desc/">昇順と降順の覚え方とasc,descの意味について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>SQLやプログラミングで並び替えするときなど、昇順、降順をいった言葉よく出てくる。</p>
+
+
+
+<p>でも、どっちがどっちだったけ？ということはよくあるので、その覚え方を説明する。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">昇順と降順のそもそもの意味について</a></li><li><a href="#toc2" tabindex="0">覚え方</a></li><li><a href="#toc3" tabindex="0">asc,descの意味について</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">昇順と降順のそもそもの意味について</span></h2>
+
+
+
+<p>まず、昇順と降順の意味から。</p>
+
+
+
+<h4 class="wp-block-heading">昇順は「小さい順」のこと</h4>
+
+
+
+<p>数値なら「1、2、3、4…」、日付なら「2020/1/1、2020/1/2、2020/1/3…」といった感じ。</p>
+
+
+
+<h4 class="wp-block-heading">降順は「大きい順」のこと</h4>
+
+
+
+<p>数値なら「4、3、2、1…」、日付なら「2020/1/3、2020/1/2、2020/1/1…」といった感じ。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">覚え方</span></h2>
+
+
+
+<p>昇順は、「昇っていく」というイメージで覚える。<strong>「昇っていく」ので小さい値から大きい値へ増えていく</strong>と覚えればよい。</p>
+
+
+
+<p>降順は、「降りていく」というイメージで覚える。<strong>「降りていく」ので大きい値から小さい値へ減っていく</strong>と覚えればよい。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">asc,descの意味について</span></h2>
+
+
+
+<p>SQLなどで昇順や降順は英語で指定することが大概で、asc,descがよく使われる。</p>
+
+
+
+<p>ascは<strong>「ascending order」</strong>の略で、昇順の意味。</p>
+
+
+
+<p>descは<strong>「descending order」</strong>の略で、降順の意味。</p>
+
+
+
+<p>覚え方は、<strong>ascは「a」から始まって「c」で終わるので「a、b、c…」ということで昇順。</strong></p>
+
+
+
+<p>descは<strong>「d」から始まって「c」で終わるので「d、c、b、a…」ということで降順</strong>。</p>The post <a href="https://blog.popweb.dev/programming/db/asc-desc/">昇順と降順の覚え方とasc,descの意味について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/asc-desc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>IT用語におけるトランザクションとは？</title>
+		<link>https://blog.popweb.dev/programming/db/transaction/</link>
+					<comments>https://blog.popweb.dev/programming/db/transaction/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 24 Mar 2020 16:02:00 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=858</guid>
+
+					<description><![CDATA[<p>IT用語としてトランザクションとは、複数の処理をまとめて処理すること。 この処理のことのことを。トランザクション処理とも呼ぶ。 なぜ複数の処理をひとまとめに考えるかというと、複数の処理であるトランザクションを実行中に1つ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/transaction/">IT用語におけるトランザクションとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>IT用語としてトランザクションとは、<strong>複数の処理をまとめて処理すること。</strong></p>
+
+
+
+<p>この処理のことのことを。トランザクション処理とも呼ぶ。</p>
+
+
+
+<p>なぜ複数の処理をひとまとめに考えるかというと、<strong>複数の処理であるトランザクションを実行中に1つでも処理に失敗した場合、それまでに行ってきた処理をすべて無かったことにするためである。</strong></p>
+
+
+
+<p>例えば、会社のデーターベースに社員を登録する際に、社員テーブルに社員名を登録し、所属部署テーブルに所属部署を登録する一連の処理があったとする。</p>
+
+
+
+<p>社員テーブルに社員名を登録した後に、所属部署テーブルへ所属部署を登録する際に障害が起きて所属部署が登録できなかった場合、無所属の社員が存在することとなり中途半端な状態になる。</p>
+
+
+
+<p>これを防ぐためにトランザクション処理が用いられる。</p>
+
+
+
+<p>ちなみに、トランザクション実行前に戻すことを「ロールバック」といい、トランザクション処理が全て成功して処理内容を確定することを「コミット」という。</p>The post <a href="https://blog.popweb.dev/programming/db/transaction/">IT用語におけるトランザクションとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/transaction/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>スキーマってデータベース（DB）のことじゃないの？その違いについて。</title>
+		<link>https://blog.popweb.dev/programming/db/schema/</link>
+					<comments>https://blog.popweb.dev/programming/db/schema/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 08 Mar 2020 11:25:00 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=753</guid>
+
+					<description><![CDATA[<p>スキーマは、テーブルといったオブジェクトをグループ化したもの。 MySQLの場合、データベースを作成した後、その中に複数のテーブルを格納するのでスキーマはデータベースということになる。 しかし、PostgreSQLやOr [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/schema/">スキーマってデータベース（DB）のことじゃないの？その違いについて。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><strong>スキーマは、テーブルといったオブジェクトをグループ化したもの。</strong></p>
+
+
+
+<p>MySQLの場合、データベースを作成した後、その中に複数のテーブルを格納するのでスキーマはデータベースということになる。</p>
+
+
+
+<p>しかし、PostgreSQLやOracleの場合、<strong>データベースの中に複数のスキーマを作成される</strong>、そしてさらにそのスキーマの中に複数のテーブルを格納することとなる。</p>
+
+
+
+<p>共通して言えることはスキーマの中にテーブルがあり、テーブルへ実際のデータが格納されているということ。</p>
+
+
+
+<p>単に「データベース」って呼んでしまうと、PostgreSQLやOracleでいう複数のスキーマたちを指しているのかもしれないし、MySQLといったソフトウェア自体のことを指しているのかもしれない。</p>
+
+
+
+<p>なので、みんなで仕事をする時に、呼び分けるために「スキーマ」と呼ぶ。</p>The post <a href="https://blog.popweb.dev/programming/db/schema/">スキーマってデータベース（DB）のことじゃないの？その違いについて。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/schema/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【初心者向け】データベースの正規化について</title>
+		<link>https://blog.popweb.dev/programming/db/db-normalization/</link>
+					<comments>https://blog.popweb.dev/programming/db/db-normalization/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 18 Sep 2019 00:37:57 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=571</guid>
+
+					<description><![CDATA[<p>データベースには「正規化」するという作業がある。 正規化には第1正規化〜第5正規化までが存在しますが、リレーショナルデータベースを扱うなら、第1正規化〜第3正規化までできればよい。 正規化の手順 まず、正規化から説明する [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/db-normalization/">【初心者向け】データベースの正規化について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>データベースには「正規化」するという作業がある。</p>
+
+
+
+<p>正規化には第1正規化〜第5正規化までが存在しますが、リレーショナルデータベースを扱うなら、第1正規化〜第3正規化までできればよい。</p>
+
+
+
+<h1 class="wp-block-heading">正規化の手順</h1>
+
+
+
+<p>まず、正規化から説明する</p>
+
+
+
+<ol class="wp-block-list"><li><strong>非正規形</strong></li><li><strong>第1世紀形</strong></li><li><strong>候補キーの選定</strong></li><li><strong>第2世紀形</strong></li><li><strong>第3世紀形</strong></li></ol>
+
+
+
+<p>今回は例として、都内で展開しているカフェ店を想定し、エクセル管理されているダミーデータを用意。</p>
+
+
+
+<h1 class="wp-block-heading">非正規形</h1>
+
+
+
+<p>非正規形とは、エクセルなどで見た目分かりやすくされた状態のこと。</p>
+
+
+
+<p>例では、エクセルでセルが縦結合されて、行の中に複数行が存在している状態。</p>
+
+
+
+<p>これの状態のことを「繰り返し項目が存在する」という。この状態を非正規形と呼ぶ。</p>
+
+
+
+<figure class="wp-block-image"><img fetchpriority="high" decoding="async" width="700" height="124" src="https://blog.pop-web.net/wp-content/uploads/2019/09/3ffb99359d34387cdf2630af6a069341-700x124.png" alt="" class="wp-image-573" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/3ffb99359d34387cdf2630af6a069341-700x124.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/3ffb99359d34387cdf2630af6a069341-300x53.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/3ffb99359d34387cdf2630af6a069341-768x136.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/3ffb99359d34387cdf2630af6a069341-1200x213.png 1200w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/3ffb99359d34387cdf2630af6a069341.png 1434w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h1 class="wp-block-heading">第1正規形</h1>
+
+
+
+<p>第1正規形では、「繰り返し項目の排除」と「導出項目の排除」を行う。</p>
+
+
+
+<p>例でいうと、新宿店の繰り返し項目が排除されて、すべてのレコード数が3つから4つになる。</p>
+
+
+
+<p>また、導出項目の排除も行う。</p>
+
+
+
+<p>導出項目は、他の項目の計算などによって導き出される項目のことで、例でいうと売り上げ金額になる。</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" width="700" height="124" src="https://blog.pop-web.net/wp-content/uploads/2019/09/20ac8f62e04efc44bd62430bbab93382-700x124.png" alt="" class="wp-image-575" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/20ac8f62e04efc44bd62430bbab93382-700x124.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/20ac8f62e04efc44bd62430bbab93382-300x53.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/20ac8f62e04efc44bd62430bbab93382-768x136.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/20ac8f62e04efc44bd62430bbab93382-1200x213.png 1200w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/20ac8f62e04efc44bd62430bbab93382.png 1432w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h1 class="wp-block-heading">候補キーの選定</h1>
+
+
+
+<p>候補キーとは、<strong>テーブルの中で1つのレコードを特定できるカラムのこと、またはその組み合わせ。</strong></p>
+
+
+
+<p>つまり、MySQLでいう主キーやユニークキーにあたる。</p>
+
+
+
+<p>候補キーにならないものは、<strong>非キー属性</strong>と呼ぶ。</p>
+
+
+
+<p>今回の例でいうと、候補キーは「店舗ID」と「商品名」になる。</p>
+
+
+
+<p>大量なデータがあったとしても、この２つを抽出条件にすると、1つのレコードを特定できる。</p>
+
+
+
+<h1 class="wp-block-heading">第2正規形</h1>
+
+
+
+<p>第2正規形では、候補キーに対して、部分関数従属性のあるカラムを分離することを行う。</p>
+
+
+
+<p><strong>「部分関数従属性」とは、候補キーの特定のカラムAが決まれば、他のカラムBがきまる関係性のこと。</strong></p>
+
+
+
+<p>例では、「店舗ID」から決まるものは、「店舗」と「店長」。「商品名」から決まるものは「価格」</p>
+
+
+
+<p>分離する時には、ついでに商品IDも付与する。</p>
+
+
+
+<p>よって、以下のように「売上」「店舗」「商品」で分離できる。</p>
+
+
+
+<ul class="wp-block-list"><li>売上テーブル</li></ul>
+
+
+
+<figure class="wp-block-image"><img decoding="async" width="628" height="254" src="https://blog.pop-web.net/wp-content/uploads/2019/09/01238288808cc443ce03ac6bace54221.png" alt="" class="wp-image-576" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/01238288808cc443ce03ac6bace54221.png 628w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/01238288808cc443ce03ac6bace54221-300x121.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></figure>
+
+
+
+<ul class="wp-block-list"><li>店舗テーブル</li></ul>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="628" height="210" src="https://blog.pop-web.net/wp-content/uploads/2019/09/2f653df422e9d82120afbacd52e36a46.png" alt="" class="wp-image-577" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/2f653df422e9d82120afbacd52e36a46.png 628w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/2f653df422e9d82120afbacd52e36a46-300x100.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></figure>
+
+
+
+<ul class="wp-block-list"><li>商品テーブル</li></ul>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="628" height="210" src="https://blog.pop-web.net/wp-content/uploads/2019/09/4c70310d25f5b6ecf4576c1c82ea72df.png" alt="" class="wp-image-578" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/4c70310d25f5b6ecf4576c1c82ea72df.png 628w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/4c70310d25f5b6ecf4576c1c82ea72df-300x100.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></figure>
+
+
+
+<h1 class="wp-block-heading">第3正規形</h1>
+
+
+
+<p>第3正規形では、候補キーではない非キー属性に対して、推移的関数従属性のあるカラムを分離する。</p>
+
+
+
+<p><strong>「推移的関数従属性」とは、非属性キーカラムAが決まれば、非属性キーカラムBが決まる関係性のこと。</strong></p>
+
+
+
+<p>例えば、店舗テーブルで店長の年齢のカラムがあるとする。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="700" height="178" src="https://blog.pop-web.net/wp-content/uploads/2019/09/c9c834fd97cba65f8d76a03986b5b5e6-700x178.png" alt="" class="wp-image-579" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/c9c834fd97cba65f8d76a03986b5b5e6-700x178.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/c9c834fd97cba65f8d76a03986b5b5e6-300x76.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/c9c834fd97cba65f8d76a03986b5b5e6-768x196.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/c9c834fd97cba65f8d76a03986b5b5e6.png 824w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>店舗テーブルで、候補キーは「店舗」で、非属性キーは、「店長」と「店長年齢」。</p>
+
+
+
+<p>「店長年齢」は、「店長」が決まれば分かる。</p>
+
+
+
+<p>よって、以下のようにテーブルを分離できる。</p>
+
+
+
+<ul class="wp-block-list"><li>店舗テーブル</li></ul>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="622" height="210" src="https://blog.pop-web.net/wp-content/uploads/2019/09/8669447520ab56f9782b4d40484a92e7.png" alt="" class="wp-image-580" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/8669447520ab56f9782b4d40484a92e7.png 622w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/8669447520ab56f9782b4d40484a92e7-300x101.png 300w" sizes="(max-width: 622px) 100vw, 622px" /></figure>
+
+
+
+<ul class="wp-block-list"><li>店長テーブル</li></ul>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="622" height="210" src="https://blog.pop-web.net/wp-content/uploads/2019/09/c8555e9adfeb7d1e033d22b34f14c925.png" alt="" class="wp-image-581" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/09/c8555e9adfeb7d1e033d22b34f14c925.png 622w, https://storage.googleapis.com/gcs.pop-web.net/2019/09/c8555e9adfeb7d1e033d22b34f14c925-300x101.png 300w" sizes="(max-width: 622px) 100vw, 622px" /></figure>
+
+
+
+<h1 class="wp-block-heading">まとめ</h1>
+
+
+
+<p>とりあえず、第1正規化〜第3正規化の説明は以上。</p>The post <a href="https://blog.popweb.dev/programming/db/db-normalization/">【初心者向け】データベースの正規化について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/db-normalization/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>MySQLのよく使われるデータ型の種類のまとめ</title>
+		<link>https://blog.popweb.dev/programming/db/mysql-datatype/</link>
+					<comments>https://blog.popweb.dev/programming/db/mysql-datatype/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 15 Sep 2019 18:30:15 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=566</guid>
+
+					<description><![CDATA[<p>MySQLのデータ型には、まぁたくさんある。 なので、MySQLでよく使われるデータ型を一覧でまとめる。 数値型 目次 INTUNSIGNEDの説明UNSIGNED ZEROFILLの説明BOOLEANVARCHARCH [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/mysql-datatype/">MySQLのよく使われるデータ型の種類のまとめ</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>MySQLのデータ型には、まぁたくさんある。</p>
+
+
+
+<p>なので、MySQLで<strong>よく使われるデータ型</strong>を一覧でまとめる。</p>
+
+
+
+<h1 class="wp-block-heading">数値型</h1>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-10" checked><label class="toc-title" for="toc-checkbox-10">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"></li><li><a href="#toc1" tabindex="0">INT</a><ol><li><a href="#toc2" tabindex="0">UNSIGNEDの説明</a></li><li><a href="#toc3" tabindex="0">UNSIGNED ZEROFILLの説明</a></li></ol></li><li><a href="#toc4" tabindex="0">BOOLEAN</a></li><li><a href="#toc5" tabindex="0">VARCHAR</a><ol><li><a href="#toc6" tabindex="0">CHARとの違い</a></li></ol></li><li><a href="#toc7" tabindex="0">TEXT</a></li><li><a href="#toc8" tabindex="0">DATE</a></li><li><a href="#toc9" tabindex="0">DATETIME</a></li><li><a href="#toc10" tabindex="0">TIMESTAMP</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">INT</span></h2>
+
+
+
+<p>数値型で整数を扱う場合によく使う。</p>
+
+
+
+<p>格納範囲は、-2147483648 〜 2147483647となる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">UNSIGNEDの説明</span></h3>
+
+
+
+<p>オプションでUNSIGNEDをつけると、正の数だけを扱うように設定ができ、負の数の分だけ格納範囲が広がる。格納範囲は、0 〜 4294967295になる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">UNSIGNED ZEROFILLの説明</span></h3>
+
+
+
+<p>オプションでUNSIGNED ZEROFILLをつけると、表示桁数に満たない場合、値を0で埋めるようにしてくれる。</p>
+
+
+
+<p>例えば、int(6)と設定すると整数6桁で表示させるように指定ができる。</p>
+
+
+
+<p>そして、これにUNSIGNED ZEROFILLを付加したカラムに<strong>「12」と登録すると、表示桁数にあわせて「000012」と登録しなおされる。</strong></p>
+
+
+
+<h1 class="wp-block-heading">BOOLEAN型</h1>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">BOOLEAN</span></h2>
+
+
+
+<p>true（真）か、false（偽）を入れたい時に使う。</p>
+
+
+
+<h1 class="wp-block-heading">文字列型</h1>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">VARCHAR</span></h2>
+
+
+
+<p>文字を扱う型でよく使う。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">CHARとの違い</span></h3>
+
+
+
+<p>VARCHAEと類似してCHARというものがある。</p>
+
+
+
+<p>違いは、VARCHARは可変長文字、CHARは固定長文字列でそれぞれ格納される。</p>
+
+
+
+<p>例えば、<strong>VARCHAR(5)へ「ABC」という文字列を格納した場合、「ABC」と格納されるが、CHAR(5)へ「ABC」という文字列を格納した場合は「ABC  」となり、指定された長さになるように足らない分スペースで埋められる。</strong></p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">TEXT</span></h2>
+
+
+
+<p>長尾文字列を格納する場合は、TEXT型を使用する。</p>
+
+
+
+<h1 class="wp-block-heading">日時型</h1>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">DATE</span></h2>
+
+
+
+<p>日付のみを扱う場合に使う。</p>
+
+
+
+<p>フォーマット形式は、「年-月-日」となる。</p>
+
+
+
+<p>例：&#8217;2019-09-01&#8242;</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">DATETIME</span></h2>
+
+
+
+<p>日付と時間を扱う場合に使う。</p>
+
+
+
+<p>フォーマット形式は、「年-月-日 時:分:秒」</p>
+
+
+
+<p>例：&#8217;2019-09-01 01:15:09&#8242;</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">TIMESTAMP</span></h2>
+
+
+
+<p>タイムスタンプをしたい時に使う。</p>
+
+
+
+<p>レコードが更新された時に、変更した時の日時が<strong>自動的</strong>に登録される。</p>The post <a href="https://blog.popweb.dev/programming/db/mysql-datatype/">MySQLのよく使われるデータ型の種類のまとめ</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/mysql-datatype/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>XAMPPでMySQLコマンドを使えるようにする方法【Windows10】</title>
+		<link>https://blog.popweb.dev/programming/db/xampp-mysql-command/</link>
+					<comments>https://blog.popweb.dev/programming/db/xampp-mysql-command/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 04 Jun 2019 15:23:21 +0000</pubDate>
+				<category><![CDATA[DB]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=168</guid>
+
+					<description><![CDATA[<p>XAMPPをインストールして、さぁMySQLコマンドを使って、MySQLにログインしようと MySQLコマンドが使えないとでるので、使えるようにする手順を書きます。 目次 環境変数のPathに追加するコマンドの実行 環境 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/db/xampp-mysql-command/">XAMPPでMySQLコマンドを使えるようにする方法【Windows10】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>XAMPPをインストールして、さぁMySQLコマンドを使って、MySQLにログインしようと</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism lang-plain"><code>&gt;mysql -u root
+&#39;mysql&#39; は、内部コマンドまたは外部コマンド、
+操作可能なプログラムまたはバッチ ファイルとして認識されていません。</code></pre></div>
+
+
+
+<p>MySQLコマンドが使えないとでるので、使えるようにする手順を書きます。 </p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-12" checked><label class="toc-title" for="toc-checkbox-12">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">環境変数のPathに追加する</a></li><li><a href="#toc2" tabindex="0">コマンドの実行</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">環境変数のPathに追加する</span></h2>
+
+
+
+<p>MySQLコマンドを使えるようにするには、環境に変数にPathを追加するだけ。</p>
+
+
+
+<p>追加する場所は、Windowsの検索窓の「環境変数」と入力します。</p>
+
+
+
+<p>「システム環境変数の編集」がヒットするのでそれを選択し、さらに現れたウィンドウの中の「環境変数」をクリックします。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="565" src="https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-24_17h53_58-700x565.png" alt="" class="wp-image-118" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-24_17h53_58-700x565.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-24_17h53_58-300x242.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-24_17h53_58-768x620.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-24_17h53_58.png 837w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>表示された環境変数のウィンドウのリストから「Path」を選択して「編集」ボタンをクリックして編集していきます。</p>
+
+
+
+<p>そして、以下のパスを追加します。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism lang-plain"><code>C:\xampp\mysql\bin</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">コマンドの実行</span></h2>
+
+
+
+<div class="hcb_wrap"><pre class="prism lang-bash" data-lang="Bash"><code>&gt;mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 5638
+Server version: 10.1.35-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+MariaDB [(none)]&gt;</code></pre></div>
+
+
+
+<p>こんな感じに実行されれば完了です。</p>The post <a href="https://blog.popweb.dev/programming/db/xampp-mysql-command/">XAMPPでMySQLコマンドを使えるようにする方法【Windows10】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/db/xampp-mysql-command/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>React | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/react/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Tue, 23 Nov 2021 09:36:58 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>React | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>【初心者解説】React.memo, useMemo, useCallbackとは？</title>
+		<link>https://blog.popweb.dev/programming/react/%e3%80%90%e5%88%9d%e5%bf%83%e8%80%85%e8%a7%a3%e8%aa%ac%e3%80%91react-memo-usememo-usecallback%e3%81%a8%e3%81%af%ef%bc%9f/</link>
+					<comments>https://blog.popweb.dev/programming/react/%e3%80%90%e5%88%9d%e5%bf%83%e8%80%85%e8%a7%a3%e8%aa%ac%e3%80%91react-memo-usememo-usecallback%e3%81%a8%e3%81%af%ef%bc%9f/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 23 Nov 2021 09:36:56 +0000</pubDate>
+				<category><![CDATA[React]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1724</guid>
+
+					<description><![CDATA[<p>Ractには、メモ化するhookが用意されている。 そもそもメモ化とは？ メモ化とは関数実行後の結果をキャッシュか何か保存しておくことによって、再度同じ関数を実行するのではなく、保存しておいた結果を返すこと。それによって [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/react/%e3%80%90%e5%88%9d%e5%bf%83%e8%80%85%e8%a7%a3%e8%aa%ac%e3%80%91react-memo-usememo-usecallback%e3%81%a8%e3%81%af%ef%bc%9f/">【初心者解説】React.memo, useMemo, useCallbackとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Ractには、メモ化するhookが用意されている。</p>
+
+
+
+<p>そもそも<strong>メモ化</strong>とは？</p>
+
+
+
+<p>メモ化とは関数実行後の結果をキャッシュか何か保存しておくことによって、再度同じ関数を実行するのではなく、保存しておいた結果を返すこと。それによって実行速度を高速化させるためのものである。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Reactのパフォーマンスを最適化する</a></li><li><a href="#toc2" tabindex="0">React.memo</a><ol><li><a href="#toc3" tabindex="0">React.memoの使い方</a></li></ol></li><li><a href="#toc4" tabindex="0">useCallback</a><ol><li><a href="#toc5" tabindex="0">useCallbackの使い方</a></li></ol></li><li><a href="#toc6" tabindex="0">useMemo</a><ol><li><a href="#toc7" tabindex="0">useMemoの使い方</a></li><li><a href="#toc8" tabindex="0">レンダリングのメモ化</a></li></ol></li><li><a href="#toc9" tabindex="0">メモ化をする処理自体のコストについて</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Reactのパフォーマンスを最適化する</span></h2>
+
+
+
+<p>Reactはコンポーネントのpropsやstateが更新されると、その配下の全ての子コンポーネントも再レンダリングされる。</p>
+
+
+
+<p>そのため、不要な再計算や再レンダリングを抑えるとことでパフォーマンスを最適化することができる。</p>
+
+
+
+<p>その最適化の方法が、メモ化がである。</p>
+
+
+
+<p>メモ化を実現する方法として<strong>React.memo</strong>、<strong> useMemo</strong>、<strong>useCallback</strong>がある。</p>
+
+
+
+<p>メモ化の対象するものがそれぞれ異なる。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>React.memo:</strong> コンポーネントをメモ化するReactのAPI</li><li><strong>useMemo: </strong> 計算結果をメモ化するHook</li><li><strong>useCallback:</strong> コールバック関数をメモ化するHook</li></ul>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">React.memo</span></h2>
+
+
+
+<p>React.memoを利用することで、コンポーネントの再レンダリングを抑止することができるのでパフォーマンス向上がする。</p>
+
+
+
+<p>特に、レンダリング量が多いコンポーネントや再レンダリング頻繁に行われるコンポーネント内の子コンポーネントで有効である</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">React.memoの使い方</span></h3>
+
+
+
+<p>React.memoの書き方は以下のよう。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>React.memo(メモ化したいコンポーネント)</code></pre></div>
+
+
+
+<p>以下、コードの一例</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>const Hoge = React.memo((props) =&gt; &lt;div&gt;{props.name}&lt;/div&gt;);</code></pre></div>
+
+
+
+<p><a rel="noopener" href="https://codesandbox.io/s/clever-stonebraker-wjt7m?file=/src/App.js" target="_blank" class="broken_link">codeSandbox</a></p>
+
+
+
+<p>React.memoは、渡ってきたpropsが等価であるかをチェックして、等価であれば再レンダリングはされずにメモ化で保存したコンポーネントを再利用する。</p>
+
+
+
+<p><strong>Hogeコンポーネントは、props.nameに変更がなければコンポーネントは再レンダリングされない。</strong></p>
+
+
+
+<h4 class="wp-block-heading">コールバック関数をpropsで渡ってきた場合は再レンダリングされる</h4>
+
+
+
+<p>関数に関しては再レンダリングされるたびに、新しいオブジェクトを生成するためpropsで渡ってきた場合、等価とは判断されずに再レンダリングされる。</p>
+
+
+
+<p>そのため、関数の内容が同じでも再レンダリングされる。</p>
+
+
+
+<p>以下がその一例</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>import React, { useState } from &quot;react&quot;;
+
+const Hoge = React.memo((props) =&gt; {
+  console.log(&quot;Hoge Render!&quot;);  
+  return &lt;div onClick={props.handleClick}&gt;{props.name}&lt;/div&gt;
+});
+
+export const App = () =&gt; {
+  const [toggle, setToggle] = useState(false);
+
+  //  関数は再レンダリングされるたびに再生成されるため等価評価されない
+  const handleClick = () =&gt; {
+    console.log(&quot;Click!&quot;);
+  };
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello CodeSandbox&lt;/h1&gt;
+      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setToggle(!toggle)}&gt;
+        Appコンポーネントを再レンダリング！
+      &lt;/button&gt;
+      &lt;br /&gt;
+      &lt;Hoge name={&quot;fuga&quot;} handleClick={handleClick} /&gt;
+    &lt;/div&gt;
+  );
+};</code></pre></div>
+
+
+
+<p><a rel="noopener" href="https://codesandbox.io/embed/interesting-fast-4gqko?fontsize=14&amp;hidenavigation=1&amp;theme=dark" target="_blank">codeSandbox</a></p>
+
+
+
+<p>この問題を解消するためには、<code>useCallback</code>を使用するとよい。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">useCallback</span></h2>
+
+
+
+<p>先述にあるようにReact.memoでメモ化したコンポーネントにコールバック関数が渡ってきた場合は再レンダリングがされる。</p>
+
+
+
+<p>そのため、useCallbackを併用する。</p>
+
+
+
+<p>useCallbackはメモ化したコールバック関数を返すhookである。</p>
+
+
+
+<p>まず、useCallbackでコールバック関数メモ化する。</p>
+
+
+
+<p>メモ化した<meta charset="utf-8">コールバック関数をReact.memoでメモ化したコンポーネントにpropsとして渡すと再レンダリングを抑止することができる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">useCallbackの使い方</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>useCallback(コールバック関数, 依存配列);</code></pre></div>
+
+
+
+<p>依存は配列には、コーバルバック関数が依存している要素を入れる。</p>
+
+
+
+<p>依存している要素が更新されれば、関数も新たに生成される。</p>
+
+
+
+<p>先程のコードのにuseCallbackを加えてみる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>import React, { useState, useCallback } from &quot;react&quot;;
+
+const Hoge = React.memo((props) =&gt; {
+  console.log(&quot;Hoge Render!&quot;);
+  return &lt;div onClick={props.handleClick}&gt;{props.name}&lt;/div&gt;;
+});
+
+export const App = () =&gt; {
+  const [toggle, setToggle] = useState(false);
+
+  // 関数をメモ化。等価ななるためHogeコンポーネントは再レンダリングされない
+  const handleClick = useCallback(() =&gt; {
+    console.log(&quot;Click!&quot;);
+  }, []);
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello CodeSandbox&lt;/h1&gt;
+      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setToggle(!toggle)}&gt;
+        Appコンポーネントを再レンダリング！
+      &lt;/button&gt;
+      &lt;br /&gt;
+      &lt;Hoge name={&quot;fuga&quot;} handleClick={handleClick} /&gt;
+    &lt;/div&gt;
+  );
+};</code></pre></div>
+
+
+
+<p><a rel="noopener" href="https://codesandbox.io/s/dark-http-zl0ps?file=/src/App.js:23-712" target="_blank" class="broken_link">codeSandbox</a></p>
+
+
+
+<p>注意点は、React.memoでメモ化していないコンポーネントへuseCallbackでメモ化したコールバックス関数を渡しても意味はなく、再レンダリングがされてしまう。</p>
+
+
+
+<p>つまり、<strong>useCallbackはReact.memoと併用して使用するものだということ。</strong></p>
+
+
+
+<p>また、useCallbackでメモ化したコールバック関数を、自身のコンポーネントで利用しても動作はするが意味がない。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">useMemo</span></h2>
+
+
+
+<p>useMemoは計算結果の値をメモ化して返すhook。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">useMemoの使い方</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>useMemo(() =&gt; 計算結果を出すロジック, 依存配列);</code></pre></div>
+
+
+
+<p>useMemoは、値が変わらない場合、再計算をさせないことでパフォーマンスを向上することができる。</p>
+
+
+
+<p>依存配列には、値を計算する際に依存している要素を入れて、更新された時だけ再計算がされる。</p>
+
+
+
+<p>また、React.memoのようにレンダリングもメモ化できる。</p>
+
+
+
+<p>以下のコードは2倍にする計算をメモ化している。</p>
+
+
+
+<p>Appコンポーネントが再レンダリングされても、doubleが実行されないことが分かる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>import React, { useState, useMemo } from &quot;react&quot;;
+
+export const App = () =&gt; {
+  const [toggle, setToggle] = useState(false);
+
+  const double = (count) =&gt; {
+    console.log(&quot;Run double!&quot;);
+    return count * 2;
+  };
+
+　// 2倍する計算結果をメモすることで、再レンダリングされても再計算されない
+  const doubleResult = useMemo(() =&gt; double(1), []);
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello CodeSandbox&lt;/h1&gt;
+      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setToggle(!toggle)}&gt;
+        Appコンポーネントを再レンダリング！
+      &lt;/button&gt;
+      &lt;div&gt;{doubleResult}&lt;/div&gt;
+    &lt;/div&gt;
+  );
+};</code></pre></div>
+
+
+
+<p><a rel="noopener" href="https://codesandbox.io/s/serene-jackson-o78rp?file=/src/App.js" target="_blank" class="broken_link">codeSandbox</a></p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc8">レンダリングのメモ化</span></h3>
+
+
+
+<p>useMemoはレンダリングもメモ化できる。</p>
+
+
+
+<p>以下は、Hogeコンポーネントのレンダリングをメモ化して、不要なレンダリングを抑止している。</p>
+
+
+
+<p>注意点として、関数コンポーネント内で、コンポーネントをメモ化したい時にuseMemoでメモ化ができるが、React.memoのようにコンポーネント外でではできない。</p>
+
+
+
+<p>逆にコンポーネント内でReact.memoを利用しても意味がない。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>import React, { useState, useMemo } from &quot;react&quot;;
+
+export const App = () =&gt; {
+  const [toggle, setToggle] = useState(false);
+
+  const Hoge = useMemo(() =&gt; {
+    console.log(&quot;Hoge Render!&quot;);
+    return &lt;div&gt;fuga&lt;/div&gt;;
+  }, []);
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello CodeSandbox&lt;/h1&gt;
+      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setToggle(!toggle)}&gt;
+        Appコンポーネントを再レンダリング！
+      &lt;/button&gt;
+      &lt;br /&gt;
+      {Hoge}
+    &lt;/div&gt;
+  );
+};</code></pre></div>
+
+
+
+<p><a rel="noopener" href="https://codesandbox.io/s/clever-rhodes-lgxbk?file=/src/App.js" target="_blank" class="broken_link">codeSandbox</a></p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">メモ化をする処理自体のコストについて</span></h2>
+
+
+
+<p>useMemoやuseCallbackを使用してメモ化することで、パフォーマンスの向上を見込めるが、何でもかんでもメモ化したらいいわけではない。</p>
+
+
+
+<p>なぜなら、メモ化する処理自体にもコストがかかるから。</p>
+
+
+
+<p>useCallbackのメモ化のコストは、関数を再生成するコストより大きくなってしまう場合が多いから。</p>
+
+
+
+<p>なので、useCallbackをわざわざ利用する必要ないところで使用するとパフォーマンスが悪くなってしまうということ。</p>
+
+
+
+<p>明らかに再レンダリングや再計算のコストが高い場合に使用して、適切に使用することがポイントとなる。</p>The post <a href="https://blog.popweb.dev/programming/react/%e3%80%90%e5%88%9d%e5%bf%83%e8%80%85%e8%a7%a3%e8%aa%ac%e3%80%91react-memo-usememo-usecallback%e3%81%a8%e3%81%af%ef%bc%9f/">【初心者解説】React.memo, useMemo, useCallbackとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/react/%e3%80%90%e5%88%9d%e5%bf%83%e8%80%85%e8%a7%a3%e8%aa%ac%e3%80%91react-memo-usememo-usecallback%e3%81%a8%e3%81%af%ef%bc%9f/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

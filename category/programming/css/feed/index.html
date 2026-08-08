@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CSS | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/css/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Thu, 14 Jan 2021 11:36:04 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>CSS | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>テキスト下に蛍光色ラインマーカーをCSSで作る（改行対応）</title>
+		<link>https://blog.popweb.dev/programming/css/css-line-marker/</link>
+					<comments>https://blog.popweb.dev/programming/css/css-line-marker/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 31 Dec 2020 22:56:58 +0000</pubDate>
+				<category><![CDATA[CSS]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1568</guid>
+
+					<description><![CDATA[<p>改行されているテキストにも対応できるCSSによるラインマーカーの作成。 以下、コード。 HTML CSS</p>
+The post <a href="https://blog.popweb.dev/programming/css/css-line-marker/">テキスト下に蛍光色ラインマーカーをCSSで作る（改行対応）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>改行されているテキストにも対応できるCSSによるラインマーカーの作成。</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img fetchpriority="high" decoding="async" src="https://storage.googleapis.com/gcs.pop-web.net/2020/12/16369e672a034d3e1667498ad55d3677.png" alt="" class="wp-image-1572" width="408" height="157" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/12/16369e672a034d3e1667498ad55d3677.png 680w, https://storage.googleapis.com/gcs.pop-web.net/2020/12/16369e672a034d3e1667498ad55d3677-300x116.png 300w" sizes="(max-width: 408px) 100vw, 408px" /></figure>
+
+
+
+<p>以下、コード。</p>
+
+
+
+<h5 class="wp-block-heading">HTML</h5>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;
+  テキストテキストテキストテキストテキスト&lt;br /&gt;
+  &lt;span class=&quot;line-marker&quot;&gt;テキストテキストテキストテキストテキスト&lt;br /&gt;
+    テキストテキスト&lt;/span&gt;テキストテキストテキスト&lt;br /&gt;
+  テキストテキストテキストテキストテキスト
+&lt;/p&gt;</code></pre></div>
+
+
+
+<h5 class="wp-block-heading">CSS</h5>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code>.line-marker {
+	background: linear-gradient(transparent 70%, #FDDEB3 0%);
+	display: inline;
+	padding: 0 2px 4px;
+}</code></pre></div>The post <a href="https://blog.popweb.dev/programming/css/css-line-marker/">テキスト下に蛍光色ラインマーカーをCSSで作る（改行対応）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/css/css-line-marker/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【初心者向け】SASSについて徹底解説</title>
+		<link>https://blog.popweb.dev/programming/css/sass/</link>
+					<comments>https://blog.popweb.dev/programming/css/sass/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 22 Aug 2019 13:47:36 +0000</pubDate>
+				<category><![CDATA[CSS]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=448</guid>
+
+					<description><![CDATA[<p>SASSとは 呼び方は「サス」or「サース」 Syntactically Awesome StyleSheets（シンタクティクリー・オーサム・スタイルシート）の略。CSSのメタ言語（プリプロセッサ）。 Syntacti [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/css/sass/">【初心者向け】SASSについて徹底解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<h1 class="wp-block-heading">SASSとは</h1>
+
+
+
+<p>呼び方は「サス」or「サース」</p>
+
+
+
+<p><strong>S</strong>yntactically <strong>A</strong>wesome <strong>S</strong>tyle<strong>S</strong>heets（<em>シンタクティクリー・オーサム・スタイルシート</em>）の略。CSSのメタ言語（プリプロセッサ）。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>S</strong>yntactically = 構文的に</li><li><strong>A</strong>wesome = すばらしい</li><li><strong>S</strong>tyle<strong>S</strong>heets = スタイルシート（CSS）</li></ul>
+
+
+
+<p>簡単にいうと、すごいCSS。</p>
+
+
+
+<p>CSSを作るときに色々と便利にしてくれるもの。</p>
+
+
+
+<h1 class="wp-block-heading">なぜSASSを使うのか</h1>
+
+
+
+<p>CSS作成時の効率化のアップのため。</p>
+
+
+
+<ul class="wp-block-list"><li>コード量が少なくてすむので、見やすい</li><li>保守性・メンテナンス性の向上</li><li>変数や関数などが使える</li></ul>
+
+
+
+<h1 class="wp-block-heading">記法が2種類ある</h1>
+
+
+
+<p>記法にはSASS記法とSCSS記法があるが、現在はSCSS記法が使われるのが一般的。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"></li><li><a href="#toc1" tabindex="0">拡張子の違い</a></li><li><a href="#toc2" tabindex="0">記法の違い</a><ol><li><a href="#toc3" tabindex="0">SASS</a></li><li><a href="#toc4" tabindex="0">SCSS</a></li></ol></li><li><a href="#toc5" tabindex="0">【参考】SASSコンパイルツール</a></li><li><a href="#toc6" tabindex="0">【参考】css形式からsass形式にしたい</a></li><li><a href="#toc7" tabindex="0">1.ネスト（入れ子）</a></li><li><a href="#toc8" tabindex="0">2.変数</a></li><li><a href="#toc9" tabindex="0">3.演算</a></li><li><a href="#toc10" tabindex="0">4.継承（@extend）</a></li><li><a href="#toc11" tabindex="0">5.ミックスイン（@mixin）</a></li><li><a href="#toc12" tabindex="0">6.インポート（@import）</a><ol><li><a href="#toc13" tabindex="0">分割</a></li><li><a href="#toc14" tabindex="0">統合</a></li></ol></li><li><a href="#toc15" tabindex="0">7.条件分岐・繰り返し処理</a><ol><li><a href="#toc16" tabindex="0">条件分岐（@if）</a></li><li><a href="#toc17" tabindex="0">繰り返し処理（@for/@while/@each）</a></li></ol></li><li><a href="#toc18" tabindex="0">8.関数</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">拡張子の違い</span></h2>
+
+
+
+<table class="wp-block-table"><thead><tr><th>記法</th><th>拡張子</th></tr></thead><tbody><tr><td>SASS</td><td>.sass</td></tr><tr><td>SCSS</td><td>.scss</td></tr></tbody></table>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">記法の違い</span></h2>
+
+
+
+<p>SASSは、{}や;を省略してインデントだけで入れ子にしていく。</p>
+
+
+
+<p>一方、SCSSはCSSにかなり似た書き方ができる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">SASS</span></h3>
+
+
+
+<pre class="wp-block-code"><code>div
+    margin: 0 auto
+    p
+        padding: 10px 20px
+        span
+            font-color: #ff0000</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">SCSS</span></h3>
+
+
+
+<pre class="wp-block-code"><code>div {
+    margin: 0 auto;
+    p {
+        padding: 10px 20px;
+        span {
+             font-color: #ff0000;
+        }
+    }
+}</code></pre>
+
+
+
+<h1 class="wp-block-heading">コンパイル方法</h1>
+
+
+
+<p>コンパイル方法は、様々ある。</p>
+
+
+
+<p>Gulpやwebpackを使って、コンパイラーのモジュールをnpm（パッケージ管理ソフト）でインストールしてオートコンパイルさせるのが今では主流</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">【参考】SASSコンパイルツール</span></h2>
+
+
+
+<ul class="wp-block-list"><li><a href="https://prepros.io">prepros</a></li><li><a href="https://www.sassmeister.com" class="broken_link">sassmeister</a></li></ul>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">【参考】css形式からsass形式にしたい</span></h2>
+
+
+
+<ul class="wp-block-list"><li><a href="https://css2sass.herokuapp.com/" class="broken_link">css2sass</a></li></ul>
+
+
+
+<h1 class="wp-block-heading">SASSの基本機能</h1>
+
+
+
+<p>SASSの8つの基本機能について</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">1.ネスト（入れ子）</span></h2>
+
+
+
+<p>入れ子にすることでまとまった書き方ができるので、見通しがよくメンテナンス性が高い</p>
+
+
+
+<pre class="wp-block-code"><code>div {
+    margin: 0 auto;
+    p {
+        padding: 10px 20px;
+        span {
+             font-color: #ff0000;
+        }
+        &amp;:hover{
+             text-decoration-line: underline;
+        }
+    }
+}</code></pre>
+
+
+
+<h4 class="wp-block-heading">「&amp;」（アンバサンド）セレクタ</h4>
+
+
+
+<p>「&amp;」の場合は、ネストではなく親セラクタを参照し合成する。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">2.変数</span></h2>
+
+
+
+<p>SASSでは変数が使える。</p>
+
+
+
+<p>変数の宣言の書き方は、「$変数名: 値;」</p>
+
+
+
+<pre class="wp-block-code"><code>$primary_color:#ff0000;
+$fontSize:18px;
+
+.container{
+    background:$primary_color;
+    font-size:$fontSize
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">3.演算</span></h2>
+
+
+
+<p>四則演算ができます。</p>
+
+
+
+<pre class="wp-block-code"><code>$baseWidth:980px;
+
+.sub_content{
+  width:1000px - $baseWidth;
+}
+
+.container{
+  width: (680px / $baseWidth) * 100%
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">4.継承（@extend）</span></h2>
+
+
+
+<p>セレクタの内容を、他のセレクタにも適用できる。</p>
+
+
+
+<pre class="wp-block-code"><code>.button01{
+  background:#777;
+  border:1px solid #ccc;
+  color:white;
+}
+.button02{
+  @extend .button01;
+  border-radius:10px;
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc11">5.ミックスイン（@mixin）</span></h2>
+
+
+
+<p>まとめたスタイルを使うことができる。引数の利用も可能。</p>
+
+
+
+<p>よく使うパターンとしてはメディアクエリの指定するときに多用される。</p>
+
+
+
+<p>・ブレークポイントの設定</p>
+
+
+
+<pre class="wp-block-code"><code>// ブレイクポイントを変数に格納、PCとSPのメディアクエリを配列で用意しておく
+$breakpoint: 767px;
+$breakpoints: (
+  "sp": "screen and (max-width: #{$breakpoint})",
+  "pc": "screen and (min-width: #{$breakpoint})"
+);</code></pre>
+
+
+
+<p>・出力設定</p>
+
+
+
+<pre class="wp-block-code"><code>// 引数には初期設定ができる。引数がない場合、初期設定の値が適用される
+@mixin mq($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}</code></pre>
+
+
+
+<p>・mixinの使用する例</p>
+
+
+
+<pre class="wp-block-code"><code>// PCではフォントサイズ「18px」で、スマホでは「3.6vw」にしたい場合
+span{
+  font-size:18px;
+  @include mq(){
+    fonts-size:3.6vw;
+  }
+}    </code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc12">6.インポート（@import）</span></h2>
+
+
+
+<p>Sassファイルは、内容によってファイルを分割することができ、最終的に1つのファイルにまとめることができる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc13">分割</span></h3>
+
+
+
+<p>Sassファイルを分割する場合、分割するファイルには<strong>_(アンダースコア)から始まるファイル名</strong>にする。</p>
+
+
+
+<p>これは、パーシャルファイルといってコンパイルされない状態にすることができる。</p>
+
+
+
+<p>ヘッダーとフッターと分ける場合、以下のようなファイル名になる。</p>
+
+
+
+<ul class="wp-block-list"><li><code>_header.scss</code> → ヘッダーのスタイルが書かれているファイル</li><li><code>_footer.scss</code> → フッターのスタイルが書かれているファイル</li></ul>
+
+
+
+<h3 class="wp-block-heading"><span id="toc14">統合</span></h3>
+
+
+
+<p>Sassファイルを一つにまとめるときには、以下のようにインポートしてまとめる。</p>
+
+
+
+<p>ファイルを指定するときは、<strong>_(アンダースコア)と拡張子（.scss）は省略できる。</strong></p>
+
+
+
+<pre class="wp-block-code"><code>@import "./common/header"
+@import "./common/footer"</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc15">7.条件分岐・繰り返し処理</span></h2>
+
+
+
+<p>プログラミングのように、条件分岐や繰り返し処理も使える</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc16">条件分岐（@if）</span></h3>
+
+
+
+<pre class="wp-block-code"><code>$basicColor: true;
+@if $basicColor {
+  .content {
+     color: red;
+  }
+}
+@else {
+   .content {
+      color: white;
+   }
+}</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc17">繰り返し処理（@for/@while/@each）</span></h3>
+
+
+
+<pre class="wp-block-code"><code>@for $v from 0 through 100 {
+  .mb#{$v} {
+    margin-bottom: #{$v}px;
+  }
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc18">8.関数</span></h2>
+
+
+
+<p>プログラミングのように、関数も使うことができる</p>
+
+
+
+<pre class="wp-block-code"><code>//pxを%表示に変換する関数
+$container: 1020px;
+@function percent($pixel) {
+  @return floor(($pixel / $container) * 100%);
+}
+
+.sub_container {
+  width: percent(150px);
+}</code></pre>The post <a href="https://blog.popweb.dev/programming/css/sass/">【初心者向け】SASSについて徹底解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/css/sass/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

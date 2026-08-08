@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>AWS | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/server/aws/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Tue, 15 Dec 2020 16:20:25 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>AWS | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>【AWS】EC2の作成</title>
+		<link>https://blog.popweb.dev/server/aws-ec2/</link>
+					<comments>https://blog.popweb.dev/server/aws-ec2/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 20 Mar 2020 17:30:00 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=835</guid>
+
+					<description><![CDATA[<p>EC2はAWSの中でも基本的なサービスで、簡単に仮想サーバーを構築することができる。 目次 EC2インスタンスの作成ステップ 1 ステップ 2ステップ 3ステップ 4ステップ 5ステップ 6 EC2インスタンスの作成 E [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/aws-ec2/">【AWS】EC2の作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>EC2はAWSの中でも基本的なサービスで、簡単に仮想サーバーを構築することができる。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">EC2インスタンスの作成</a><ol><li><a href="#toc2" tabindex="0">ステップ 1 </a></li><li><a href="#toc3" tabindex="0">ステップ 2</a></li><li><a href="#toc4" tabindex="0">ステップ 3</a></li><li><a href="#toc5" tabindex="0">ステップ 4</a></li><li><a href="#toc6" tabindex="0">ステップ 5</a></li><li><a href="#toc7" tabindex="0">ステップ 6</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">EC2インスタンスの作成</span></h2>
+
+
+
+<p>EC2のダッシュボードのメニューからインスタンスを選択し、インスタンスの作成をクリック。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">ステップ 1 </span></h3>
+
+
+
+<p>AMIの選択は、クイックスタートの中のAmazon Linux 2 AMIを選択。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">ステップ 2</span></h3>
+
+
+
+<p>インスタンスタイプの選択では、無料利用枠の対象の「t2.micro」を選択。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">ステップ 3</span></h3>
+
+
+
+<p>インスタンスの詳細の設定では、ネットワークでは作成したVPCを選択（例：aws-vpc）</p>
+
+
+
+<p>サブネットも作成したパブリックサブネットを選択（例：aws-public-subnet-1a）</p>
+
+
+
+<p>自動割り当てパブリック IPは、グローバルIPアドレスを割り当てるかの設定。今回は有効にしておく。</p>
+
+
+
+<p>キャパシティーの予約は料金がかかるのでなしにしておく。</p>
+
+
+
+<p>ネットワークインターフェイスでは、プライベートIPアドレスも割り当てておく。</p>
+
+
+
+<p>サブネットの範囲内のIPアドレスを設定しておく（例：192.168.10.10）</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">ステップ 4</span></h3>
+
+
+
+<p>ストレージの追加では、ボリュームタイプを汎用SSDを選択。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">ステップ 5</span></h3>
+
+
+
+<p>タグの追加では、好きな名前をつけておく（例：キーに「Name」、値に「aws-web」）</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">ステップ 6</span></h3>
+
+
+
+<p>セキュリティグループの設定では、新しいセキュリティグループを作成するを選択し、セキュリティグループ名は好きな名前を入力（例：aws-web）</p>
+
+
+
+<p>確認し、起動ボタンをクリック。</p>
+
+
+
+<p>これで、EC2が起動する。</p>
+
+
+
+<p>最後にキーペアを作成できるので、適宜PCに保存しておく。</p>
+
+
+
+<p>キーペアは、<strong>EC2に接続する際に必要なものなのでわかるところに保存しておく。</strong></p>The post <a href="https://blog.popweb.dev/server/aws-ec2/">【AWS】EC2の作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/aws-ec2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【AWS】パブリックサブネットとプライベートサブネットの作成</title>
+		<link>https://blog.popweb.dev/server/public-private-subnet/</link>
+					<comments>https://blog.popweb.dev/server/public-private-subnet/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 19 Mar 2020 18:17:00 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=829</guid>
+
+					<description><![CDATA[<p>目次 パブリックサブネットとプライベートサブネットについてVPCを作成サブネットの作成パブリックサブネット作成プライベートサブネット作成インターネットゲートウェイを作成VPCにアタッチルーティングの設定 パブリックサブネ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/public-private-subnet/">【AWS】パブリックサブネットとプライベートサブネットの作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">パブリックサブネットとプライベートサブネットについて</a></li><li><a href="#toc2" tabindex="0">VPCを作成</a></li><li><a href="#toc3" tabindex="0">サブネットの作成</a><ol><li><a href="#toc4" tabindex="0">パブリックサブネット作成</a></li><li><a href="#toc5" tabindex="0">プライベートサブネット作成</a></li></ol></li><li><a href="#toc6" tabindex="0">インターネットゲートウェイを作成</a><ol><li><a href="#toc7" tabindex="0">VPCにアタッチ</a></li></ol></li><li><a href="#toc8" tabindex="0">ルーティングの設定</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">パブリックサブネットとプライベートサブネットについて</span></h2>
+
+
+
+<p>AWSにおいて、パブリックサブネットはインターネットと接続できるサブネットで、プライベートサブネットはインターネットは接続できないサブネット。</p>
+
+
+
+<p>パブリックサブネットはIGW（インターネットゲートウェイ）にルーティング設定することで作成することできる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">VPCを作成</span></h2>
+
+
+
+<p>まず、右上のメニューで東京リージョンが選択されていることを確認。</p>
+
+
+
+<p>VPCダッシュボードのメニューでVPCをクリック。そして「VPCの作成」をクリック。</p>
+
+
+
+<p>名前タグは、好きな名前を入力（例：aws-vpc）</p>
+
+
+
+<p>IPv4 CIDR ブロックはプライベートIPアドレスの範囲内からCIDRブロック形式で設定する（例：192.168.0.0/16）</p>
+
+
+
+<p>「作成」をクリックして作成。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">サブネットの作成</span></h2>
+
+
+
+<p>VPCダッシュボードのメニューでサブネットをクリック。そして「サブネットの作成」をクリック。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">パブリックサブネット作成</span></h3>
+
+
+
+<p>名前タグは、好きな名前を入力するがパブリックサブネットをわかるようにしておく（例：aws-public-subnet-1a）</p>
+
+
+
+<p>VPCは先程作成したVPCを選択</p>
+
+
+
+<p>アベイラビリティーゾーンは、好きなものを選択（例：ap-northeast-1a）</p>
+
+
+
+<p>IPv4 CIDR ブロックには、VPC範囲内のIPアドレスをCIDRブロック形式で設定する（例：192.168.10.0/24）</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">プライベートサブネット作成</span></h3>
+
+
+
+<p>こちらも名前タグは、好きな名前を入力するがパブリックサブネットをわかるようにしておく（例：aws-private-subnet-1a）</p>
+
+
+
+<p>VPCとアベイラビリティーゾーンは先程作成したパブリックサブネットと同じ設定で。</p>
+
+
+
+<p>IPv4 CIDR ブロックには、VPC範囲内のIPアドレスをCIDRブロック形式で設定する（例：192.168.20.0/24）</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">インターネットゲートウェイを作成</span></h2>
+
+
+
+<p>メニューがインタネットゲートウェイをクリックして、「インターネットゲートウェイの作成」をクリック。</p>
+
+
+
+<p>名前タグは、好きな名前を入力（例：aws-igw）</p>
+
+
+
+<p>「作成」をクリック。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">VPCにアタッチ</span></h3>
+
+
+
+<p>作成したインタネットゲートウェイを選択して、「アクション」から「VPCにアタッチ」をクリック。</p>
+
+
+
+<p>VPCには作成しているVPC（aws-vpc）を選択して「アタッチ」をクリック。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">ルーティングの設定</span></h2>
+
+
+
+<p>ルーティングでパブリックサブネットとインターネットゲートウェイを紐付ける。</p>
+
+
+
+<p>メニューのルートテーブルから「ルートテーブルの作成」をクリック。</p>
+
+
+
+<p>名前タグは、好きな名前を入力（例：aws-public-routing）</p>
+
+
+
+<p>VPCには作成しているVPC（aws-vpc）を選択</p>
+
+
+
+<p>作成したルートテーブルを選択して、「アクション」から「サブネットの関連付けの編集」をクリック。</p>
+
+
+
+<p>パブリックサブネットを選択して「保存」をクリック。</p>
+
+
+
+<p>次にデフォルトルート（0.0.0.0/0）をインターネットゲートウェイへ設定する。</p>
+
+
+
+<p>作成したルートテーブルを選択して、「アクション」から「ルートの編集」をクリック。</p>
+
+
+
+<p>「ルートの追加」で送信先を「0.0.0.0/0」、ターゲットをインタネットゲートウェイの選択して「保存」をクリック。</p>
+
+
+
+<p>以上で、インターネットに接続できるパブリックサブネットとインターネットに接続できないプライベートサブネットが完成。</p>The post <a href="https://blog.popweb.dev/server/public-private-subnet/">【AWS】パブリックサブネットとプライベートサブネットの作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/public-private-subnet/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【AWS】リージョンとアベイラビリティーゾーンとVPCについて</title>
+		<link>https://blog.popweb.dev/server/regions-availability-zone-vpc/</link>
+					<comments>https://blog.popweb.dev/server/regions-availability-zone-vpc/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 15 Mar 2020 14:30:00 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=805</guid>
+
+					<description><![CDATA[<p>目次 リージョンとはアベイラビリティーゾーンとはVPCとは リージョンとは AWSのサービスが展開されている地域のこと。 日本には東京リージョン。アメリカにはオハイオリージョン、オレゴンリージョンなどがある。 アベイラビ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/regions-availability-zone-vpc/">【AWS】リージョンとアベイラビリティーゾーンとVPCについて</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">リージョンとは</a></li><li><a href="#toc2" tabindex="0">アベイラビリティーゾーンとは</a></li><li><a href="#toc3" tabindex="0">VPCとは</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">リージョンとは</span></h2>
+
+
+
+<p>AWSのサービスが展開されている地域のこと。</p>
+
+
+
+<p>日本には東京リージョン。アメリカにはオハイオリージョン、オレゴンリージョンなどがある。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">アベイラビリティーゾーンとは</span></h2>
+
+
+
+<p>リージョンの中にあるデータセンターの集合のこと。物理的に独立していて複数存在する。</p>
+
+
+
+<p>サーバをたてる時には、複数の異なるアベイラビリティーゾーンにたてることによって冗長化させる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">VPCとは</span></h2>
+
+
+
+<p>VPC（Virtual Private Cloud）は、AWSサービスの1つで仮想ネットワークを構築できる。</p>
+
+
+
+<p>VPCの中でさらにネットワークを分けるにはサブネットで区切り、サブネットの中にサーバを配置する。</p>
+
+
+
+<p>また、サブネットは複数のアベイラビリティーゾーンで構築することで冗長化構成にすることができる。</p>The post <a href="https://blog.popweb.dev/server/regions-availability-zone-vpc/">【AWS】リージョンとアベイラビリティーゾーンとVPCについて</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/regions-availability-zone-vpc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【AWS】CloudTrailとは？設定方法について</title>
+		<link>https://blog.popweb.dev/server/aws-cloudtrail/</link>
+					<comments>https://blog.popweb.dev/server/aws-cloudtrail/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 14 Mar 2020 06:36:00 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=801</guid>
+
+					<description><![CDATA[<p>目次 CloudTrailとは特徴設定方法 CloudTrailとは CloudTrailは、「いつどのユーザがどんな動作をしたか？」といった操作ログを記録するサービス。 特徴 デフォルトで有効になっている。 デフォルト [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/aws-cloudtrail/">【AWS】CloudTrailとは？設定方法について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-8" checked><label class="toc-title" for="toc-checkbox-8">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">CloudTrailとは</a></li><li><a href="#toc2" tabindex="0">特徴</a></li><li><a href="#toc3" tabindex="0">設定方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">CloudTrailとは</span></h2>
+
+
+
+<p>CloudTrailは、<strong>「いつどのユーザがどんな動作をしたか？」といった操作ログを記録するサービス。</strong></p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">特徴</span></h2>
+
+
+
+<ul class="wp-block-list"><li>デフォルトで有効になっている。</li><li>デフォルトでの有効の場合、保存期間は過去90日。</li><li>90日以上保存したい場合は、S3に保存させるように設定する。</li><li>CloudTrail自体に料金は発生しないが、<strong>S3へ保存する場合はS3の料金がかかる。</strong></li></ul>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">設定方法</span></h2>
+
+
+
+<p>基本的なCloudTrail設定を新規作成する場合について説明する。</p>
+
+
+
+<ul class="wp-block-list"><li>CloudTrailのダッシュボードで「証跡の作成」をクリック。</li><li>証跡名に好きな名前を入力。証跡情報を全てのリージョンに適用は、「はい」にしておく。</li><li>読み込み/書き込みイベントは、「はい」にしておく。</li><li>Log Insights イベントは、「いいえ」にしておく。</li><li>データイベントでは、S3に保存する場合、「アカウントのすべての S3 バケットの選」をのチェックボックスを選択しておく</li><li>新しい S3 バケットを作成しますか「はい」にして、S3 バケットには好きな名前を入力。</li><li>最後に「作成」をクリック。</li></ul>
+
+
+
+<p>ログの履歴は、ダッシュボードのメニュー「イベント履歴」で確認できる。</p>The post <a href="https://blog.popweb.dev/server/aws-cloudtrail/">【AWS】CloudTrailとは？設定方法について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/aws-cloudtrail/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>AWSとは？クラウドとは？</title>
+		<link>https://blog.popweb.dev/server/aws%e3%81%a8%e3%81%af%ef%bc%9f%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%81%a8%e3%81%af%ef%bc%9f/</link>
+					<comments>https://blog.popweb.dev/server/aws%e3%81%a8%e3%81%af%ef%bc%9f%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%81%a8%e3%81%af%ef%bc%9f/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 12 Mar 2020 15:37:00 +0000</pubDate>
+				<category><![CDATA[AWS]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=783</guid>
+
+					<description><![CDATA[<p>目次 AWSとはクラウドとは AWSとは AWSは、Amazon Web Services（アマゾン ウェブ サービス）のこと。 Amazonが提供しているクラウドコンピューティングサービス。 その中でもインフラ（サーバ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/aws%e3%81%a8%e3%81%af%ef%bc%9f%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%81%a8%e3%81%af%ef%bc%9f/">AWSとは？クラウドとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-10" checked><label class="toc-title" for="toc-checkbox-10">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">AWSとは</a></li><li><a href="#toc2" tabindex="0">クラウドとは</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">AWSとは</span></h2>
+
+
+
+<p>AWSは、<strong>Amazon Web Services</strong>（アマゾン ウェブ サービス）のこと。</p>
+
+
+
+<p>Amazonが提供しているクラウドコンピューティングサービス。</p>
+
+
+
+<p>その中でもインフラ（サーバやネットワーク）を扱っており、IaaS（Infrastructure as a Service）という分類がされる。</p>
+
+
+
+<p>ちなみに、<strong>IaaSは「イアース」</strong>と読む。</p>
+
+
+
+<p>他にもSaasとかPaasなどがある。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">クラウドとは</span></h2>
+
+
+
+<p>クラウドとはクラウドコンピューティングサービスのこと。</p>
+
+
+
+<p>インターネット越しに利用できるサービスのこと。</p>
+
+
+
+<p>AWSでは、インターネット上で仮想的にサーバやネットワークを構築することができるため、必要な分のリソースを必要な時にだけ利用できるメリットがある。</p>
+
+
+
+<p>クラウドとは逆に<strong>オンプレミス</strong>というものある。</p>
+
+
+
+<p>オンプレミスは、自社でサーバやネットワークを用意して利用すること。</p>
+
+
+
+<p>オンプレミスは、初期コストがかかりやすく、必要な時にリソースを増やしにくいということがあげられる。</p>The post <a href="https://blog.popweb.dev/server/aws%e3%81%a8%e3%81%af%ef%bc%9f%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%81%a8%e3%81%af%ef%bc%9f/">AWSとは？クラウドとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/aws%e3%81%a8%e3%81%af%ef%bc%9f%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%81%a8%e3%81%af%ef%bc%9f/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

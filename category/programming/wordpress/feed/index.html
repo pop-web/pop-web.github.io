@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>WordPress | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/wordpress/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Mon, 29 Jun 2020 22:16:50 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>WordPress | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>WordPress高速化、Nginx環境にOPcacheとAPCuをインストール</title>
+		<link>https://blog.popweb.dev/programming/wordpress/wordpress-nginx-opcache-apcu/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress/wordpress-nginx-opcache-apcu/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 12 Jun 2020 11:56:11 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1339</guid>
+
+					<description><![CDATA[<p>当サイトは、さくらのVPS上にWordPressをのせて構築していているが、体感的に表示速度が遅かった。 WordPress高速化するのため、PHPのキャッシュ機能パッケージであるOPcacheとAPCuをインストールす [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress/wordpress-nginx-opcache-apcu/">WordPress高速化、Nginx環境にOPcacheとAPCuをインストール</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>当サイトは、さくらのVPS上にWordPressをのせて構築していているが、体感的に表示速度が遅かった。</p>
+
+
+
+<p>WordPress高速化するのため、PHPのキャッシュ機能パッケージであるOPcacheとAPCuをインストールする。</p>
+
+
+
+<p>因みに、サーバの設定とかせずにVPSやクラウド上のWordPressサイトを高速化したい場合は、<a rel="noopener" href="https://kusanagi.tokyo/" target="_blank">「KUSANAGI」</a>というCMS高速化に特化した実行環境がある。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">インストール前後のPage Speed Insightsスコア比較</a><ol><li><a href="#toc2" tabindex="0">OPcacheとAPCuインストール前</a></li><li><a href="#toc3" tabindex="0">OPcacheとAPCuインストール後</a></li></ol></li><li><a href="#toc4" tabindex="0">OPcacheとAPCuをインストール</a></li><li><a href="#toc5" tabindex="0">php-fpmとnginxの再起動して有効化</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">インストール前後のPage Speed Insightsスコア比較</span></h2>
+
+
+
+<p>OPcacheとAPCuをインストールする前と後のPage Speed Insightsスコア。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">OPcacheとAPCuインストール前</span></h3>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="700" height="239" src="https://blog.pop-web.net/wp-content/uploads/2020/06/4a08ab877b4af4e79bcbffdac2874b86-700x239.png" alt="" class="wp-image-1340" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/06/4a08ab877b4af4e79bcbffdac2874b86-700x239.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/4a08ab877b4af4e79bcbffdac2874b86-300x102.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/4a08ab877b4af4e79bcbffdac2874b86-768x262.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/4a08ab877b4af4e79bcbffdac2874b86.png 800w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">OPcacheとAPCuインストール後</span></h3>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="700" height="240" src="https://blog.pop-web.net/wp-content/uploads/2020/06/57e717c375ada4b63b1aa14a32f32a45-700x240.png" alt="" class="wp-image-1341" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/06/57e717c375ada4b63b1aa14a32f32a45-700x240.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/57e717c375ada4b63b1aa14a32f32a45-300x103.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/57e717c375ada4b63b1aa14a32f32a45-768x263.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/06/57e717c375ada4b63b1aa14a32f32a45.png 900w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>スコアが劇的にアップしたわけではないが、体感的にもインストール後の方が表示速度は早くなったと感じられた。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">OPcacheとAPCuをインストール</span></h2>
+
+
+
+<p>OPcacheとAPCuをインストールしていく。</p>
+
+
+
+<p>環境は、さくらのVPS、CentOS 7、Nginx 1.17、PHP7.4。</p>
+
+
+
+<p>以下のコマンドでインストール。</p>
+
+
+
+<pre class="wp-block-code"><code>yum -y install --enablerepo=remi,remi-php74 php-opcache php-pecl-apcu</code></pre>
+
+
+
+<p>インストールが完了したら<code>php -v</code>で確認。</p>
+
+
+
+<pre class="wp-block-code"><code>php -v
+PHP 7.4.7 (cli) (built: Jun  9 2020 10:57:17) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v3.4.0, Copyright (c) Zend Technologies
+    with Zend OPcache v7.4.7, Copyright (c), by Zend Technologies</code></pre>
+
+
+
+<p>上記のように、with Zend OPcache v7.4.7となっていればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">php-fpmとnginxの再起動して有効化</span></h2>
+
+
+
+<p>php-fpmとnginxを再起動するため、以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl restart php-fpm
+systemctl restart nginx</code></pre>The post <a href="https://blog.popweb.dev/programming/wordpress/wordpress-nginx-opcache-apcu/">WordPress高速化、Nginx環境にOPcacheとAPCuをインストール</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress/wordpress-nginx-opcache-apcu/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【WordPressサイトヘルス解決】オプションのモジュールzipがインストールされていないか、無効化されています。</title>
+		<link>https://blog.popweb.dev/programming/wordpress-site-health-check-zip/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress-site-health-check-zip/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 17 Apr 2020 12:01:00 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1051</guid>
+
+					<description><![CDATA[<p>WordPressサイトヘルスチェックの「1つ以上の推奨モジュールが存在しません」の中で、「オプションのモジュール zip がインストールされていないか、無効化されています。」と出たのでzipモジュールを入れることにした [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress-site-health-check-zip/">【WordPressサイトヘルス解決】オプションのモジュールzipがインストールされていないか、無効化されています。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>WordPressサイトヘルスチェックの「1つ以上の推奨モジュールが存在しません」の中で、<strong>「オプションのモジュール zip がインストールされていないか、無効化されています。」</strong>と出たのでzipモジュールを入れることにした。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="700" height="196" src="https://blog.pop-web.net/wp-content/uploads/2020/04/8700359200f0cb1b1fe038e36a1bc19b-700x196.png" alt="" class="wp-image-1075" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/8700359200f0cb1b1fe038e36a1bc19b-700x196.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/8700359200f0cb1b1fe038e36a1bc19b-300x84.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/8700359200f0cb1b1fe038e36a1bc19b-768x215.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/8700359200f0cb1b1fe038e36a1bc19b.png 808w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>環境は以下</p>
+
+
+
+<ul class="wp-block-list"><li>さくらのVPS</li><li>CentOS 7</li><li>Nginx 1.17</li><li>PHP 7.4</li><li>MariaDB</li></ul>
+
+
+
+<p>※<strong>VPSでなくレンタルサーバーサービスならコントールパネルといった管理画面から簡単に入れられると思う。</strong></p>
+
+
+
+<p>zipモジュールは、<code>php-pecl-zip</code>を入れればよい。</p>
+
+
+
+<pre class="wp-block-code"><code>yum --enablerepo=remi,remi-php74 install php-pecl-zip</code></pre>
+
+
+
+<p>最後に、php-fpmを再起動。</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl restart php-fpm</code></pre>
+
+
+
+<p>WordPressの管理画面に戻って、テスト通過されていることが確認できればOK。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="682" height="575" src="https://blog.pop-web.net/wp-content/uploads/2020/04/e737e764cd2a71c9aa37113e5ad701ec.png" alt="" class="wp-image-1076" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/e737e764cd2a71c9aa37113e5ad701ec.png 682w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/e737e764cd2a71c9aa37113e5ad701ec-300x253.png 300w" sizes="(max-width: 682px) 100vw, 682px" /></figure>The post <a href="https://blog.popweb.dev/programming/wordpress-site-health-check-zip/">【WordPressサイトヘルス解決】オプションのモジュールzipがインストールされていないか、無効化されています。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress-site-health-check-zip/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【WordPressサイトヘルス解決】オプションのモジュールimagickがインストールされていないか、無効化されています。</title>
+		<link>https://blog.popweb.dev/programming/wordpress-site-health-check-imagick/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress-site-health-check-imagick/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 16 Apr 2020 04:12:00 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1049</guid>
+
+					<description><![CDATA[<p>WordPressサイトヘルスチェックの「1つ以上の推奨モジュールが存在しません」の中で、「オプションのモジュール imagick がインストールされていないか、無効化されています。」と出たのでimagickモジュールを [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress-site-health-check-imagick/">【WordPressサイトヘルス解決】オプションのモジュールimagickがインストールされていないか、無効化されています。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>WordPressサイトヘルスチェックの「1つ以上の推奨モジュールが存在しません」の中で、<strong>「オプションのモジュール imagick がインストールされていないか、無効化されています。」</strong>と出たのでimagickモジュールを入れることにした。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="196" src="https://blog.pop-web.net/wp-content/uploads/2020/04/3b3fb65dc9bf9ccc4ed1b8674222432b-700x196.png" alt="" class="wp-image-1082" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/3b3fb65dc9bf9ccc4ed1b8674222432b-700x196.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/3b3fb65dc9bf9ccc4ed1b8674222432b-300x84.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/3b3fb65dc9bf9ccc4ed1b8674222432b-768x215.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/3b3fb65dc9bf9ccc4ed1b8674222432b.png 808w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>環境は以下</p>
+
+
+
+<ul class="wp-block-list"><li>さくらのVPS</li><li>CentOS 7</li><li>Nginx 1.17</li><li>PHP 7.4</li><li>MariaDB</li></ul>
+
+
+
+<p>※<strong>VPSでなくレンタルサーバーサービスならコントールパネルといった管理画面から簡単に入れられると思う。</strong></p>
+
+
+
+<p>perlコマンドを使えるようにするため、php-pear php-develをインストール。</p>
+
+
+
+<pre class="wp-block-code"><code>yum install --enablerepo=remi,remi-php74 php-pear php-devel</code></pre>
+
+
+
+<p>次に、imagickをインストール</p>
+
+
+
+<pre class="wp-block-code"><code>pecl install imagick</code></pre>
+
+
+
+<p>/etc/php.d/の下に30-imagick.iniというiniファイルを作成し編集していく。</p>
+
+
+
+<pre class="wp-block-code"><code>vi /etc/php.d/30-imagick.ini</code></pre>
+
+
+
+<p>そして、ファイルへ以下の記述をする。</p>
+
+
+
+<pre class="wp-block-code"><code>; Enable imagick extension module
+extension=imagick.so</code></pre>
+
+
+
+<p>最後に、php-fpmを再起動。</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl restart php-fpm</code></pre>
+
+
+
+<p>WordPressの管理画面に戻って、テスト通過されていることが確認できればOK。</p>
+
+
+
+<figure class="wp-block-image is-resized"><img loading="lazy" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/04/e737e764cd2a71c9aa37113e5ad701ec.png" alt="" class="wp-image-1076" width="674" height="568" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/e737e764cd2a71c9aa37113e5ad701ec.png 682w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/e737e764cd2a71c9aa37113e5ad701ec-300x253.png 300w" sizes="(max-width: 674px) 100vw, 674px" /></figure>The post <a href="https://blog.popweb.dev/programming/wordpress-site-health-check-imagick/">【WordPressサイトヘルス解決】オプションのモジュールimagickがインストールされていないか、無効化されています。</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress-site-health-check-imagick/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>WordPress親テーマのincサブディレクトリ以下のファイルを子テーマで上書きしたい場合</title>
+		<link>https://blog.popweb.dev/programming/child-theme-directory-overwrite/</link>
+					<comments>https://blog.popweb.dev/programming/child-theme-directory-overwrite/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 11 Apr 2020 09:40:06 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=994</guid>
+
+					<description><![CDATA[<p>当ブログではWordPressのテーマは「Twenty Seventeen」を使っている。 さらに、子テーマを配置してカスタマイズ変更を行っている。 目次 なぜ子テーマを使うかサブディレクトリ以下のPHPファイルも子テー [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/child-theme-directory-overwrite/">WordPress親テーマのincサブディレクトリ以下のファイルを子テーマで上書きしたい場合</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>当ブログではWordPressのテーマは「Twenty Seventeen」を使っている。</p>
+
+
+
+<p>さらに、子テーマを配置してカスタマイズ変更を行っている。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-8" checked><label class="toc-title" for="toc-checkbox-8">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">なぜ子テーマを使うか</a></li><li><a href="#toc2" tabindex="0">サブディレクトリ以下のPHPファイルも子テーマで変更制御したい</a><ol><li><a href="#toc3" tabindex="0">子テーマのfunctions.phpの編集</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">なぜ子テーマを使うか</span></h2>
+
+
+
+<p>基本的なことだが、なぜ子テーマを使用するのかについて。</p>
+
+
+
+<p>親テーマを編集しているとテーマのアップデート時にその編集内容がすべて吹っ飛んでしまうためである。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">サブディレクトリ以下のPHPファイルも子テーマで変更制御したい</span></h2>
+
+
+
+<p>親テーマのスタイルシート（style.css）を上書きしたい場合は、子テーマディレクトリ直下に同ファイル名のスタイルシート（style.css）配置して、それを編集すればよい。</p>
+
+
+
+<p>しかし、親テーマディレクトリの<code>inc/template-tags.php</code>の内容を子テーマが側で変更しようと、子テーマディレクトリへ同ファイル名の<code>inc/template-tags.php</code>を入れて編集しても変更内容が反映されない。</p>
+
+
+
+<p>このような場合は、<strong>子テーマのfunctions.phpへ変更したいソースコードを書く。</strong></p>
+
+
+
+<p>例えば、親テーマディレクトリの<code>inc/template-tags.php</code>内の<code>function twentyseventeen_time_link()</code>という関数の内容を上書きしたい場合、その該当ソースコードだけを子テーマディレクトリのfunctions.phpにコピペして、変更したい箇所だけ修正すればいよい。</p>
+
+
+
+<p><strong>変更例として、投稿日が更新日より新しい日付の場合は更新日を表示させないというカスタマイズ変更をやっていく。</strong></p>
+
+
+
+<p>まず、子テーマディレクトリのfunctions.phpに<code>function twentyseventeen_time_link()</code>の内容を貼り付ける。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">子テーマのfunctions.phpの編集</span></h3>
+
+
+
+<pre class="wp-block-code"><code>function twentyseventeen_time_link() {
+    $time_string = '&lt;time class="entry-date published updated" datetime="%1$s">%2$s&lt;/time>';
+    if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+        $time_string = '&lt;time class="entry-date published" datetime="%1$s">%2$s&lt;/time>&lt;time class="updated" datetime="%3$s">%4$s&lt;/time>';
+    }
+
+    $time_string = sprintf(
+        $time_string,
+        get_the_date( DATE_W3C ),
+        get_the_date(),
+        get_the_modified_date( DATE_W3C ),
+        get_the_modified_date()
+    );
+
+    // Wrap the time string in a link, and preface it with 'Posted on'.
+    return sprintf(
+    /* translators: %s: Post date. */
+        __( '&lt;span class="screen-reader-text">Posted on&lt;/span> %s', 'twentyseventeen' ),
+        '&lt;a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '&lt;/a>'
+    );
+}</code></pre>
+
+
+
+<p>この中の、</p>
+
+
+
+<pre class="wp-block-code"><code>if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) </code></pre>
+
+
+
+<p>という箇所を以下のように変更する。</p>
+
+
+
+<pre class="wp-block-code"><code>if ( get_the_time( 'U' ) &lt; get_the_modified_time( 'U' ) ) </code></pre>
+
+
+
+<p>これで投稿日が更新日より新しい日付の場合は更新日を表示できないよう反映できた。</p>
+
+
+
+<p>こうすることで、親テーマincサブディレクトリ内のファイルも汚さずに、子テーマ側でカスタマイズ変更がすることができる。</p>The post <a href="https://blog.popweb.dev/programming/child-theme-directory-overwrite/">WordPress親テーマのincサブディレクトリ以下のファイルを子テーマで上書きしたい場合</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/child-theme-directory-overwrite/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>WordPress Twenty Seventeenの最終更新日を表示させる</title>
+		<link>https://blog.popweb.dev/programming/wordpress-twenty-seventeen-last-updated/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress-twenty-seventeen-last-updated/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 09 Apr 2020 17:59:17 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=984</guid>
+
+					<description><![CDATA[<p>WordPressの公式テーマである「Twenty Seventeen」は初期状態でブログ記事の最新更新日が表示されていない。 目次 最終更新日を表示には？style.css予約投稿すると投稿日より更新日が昔になってしま [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress-twenty-seventeen-last-updated/">WordPress Twenty Seventeenの最終更新日を表示させる</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>WordPressの公式テーマである「Twenty Seventeen」は初期状態でブログ記事の最新更新日が表示されていない。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-10" checked><label class="toc-title" for="toc-checkbox-10">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">最終更新日を表示には？</a><ol><li><a href="#toc2" tabindex="0">style.css</a></li></ol></li><li><a href="#toc3" tabindex="0">予約投稿すると投稿日より更新日が昔になってしまう問題</a><ol><li><a href="#toc4" tabindex="0">template-tags.php</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">最終更新日を表示には？</span></h2>
+
+
+
+<p><strong>最終更新日を表示させるには、CSSを編集するだけ。</strong></p>
+
+
+
+<p>そもそも最終更新日は画面上に出力されているのだが、CSSの<code>display: none</code>で非表示にされている。</p>
+
+
+
+<p>以下のCSSを追加すればよい。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">style.css</span></h3>
+
+
+
+<pre class="wp-block-code"><code>time.updated:not(.published) {
+    display: inline;
+    margin-left: 1em;
+}</code></pre>
+
+
+
+<p><strong>※CSSを追加するなどWordPressテーマのカスタマイズをする場合は、子テーマを作成してファイルの上書きをすることをオススメする。そうしないと、WordPressテーマを更新するとカスタマイズした内容がすべてふっとんでしまう。</strong></p>
+
+
+
+<p>そうすると投稿日の右に最終更新日が表示される。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="242" src="https://blog.pop-web.net/wp-content/uploads/2020/04/31d104256ba73f23f9772499234c4e63-700x242.png" alt="" class="wp-image-985" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/31d104256ba73f23f9772499234c4e63-700x242.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/31d104256ba73f23f9772499234c4e63-300x104.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/31d104256ba73f23f9772499234c4e63-768x265.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/31d104256ba73f23f9772499234c4e63.png 776w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">予約投稿すると投稿日より更新日が昔になってしまう問題</span></h2>
+
+
+
+<p>とりあえず最終更新日を表示することはできた。</p>
+
+
+
+<p>しかし、予約投稿した場合、投稿日は予約投稿日に設定した日になるが更新日は記事を作成した日になるため、<strong>投稿日より更新日が昔になってしまう、なんとも気持ち悪いことになる。</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="242" src="https://blog.pop-web.net/wp-content/uploads/2020/04/a4f819d18a9aa3dba5c9585f7831a7ed-700x242.png" alt="" class="wp-image-986" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/a4f819d18a9aa3dba5c9585f7831a7ed-700x242.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/a4f819d18a9aa3dba5c9585f7831a7ed-300x104.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/a4f819d18a9aa3dba5c9585f7831a7ed-768x265.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/a4f819d18a9aa3dba5c9585f7831a7ed.png 776w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>これを解決するには、WordPressテーマフォルダにある<strong>「template-tags.php」</strong>を編集する必要がある。</p>
+
+
+
+<p>template-tags.phpを開いて、<code>function twentyseventeen_time_link()</code>内を変更していく。</p>
+
+
+
+<p>template-tags.phpの変更を子テーマ側でしたい場合は、style.cssで変更する場合とやり方少し異なるので以下の記事を参照。</p>
+
+
+
+<figure class="wp-block-embed-wordpress wp-block-embed is-type-wp-embed is-provider-popweb"><div class="wp-block-embed__wrapper">
+
+<a rel="noopener" href="https://blog.pop-web.net/programming/child-theme-directory-overwrite/" title="https://blog.pop-web.net/programming/child-theme-directory-overwrite/" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img loading="lazy" decoding="async" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fblog.pop-web.net%2Fprogramming%2Fchild-theme-directory-overwrite%2F?w=320&#038;h=180" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">https://blog.pop-web.net/programming/child-theme-directory-overwrite/</div><div class="blogcard-snippet external-blogcard-snippet"></div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.pop-web.net/programming/child-theme-directory-overwrite/" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">blog.pop-web.net</div></div></div></div></a>
+</div></figure>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">template-tags.php</span></h3>
+
+
+
+<pre class="wp-block-code"><code>if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {</code></pre>
+
+
+
+<p>の部分を</p>
+
+
+
+<pre class="wp-block-code"><code>if ( get_the_time( 'U' ) &lt; get_the_modified_time( 'U' ) ) {</code></pre>
+
+
+
+<p>とする。</p>
+
+
+
+<p>これで更新日が投稿日より昔の場合には表示されないようになる。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="242" src="https://blog.pop-web.net/wp-content/uploads/2020/04/281eb40789ab060edc9d137996d5c3e2-700x242.png" alt="" class="wp-image-989" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/281eb40789ab060edc9d137996d5c3e2-700x242.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/281eb40789ab060edc9d137996d5c3e2-300x104.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/281eb40789ab060edc9d137996d5c3e2-768x265.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/281eb40789ab060edc9d137996d5c3e2.png 776w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>また、初投稿した記事の場合、投稿日と更新日が同じ日として表示される。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="679" height="110" src="https://blog.pop-web.net/wp-content/uploads/2020/05/cb7ffe442c5259946601267d32ada555.png" alt="" class="wp-image-1225" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/05/cb7ffe442c5259946601267d32ada555.png 679w, https://storage.googleapis.com/gcs.pop-web.net/2020/05/cb7ffe442c5259946601267d32ada555-300x49.png 300w" sizes="(max-width: 679px) 100vw, 679px" /></figure>
+
+
+
+<p>記事を更新していないのに、更新日として表示されるのが嫌だって場合は、先ほど修正した<code>template-tags.php</code>の内容を以下のようにif文の<code>if(get_the_date() == get_the_modified_date())</code>を追加する。</p>
+
+
+
+<pre class="wp-block-code"><code>    if ( get_the_time( 'U' ) &lt; get_the_modified_time( 'U' ) ) {
+        $time_string = '&lt;time class="entry-date published" datetime="%1$s">%2$s&lt;/time>&lt;time class="updated" datetime="%3$s">%4$s&lt;/time>';
+        if(get_the_date() == get_the_modified_date()){
+          $time_string = '&lt;time class="entry-date published updated" datetime="%1$s">%2$s&lt;/time>';
+        }
+    }</code></pre>
+
+
+
+<p>つまり、日付が同じ場合は投稿日だけ表示させるロジックをさらに追加しているのだ。</p>
+
+
+
+<p>これで、投稿日と更新日が同じ日の場合には更新日が表示されなくなる。</p>The post <a href="https://blog.popweb.dev/programming/wordpress-twenty-seventeen-last-updated/">WordPress Twenty Seventeenの最終更新日を表示させる</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress-twenty-seventeen-last-updated/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>WordPressエラー解決「現在メンテナンス中のため、しばらくの間ご利用いただけません。」</title>
+		<link>https://blog.popweb.dev/programming/wordpress-maintenance/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress-maintenance/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 08 Apr 2020 17:01:00 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=980</guid>
+
+					<description><![CDATA[<p>WordPressのプラグインを更新中に、ブラウザ更新ボタンを押してしまい、 WordPressのサイトが「現在メンテナンス中のため、しばらくの間ご利用いただけません。」としか表示されなくなってしまった。 目次 解決方法 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress-maintenance/">WordPressエラー解決「現在メンテナンス中のため、しばらくの間ご利用いただけません。」</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>WordPressのプラグインを更新中に、ブラウザ更新ボタンを押してしまい、</p>
+
+
+
+<p>WordPressのサイトが<strong>「現在メンテナンス中のため、しばらくの間ご利用いただけません。」</strong>としか表示されなくなってしまった。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-12" checked><label class="toc-title" for="toc-checkbox-12">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">解決方法</a></li><li><a href="#toc2" tabindex="0">「.maintenance」のある場所</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">解決方法</span></h2>
+
+
+
+<p>解決方法としては、サーバにある<strong>「.maintenance」を削除</strong>するだけ。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">「.maintenance」のある場所</span></h2>
+
+
+
+<p>WordPressを設置しているサーバへFTPツールで接続し、WordPressファイル群がある公開ディレクトリ直下に移動。</p>
+
+
+
+<p>そこに「.maintenance」がある。</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/04/16c15efe70ef533aa12ca6a665d3f018.png" alt="" class="wp-image-981" width="287" height="288" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/16c15efe70ef533aa12ca6a665d3f018.png 414w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/16c15efe70ef533aa12ca6a665d3f018-300x300.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/16c15efe70ef533aa12ca6a665d3f018-150x150.png 150w" sizes="(max-width: 287px) 100vw, 287px" /></figure>
+
+
+
+<p></p>The post <a href="https://blog.popweb.dev/programming/wordpress-maintenance/">WordPressエラー解決「現在メンテナンス中のため、しばらくの間ご利用いただけません。」</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress-maintenance/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>WordPress「返答が正しいJSON レスポンスではありません。」の原因はNginxのパーマリンクが変更不可のため</title>
+		<link>https://blog.popweb.dev/programming/wordpress-nginx-permalink/</link>
+					<comments>https://blog.popweb.dev/programming/wordpress-nginx-permalink/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 29 Mar 2020 15:58:00 +0000</pubDate>
+				<category><![CDATA[WordPress]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1097</guid>
+
+					<description><![CDATA[<p>さくらのVPSへNginxでWebサーバを構築し、WordPressをインストールして新しい記事を投稿しようとしたら「返答が正しいJSON レスポンスではありません。」のエラーが出た。 環境は以下 さくらのVPS Cen [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/wordpress-nginx-permalink/">WordPress「返答が正しいJSON レスポンスではありません。」の原因はNginxのパーマリンクが変更不可のため</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>さくらのVPSへNginxでWebサーバを構築し、WordPressをインストールして新しい記事を投稿しようとしたら<strong>「返答が正しいJSON レスポンスではありません。」</strong>のエラーが出た。</p>
+
+
+
+<p>環境は以下</p>
+
+
+
+<ul class="wp-block-list"><li>さくらのVPS</li><li>CentOS 7</li><li>Nginx 1.17</li><li>PHP 7.4</li><li>MariaDB</li></ul>
+
+
+
+<p>※Webサーバ環境構築については、<a rel="noopener" label="【さくらVPS】CentOS7+Nginx+PHP7+MariaDBの環境構築 (opens in a new tab)" href="https://blog.pop-web.net/server/linux/nginx-php-mariadb/" target="_blank" class="aioseop-link broken_link">【さくらVPS】CentOS7+Nginx+PHP7+MariaDBの環境構築</a>を参照。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-14" checked><label class="toc-title" for="toc-checkbox-14">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">原因について</a></li><li><a href="#toc2" tabindex="0">Nginxの設定を変更することで解決</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">原因について</span></h2>
+
+
+
+<p>調べてみると、<strong>管理画面の「設定」→「パーマリンク設定」で共通設定を基本以外を選択しているとエラー</strong>がでるが、基本にするとちゃんと投稿される。</p>
+
+
+
+<p>これはNginxのデフォルトの設定だと、パーマリンクのURL変更が出来ないこと原因らしい。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">Nginxの設定を変更することで解決</span></h2>
+
+
+
+<p>Nginxの設定ファイルである<code>/etc/nginx/conf.d/default.conf</code>を以下のように変更することで解決できる。</p>
+
+
+
+<p><strong>※各自<code>default.conf</code>の設定が異なる場合があるので、以下の内容を使用する場合は、各自の環境に合わせていく必要がある。</strong></p>
+
+
+
+<pre class="wp-block-code"><code>server {
+    listen 80;
+    server_name { ドメイン名 };
+    root /home/www/{ ドメイン名 }/wordpress;
+    index index.php
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ @wordpress;
+    }
+
+    location ~ \.php$ {
+        try_files $uri @wordpress;
+        fastcgi_index index.php;
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME  /home/www/{ ドメイン名 }/wordpress$fastcgi_script_name;
+        include       fastcgi_params;
+    }
+
+    location @wordpress {
+        fastcgi_index index.php;
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME /home/www/{ ドメイン名 }/wordpress/index.php;
+        include       fastcgi_params;
+    }
+
+    error_page 404 /404.html;
+    location = /40x.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}</code></pre>The post <a href="https://blog.popweb.dev/programming/wordpress-nginx-permalink/">WordPress「返答が正しいJSON レスポンスではありません。」の原因はNginxのパーマリンクが変更不可のため</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/wordpress-nginx-permalink/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

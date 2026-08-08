@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Vagrant | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/server/vagrant/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sun, 06 Jun 2021 11:12:04 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Vagrant | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順（vbguestを使わない編）</title>
+		<link>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder-2/</link>
+					<comments>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder-2/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 02 Jul 2019 09:48:32 +0000</pubDate>
+				<category><![CDATA[Vagrant]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=284</guid>
+
+					<description><![CDATA[<p>以前、Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順という記事を書いたが、プラグインである「vagrant-vbguset」が、カーネルのバージョン違いでうまく動作しない場合があるので、プラグ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/vagrant/vagrant-shared-folder-2/">Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順（vbguestを使わない編）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>以前、<a href="https://blog.pop-web.net/programming/vagrant-shared-folder/" class="broken_link">Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順</a>という記事を書いたが、プラグインである「vagrant-vbguset」が、カーネルのバージョン違いでうまく動作しない場合があるので、プラグイン「vagrant-vbguset」 を使わない共有フォルダの設定手順をまとめます。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">vagrant-vbgusetアンインストール</a></li><li><a href="#toc2" tabindex="0">VirtualBoxにisoイメージファイルを挿入</a></li><li><a href="#toc3" tabindex="0">VBoxGuestAdditionのインストール</a></li><li><a href="#toc4" tabindex="0">事前に必要なもの</a></li><li><a href="#toc5" tabindex="0">共有フォルダの設定</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">vagrant-vbgusetアンインストール</span></h2>
+
+
+
+<p>「vagrant-vbguset」は使わない方法をとるので、インストールしている場合はアインインストールしておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant plugin uninstall vagrant-vbguest</code></pre>
+
+
+
+<p>アンインストールされていることを確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant plugin list</code></pre>
+
+
+
+<p>まだなにもインストールしていない場合は、Vagrantのインストールをして仮想マシンでCentOS7までインストールしておきましょう。</p>
+
+
+
+<p>手順はこちらを参考に<br><a href="https://blog.pop-web.net/programming/local-development-environment/" class="broken_link">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）</a></p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">VirtualBoxにisoイメージファイルを挿入</span></h2>
+
+
+
+<p>VirtualBoxでの作業になります。</p>
+
+
+
+<p>まず、設定する仮想マシンを電源オフします。</p>
+
+
+
+<figure class="wp-block-image"><img fetchpriority="high" decoding="async" width="552" height="451" src="https://blog.pop-web.net/wp-content/uploads/2019/07/degenoff.png" alt="" class="wp-image-298" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/07/degenoff.png 552w, https://storage.googleapis.com/gcs.pop-web.net/2019/07/degenoff-300x245.png 300w" sizes="(max-width: 552px) 100vw, 552px" /></figure>
+
+
+
+<p>「ストレージ」選択して、ディスクの選択アイコンをクリック。</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" width="620" height="429" src="https://blog.pop-web.net/wp-content/uploads/2019/07/strage.png" alt="" class="wp-image-299" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/07/strage.png 620w, https://storage.googleapis.com/gcs.pop-web.net/2019/07/strage-300x208.png 300w" sizes="(max-width: 620px) 100vw, 620px" /></figure>
+
+
+
+<p>「ディスクを選択」ボタンを押します。</p>
+
+
+
+<p>追加ボタンを押して、「VBoxGuestAddition.iso」を選択します。</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" width="651" height="391" src="https://blog.pop-web.net/wp-content/uploads/2019/07/vbox.png" alt="" class="wp-image-300" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/07/vbox.png 651w, https://storage.googleapis.com/gcs.pop-web.net/2019/07/vbox-300x180.png 300w" sizes="(max-width: 651px) 100vw, 651px" /></figure>
+
+
+
+<p> ※「VBoxGuestAddition.iso」 がある場所は、OracleディレクトリのVirtualBoxの中にあります。</p>
+
+
+
+<p>Windowsの場合は、以下。</p>
+
+
+
+<pre class="wp-block-code"><code>C:\Program Files\Oracle\VirtualBox</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">VBoxGuestAdditionのインストール</span></h2>
+
+
+
+<p>コンソール画面に戻って、vagrantで仮想マシンの起動します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant up</code></pre>
+
+
+
+<p>サーバーへログインします。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant ssh</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">事前に必要なもの</span></h2>
+
+
+
+<p>事前準備として以下のパッケージが必要となります。</p>
+
+
+
+<pre class="wp-block-code"><code>kernel-headers kernel-devel gcc make</code></pre>
+
+
+
+<p>インストールされているか確認</p>
+
+
+
+<pre class="wp-block-code"><code>yum list installed | grep kernel</code></pre>
+
+
+
+<pre class="wp-block-code"><code>rpm -qa | grep kernel-headers
+rpm -qa | grep kernel-devel
+rpm -qa | grep make
+rpm -qa | grep gcc</code></pre>
+
+
+
+<p>なければ、インストール</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum install kernel-headers kernel-devel gcc make</code></pre>
+
+
+
+<p>kernelのバージョンの差異があるとうまくいかないので、バージョンの確認をしておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>yum list installed | grep kernel</code></pre>
+
+
+
+<pre class="wp-block-code"><code>kernel.x86_64                       3.10.0-957.5.1.el7          @koji-override-1
+kernel-devel.x86_64                 3.10.0-957.21.3.el7         @updates
+kernel-headers.x86_64               3.10.0-957.21.3.el7         @updates
+kernel-tools.x86_64                 3.10.0-957.5.1.el7          @koji-override-1
+kernel-tools-libs.x86_64            3.10.0-957.5.1.el7          @koji-override-1</code></pre>
+
+
+
+<p>上記のように、kernel-develとkernel-headersのバージョンが異なっています。</p>
+
+
+
+<p>バージョンをあわす為に、kernelのアップデートをします。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum update kernel</code></pre>
+
+
+
+<p>再度、バージョンがそろったか確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>yum list installed | grep kernel</code></pre>
+
+
+
+<pre class="wp-block-code"><code>kernel.x86_64                       3.10.0-957.5.1.el7          @koji-override-1
+kernel.x86_64                       3.10.0-957.21.3.el7         @updates
+kernel-devel.x86_64                 3.10.0-957.21.3.el7         @updates
+kernel-headers.x86_64               3.10.0-957.21.3.el7         @updates
+kernel-tools.x86_64                 3.10.0-957.5.1.el7          @koji-override-1
+kernel-tools-libs.x86_64            3.10.0-957.5.1.el7          @koji-override-1</code></pre>
+
+
+
+<p>次に、GuestAdditionsをマウントします。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo mkdir -p /mnt/cdrom
+sudo mount -r /dev/cdrom /mnt/cdrom</code></pre>
+
+
+
+<p>マウントがされて、「/mnt/cdrom」にファイルがたくさんあることを確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>ls -la  /mnt/cdrom </code></pre>
+
+
+
+<p>GuestAdditionsをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo sh /mnt/cdrom/VBoxLinuxAdditions.run</code></pre>
+
+
+
+<p>インストールが完了したら、今度はVagrantfileを編集するので、ログアウトしておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>exit</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">共有フォルダの設定</span></h2>
+
+
+
+<p> Vagrantfileを編集します。</p>
+
+
+
+<pre class="wp-block-code"><code>vi Vagrantfile</code></pre>
+
+
+
+<p>「config.vm.synced_folder」の箇所のコメントアウトをはずして、共有するゲストOSをホストOSのフォルダをそれぞれ設定します。</p>
+
+
+
+<pre class="wp-block-code"><code>config.vm.synced_folder "C:\\Users\\username\\Documents\\project", "/usr/local/bin"</code></pre>
+
+
+
+<p>vagrant設定の更新をするため、再起動します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant halt
+vagrant up</code></pre>
+
+
+
+<p>起動したら、サーバーにログインして共有されていることを確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant ssh
+ls -l /usr/local/bin</code></pre>The post <a href="https://blog.popweb.dev/server/vagrant/vagrant-shared-folder-2/">Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順（vbguestを使わない編）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順</title>
+		<link>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder/</link>
+					<comments>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 07 Jun 2019 00:56:26 +0000</pubDate>
+				<category><![CDATA[Vagrant]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=185</guid>
+
+					<description><![CDATA[<p>ローカルの作業フォルダとVirtualBoxで作った開発環境内のフォルダを自動で同期する共有フォルダの設定手順です。 VagrantとVirtualBoxがインストールしている前提です。 目次 ソフトフェアの更新プラグイ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/vagrant/vagrant-shared-folder/">Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>ローカルの作業フォルダとVirtualBoxで作った開発環境内のフォルダを自動で同期する共有フォルダの設定手順です。</p>
+
+
+
+<p>VagrantとVirtualBoxがインストールしている前提です。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">ソフトフェアの更新</a></li><li><a href="#toc2" tabindex="0">プラグイン「vbguest」のインストール </a></li><li><a href="#toc3" tabindex="0">ホストマシンと仮想マシンの共有フォルダの設定</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">ソフトフェアの更新</span></h2>
+
+
+
+<pre class="wp-block-code"><code>sudo yum -y update</code></pre>
+
+
+
+<p>kernelがkernel-headerとバージョンが異なると、うまくいかないので確認しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list installed | grep kernel</code></pre>
+
+
+
+<p>再起動しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>reboot</code></pre>
+
+
+
+<p>パスワードを聞かれたら、vagrantの初期パスワードは「vagrant」なので、それを入力する。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">プラグイン「vbguest」のインストール </span></h2>
+
+
+
+<p>vagrantの作業 ディレクトリに移動して、vbguestをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant plugin install vagrant-vbguest</code></pre>
+
+
+
+<p>「Installed the plugin &#8216;vagrant-vbguest (x.xx.x)&#8217;!」とでればOK。</p>
+
+
+
+<p>Vagrantを起動します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant up</code></pre>
+
+
+
+<p>ステータスの確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant vbguest --status</code></pre>
+
+
+
+<p> 「[default] GuestAdditions バージョン running &#8212; OK 」とでればOKですが、 「[default] No installation found. 」とでるなら、以下のコマンドを入力</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant vbguest</code></pre>
+
+
+
+<p>vbguestは、仮想マシン起動時にGuest Additionsのバージョンを自動でアップデートしてしまいます。</p>
+
+
+
+<p>そのため、kernelアップデート時に依存しているパッケージは再度コンパイルが必要となるため弊害があるため、 自動的にGuest Additionsのアップデートを行わない設定にします。</p>
+
+
+
+<p> Vagrantfileを以下のように記述します。</p>
+
+
+
+<pre class="wp-block-code"><code>Vagrant.configure("2") do |config|
+  config.vbguest.auto_update = false
+  config.vbguest.no_remote = true</code></pre>
+
+
+
+<ul class="wp-block-list"><li>「config.vbguest.auto_update」は、 agrant up時に自動的にGuest Additionsのアップデートを行わない設定</li><li> 「config.vbguest.no_remote 」は、isoファイルをリモートからダウンロードしない設定</li></ul>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">ホストマシンと仮想マシンの共有フォルダの設定</span></h2>
+
+
+
+<p>Vagrantfileを編集します。</p>
+
+
+
+<p>以下のように、記述して共有フォルダの設定をします。</p>
+
+
+
+<pre class="wp-block-code"><code>config.vm.synced_folder "[ホストOS]", "[仮想マシン]", "[オプション]</code></pre>
+
+
+
+<p>Windowsの場合、/は\\にする必要があります。</p>
+
+
+
+<pre class="wp-block-code"><code>例）config.vm.synced_folder "C:\\project", "/var/www/html/project "</code></pre>
+
+
+
+<p>編集したら、再読み込みをします。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant reload
+vagrant up</code></pre>The post <a href="https://blog.popweb.dev/server/vagrant/vagrant-shared-folder/">Vagrantでローカルとサーバ側のデータを同期する共有フォルダの設定手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/vagrant/vagrant-shared-folder/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Windows10 + VirtualBox + VagrantでLAMP開発環境手順（2）</title>
+		<link>https://blog.popweb.dev/server/vagrant/local-development-environment-2/</link>
+					<comments>https://blog.popweb.dev/server/vagrant/local-development-environment-2/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 26 May 2019 16:56:47 +0000</pubDate>
+				<category><![CDATA[Vagrant]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=126</guid>
+
+					<description><![CDATA[<p>Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）の続き vagrantでssh接続できたところから。 これからLAMP環境を構築していく Apache PHP7 MySQL5. [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/vagrant/local-development-environment-2/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（2）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><a href="https://blog.popweb.dev/server/vagrant/local-development-environment/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）</a>の続き</p>
+
+
+
+<p>vagrantでssh接続できたところから。</p>
+
+
+
+<pre class="wp-block-code"><code>&#91;vagrant@localhost ~]$</code></pre>
+
+
+
+<p>これからLAMP環境を構築していく</p>
+
+
+
+<ul class="wp-block-list"><li><strong>Apache</strong></li><li><strong>PHP7</strong></li><li><strong>MySQL5.7</strong></li></ul>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">rootユーザーになる</a></li><li><a href="#toc2" tabindex="0">SELINUXの無効化</a></li><li><a href="#toc3" tabindex="0">Apacheインストール</a></li><li><a href="#toc4" tabindex="0">MySQLのインストール</a></li><li><a href="#toc5" tabindex="0">PHPのインストール</a></li><li><a href="#toc6" tabindex="0">ブラウザで確認</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">rootユーザーになる</span></h2>
+
+
+
+<pre class="wp-block-code"><code>su</code></pre>
+
+
+
+<p>パスワードは「vagrant」。</p>
+
+
+
+<p>以下のように、「#」が先頭につけばOK</p>
+
+
+
+<pre class="wp-block-code"><code>&#91;root@localhost vagrant]#</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">SELINUXの無効化</span></h2>
+
+
+
+<p>SELINUXはセキュリティの為、デフォルトで有効になっていますが、取り扱いが難しいので、ここではオフにします。</p>
+
+
+
+<p>cofigファイルを開いて、編集する。</p>
+
+
+
+<pre class="wp-block-code"><code>vi /etc/selinux/config</code></pre>
+
+
+
+<p>以下の箇所を変更</p>
+
+
+
+<pre class="wp-block-code"><code>SELINUX=enforcing
+↓
+SELINUX=disabled</code></pre>
+
+
+
+<p>適用させるために、CentOS7を再起動させます。</p>
+
+
+
+<pre class="wp-block-code"><code>reboot</code></pre>
+
+
+
+<p>再度、vagrant sshでssh接続してrootユーザになります。</p>
+
+
+
+<p>getenforceと入力して、Disableと出ればSELINUXが無効化されています。</p>
+
+
+
+<pre class="wp-block-code"><code>&#91;root@localhost vagrant]# getenforce
+Disabled</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">Apacheインストール</span></h2>
+
+
+
+<pre class="wp-block-code"><code>yum -y install httpd</code></pre>
+
+
+
+<p>Apacheの起動</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl start httpd</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">MySQLのインストール</span></h2>
+
+
+
+<p>CentOS7で、デフォルトで入っているMariaDBをまずは削除する</p>
+
+
+
+<pre class="wp-block-code"><code>yum -y remove mariadb-libs.x86_64</code></pre>
+
+
+
+<p>リポジトリを追加して、インストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>yum -y install http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+yum -y install mysql-community-server</code></pre>
+
+
+
+<p>MySQLの起動</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl start mysqld</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">PHPのインストール</span></h2>
+
+
+
+<p>まずは、リポジトリを追加する。</p>
+
+
+
+<pre class="wp-block-code"><code>yum -y install epel-release
+rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm</code></pre>
+
+
+
+<p>PHPをもろもろインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>yum -y install --enablerepo=remi,epel,remi-php70 php php-devel php-intl php-mbstring php-pdo php-gd php-mysqlnd</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">ブラウザで確認</span></h2>
+
+
+
+<p><a href="http://192.168.33.10/" class="broken_link">http://192.168.33.10/</a>へアクセスする。</p>
+
+
+
+<p>Apacheのテストページが表示されればOK</p>The post <a href="https://blog.popweb.dev/server/vagrant/local-development-environment-2/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（2）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/vagrant/local-development-environment-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）</title>
+		<link>https://blog.popweb.dev/server/vagrant/local-development-environment/</link>
+					<comments>https://blog.popweb.dev/server/vagrant/local-development-environment/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 21 May 2019 09:34:00 +0000</pubDate>
+				<category><![CDATA[Vagrant]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=26</guid>
+
+					<description><![CDATA[<p>VirtualBox：ローカル 開発環境に仮想マシンを作れるソフト Vagrant：VirtualBoxでローカル開発環境を作るときに便利なソフト 目次 VirtualBoxのインストールVagrantのインストール イ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/vagrant/local-development-environment/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<ul class="wp-block-list"><li> <strong>VirtualBox：</strong>ローカル 開発環境に仮想マシンを作れるソフト</li><li> <strong>Vagrant：</strong>VirtualBoxでローカル開発環境を作るときに便利なソフト</li></ul>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-8" checked><label class="toc-title" for="toc-checkbox-8">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">VirtualBoxのインストール</a></li><li><a href="#toc2" tabindex="0">Vagrantのインストール</a></li><li><a href="#toc3" tabindex="0"> イメージファイルのインストール</a><ol><li><a href="#toc4" tabindex="0">Vagrantの専用フォルダを作成</a></li><li><a href="#toc5" tabindex="0">Boxを検索してインストール</a></li></ol></li><li><a href="#toc6" tabindex="0">Vagrantfileの編集</a></li><li><a href="#toc7" tabindex="0">仮想マシンの起動</a></li><li><a href="#toc8" tabindex="0">VirtualBoxで起動を確認</a></li><li><a href="#toc9" tabindex="0">仮想マシンにSSH接続</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">VirtualBoxのインストール</span></h2>
+
+
+
+<p>以下で、VirtualBoxをインストール<br><a href="https://www.virtualbox.org/" class="broken_link">https://www.virtualbox.org/</a></p>
+
+
+
+<p>インストールが始まったら、とりあえず、すべてYesで進む。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">Vagrantのインストール</span></h2>
+
+
+
+<p>以下で、Windows版のVagrantをインストール<br> <a href="https://www.vagrantup.com/downloads.html">https://www.vagrantup.com/downloads.html</a></p>
+
+
+
+<p>インストールが始まったら、とりあえず、すべてYesで進む。 </p>
+
+
+
+<p>Vagrantがインストールされているか確認する。<br>コマンドプロンプト、またはその他のターミナルソフトを立ち上げて、<br>以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant -v
+Vagrant 2.2.4</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3"> イメージファイルのインストール</span></h2>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">Vagrantの専用フォルダを作成</span></h3>
+
+
+
+<p>Vagrantのイメージファイルをインストールしていきますが、<br>その前にまずは、Vagarantの専用のフォルダを作成します。<br>コマンドプロンプトで、以下のようにフォルダを作成し移動しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>mkdir C:\vagrant
+cd  C:\vagrant
+mkdir centos7
+cd centos7</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">Boxを検索してインストール</span></h3>
+
+
+
+<p>VagrantにはBoxファイルという、仮想マシンのテンプレートなるイメージファイルがあります。</p>
+
+
+
+<p>以下のURLで、色々なBoxファイルを見つけることができます。<br><a href="https://app.vagrantup.com/boxes/search">https://app.vagrantup.com/boxes/search</a></p>
+
+
+
+<p>「centos」で検索すると、たくさんヒットしますが、今回は「centos/7」を使おうと思います。</p>
+
+
+
+<p>コマンドプロンプトで、以下のコマンドを入力してVagrantを初期化します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant init centos/7</code></pre>
+
+
+
+<p>これで、フォルダに「Vagrantfile」が作成されます。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">Vagrantfileの編集</span></h2>
+
+
+
+<p>Vagrantfileをテキストエディタで開いて確認と編集します。</p>
+
+
+
+<p>以下の項目が指定したBox名の「centos/7」になっていることを確認します。</p>
+
+
+
+<pre class="wp-block-code"><code>config.vm.box = "centos/7"</code></pre>
+
+
+
+<p>次に、以下の項目の先頭の「#」を削除してください。</p>
+
+
+
+<pre class="wp-block-code"><code>config.vm.network "private_network", ip:"192.168.33.10"</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">仮想マシンの起動</span></h2>
+
+
+
+<p>Vagrantfileを編集後、保存したら、以下のコマンドで仮想マシンを起動します。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant up</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">VirtualBoxで起動を確認</span></h2>
+
+
+
+<p>VirtualBoxでインストールした仮想マシンが起動しているのを確認できます。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="401" src="https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-21_18h22_01-700x401.png" alt="" class="wp-image-58" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-21_18h22_01-700x401.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-21_18h22_01-300x172.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-21_18h22_01-768x440.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-21_18h22_01.png 959w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">仮想マシンにSSH接続</span></h2>
+
+
+
+<p>コマンドプロンプトで、以下のコマンドを入力することで、仮想マシンへログインすることができます。</p>
+
+
+
+<pre class="wp-block-code"><code>vagrant ssh</code></pre>
+
+
+
+<p>以下のように、確認できれば接続完了です。</p>
+
+
+
+<pre class="wp-block-code"><code>&#91;vagrant@localhost ~]$</code></pre>
+
+
+
+<p><a href="https://blog.popweb.dev/server/vagrant/local-development-environment-2/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（2）</a>に続く</p>The post <a href="https://blog.popweb.dev/server/vagrant/local-development-environment/">Windows10 + VirtualBox + VagrantでLAMP開発環境手順（1）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/vagrant/local-development-environment/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

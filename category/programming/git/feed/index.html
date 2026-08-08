@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Git | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/git/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sun, 06 Jun 2021 13:20:08 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Git | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Gitリモートリポジトリをすべてのブランチごと別のリモートリポジトリへの移行方法</title>
+		<link>https://blog.popweb.dev/programming/git/remote-repository-migration/</link>
+					<comments>https://blog.popweb.dev/programming/git/remote-repository-migration/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 10 Apr 2020 15:04:47 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=999</guid>
+
+					<description><![CDATA[<p>既存のGitリモートリポジトリを別のGitリモートリポジトリ移行する方法を説明する。 移行する時、すべてのブランチやコミット履歴も一緒に移行する。 まず、移行先のGitリポジトリを作成しておく。 そして、以下のようにGi [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/remote-repository-migration/">Gitリモートリポジトリをすべてのブランチごと別のリモートリポジトリへの移行方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>既存のGitリモートリポジトリを別のGitリモートリポジトリ移行する方法を説明する。</p>
+
+
+
+<p>移行する時、すべてのブランチやコミット履歴も一緒に移行する。</p>
+
+
+
+<p>まず、移行先のGitリポジトリを作成しておく。</p>
+
+
+
+<p>そして、以下のようにGitコマンドの<code>--mirror</code>オプションを使って移行をする。</p>
+
+
+
+<pre class="wp-block-code"><code>git clone --mirror &lt;既存のリモートリポジトリURL> &lt;任意のディレクトリ名>
+cd &lt;任意のディレクトリ名>
+git push --mirror &lt;移行先のリモートリポジトリURL></code></pre>
+
+
+
+<p>これで、移行先のリモートリポジトリをのぞいて、想定通りのの移行できていればOK。</p>The post <a href="https://blog.popweb.dev/programming/git/remote-repository-migration/">Gitリモートリポジトリをすべてのブランチごと別のリモートリポジトリへの移行方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/remote-repository-migration/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>よく使うGitコマンドにエイリアス設定方法</title>
+		<link>https://blog.popweb.dev/programming/git/git-alias/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-alias/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 28 Aug 2019 14:49:32 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=516</guid>
+
+					<description><![CDATA[<p>よく使うGitコマンドにエイリアス（別名）設定をする方法を説明します。 例えば以下のようにコマンドを短縮したい場合 以下の、コマンドでエイリアスを設定します。 そうすると、git stと入力するとgit statusと同 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-alias/">よく使うGitコマンドにエイリアス設定方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>よく使うGitコマンドにエイリアス（別名）設定をする方法を説明します。</p>
+
+
+
+<p>例えば以下のようにコマンドを短縮したい場合</p>
+
+
+
+<pre class="wp-block-code"><code>git status →　git st</code></pre>
+
+
+
+<p>以下の、コマンドでエイリアスを設定します。</p>
+
+
+
+<pre class="wp-block-code"><code>git config --global alias.st status</code></pre>
+
+
+
+<p>そうすると、<code>git st</code>と入力すると<code>git status</code>と同じ動作になります。</p>
+
+
+
+<p>その他のコマンドについても、以下のような感じです。</p>
+
+
+
+<pre class="wp-block-code"><code>git config --global alias.ci commit
+git config --global alias.add ad
+git config --global alias.br branch
+git config --global alias.co checkout</code></pre>
+
+
+
+<p>こんな感じで、コマンドの入力を短縮して楽にしていきましょう。</p>The post <a href="https://blog.popweb.dev/programming/git/git-alias/">よく使うGitコマンドにエイリアス設定方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-alias/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Gitコマンド】git push のオプション -u ってなに？</title>
+		<link>https://blog.popweb.dev/programming/git/git-push-u/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-push-u/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 20 Aug 2019 12:08:34 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=489</guid>
+
+					<description><![CDATA[<p>Gitコマンドを学習していて、pushするときに以下のようなコマンドが良く出てくる このオプションの「-u」なにかということです。 ちなみに、originはリモート名（別名）で、masterはブランチ名（メインブランチ） [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-push-u/">【Gitコマンド】git push のオプション -u ってなに？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Gitコマンドを学習していて、pushするときに以下のようなコマンドが良く出てくる</p>
+
+
+
+<pre class="wp-block-code"><code>git push -u origin master</code></pre>
+
+
+
+<p>このオプションの「-u」なにかということです。</p>
+
+
+
+<p>ちなみに、originはリモート名（別名）で、masterはブランチ名（メインブランチ）です。</p>
+
+
+
+<p>オプション「-u」をつけると、次回から「git push」と実行するだけでorigin masterへpushできるようになります。</p>
+
+
+
+<p>さらに、pullも同様に「git pull origin master」を「git pull」といった感じで省略できるようになります。</p>The post <a href="https://blog.popweb.dev/programming/git/git-push-u/">【Gitコマンド】git push のオプション -u ってなに？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-push-u/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Gitコマンド】ファイル変更の取り消し方法</title>
+		<link>https://blog.popweb.dev/programming/git/git-cancel/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-cancel/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 19 Aug 2019 05:47:05 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=486</guid>
+
+					<description><![CDATA[<p>ファイルを変更した後、その変更と取り消したい場合のGitコマンドを説明します。 また、ステージに追加したファイルについて、一旦ステージの追加を取り消してからローカルのファイルの変更の取り消しを行います。 ローカルファイル [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-cancel/">【Gitコマンド】ファイル変更の取り消し方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>ファイルを変更した後、その変更と取り消したい場合のGitコマンドを説明します。</p>
+
+
+
+<p>また、ステージに追加したファイルについて、一旦ステージの追加を取り消してからローカルのファイルの変更の取り消しを行います。</p>
+
+
+
+<h1 class="wp-block-heading">ローカルファイルの変更を取り消したい場合</h1>
+
+
+
+<pre class="wp-block-code"><code># すべての変更を取り消す場合
+git checkout -- .
+
+#　ファイル名指定の場合
+git checkout -- [ファイル名]
+
+# ディレクトリ名指定の場合
+git checkout -- [ディレクトリ名]</code></pre>
+
+
+
+<p>追加したファイルに関しては、上記のコマンドでは取り消せないので以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code># 追加したファイルを取り消し
+git clean -f [ファイル名]
+
+# 追加したファイルとディレクトリすべてを取り消し
+git clean -df .</code></pre>
+
+
+
+<h1 class="wp-block-heading">ステージへ追加を取り消したい場合</h1>
+
+
+
+<pre class="wp-block-code"><code># ステージへ追加したファイルをすべて取り消す場合
+git reset HEAD .
+
+#　ファイル名指定の場合
+git reset HEAD [ファイル名]
+
+# ディレクトリ名指定の場合
+git reset HEAD [ディレクトリ名]</code></pre>
+
+
+
+<p><strong>「git reset HEAD」は、ステージ追加の取り消しをするだけ</strong>なので、ローカルファイルの変更の取り消しまでしたい場合は、「git reset HEAD」コマンドを実行した後に、前述した「git checkout &#8211;」コマンドを実行する必要があります。</p>The post <a href="https://blog.popweb.dev/programming/git/git-cancel/">【Gitコマンド】ファイル変更の取り消し方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-cancel/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Gitコマンド】管理したくないファイルを管理外にする</title>
+		<link>https://blog.popweb.dev/programming/git/git-rm/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-rm/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 18 Aug 2019 01:00:43 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=474</guid>
+
+					<description><![CDATA[<p>ファイルをGitの管理外するには？ 以下、2点について説明します。 .gitignoreファイルを作成して管理外にする方法 .gitignoreファイルを作成または、書くのを忘れてコミットしたファイルを管理外にする方法  [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-rm/">【Gitコマンド】管理したくないファイルを管理外にする</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<h1 class="wp-block-heading">ファイルをGitの管理外するには？</h1>
+
+
+
+<p>以下、2点について説明します。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>.gitignoreファイルを作成して管理外にする方法</strong></li><li><strong>.gitignoreファイルを作成または、書くのを忘れてコミットしたファイルを管理外にする方法</strong></li></ul>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-10" checked><label class="toc-title" for="toc-checkbox-10">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"></li><li><a href="#toc1" tabindex="0">.gitignoreファイルを作成</a></li><li><a href="#toc2" tabindex="0">.gitignoreファイルに記載するのを忘れた場合</a><ol><li><a href="#toc3" tabindex="0">git rmで除外</a></li><li><a href="#toc4" tabindex="0">ローカルにはファイルを残してGitの管理だけ除外したい場合</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">.gitignoreファイルを作成</span></h2>
+
+
+
+<p>.gitignoreファイルに書かれたファイル名・ディレクトリ名はGitの管理外になり、コミットされません。</p>
+
+
+
+<p>書き方は以下のようになります</p>
+
+
+
+<pre class="wp-block-code"><code># .envファイルを除外
+.env
+
+# node_modulesディレクトリを除外
+node_modules/</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">.gitignoreファイルに記載するのを忘れた場合</span></h2>
+
+
+
+<p>.gitignoreファイルに書くのを忘れて、コミットした後の場合は</p>
+
+
+
+<p>以下のようなコマンドで除外できます。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">git rmで除外</span></h3>
+
+
+
+<pre class="wp-block-code"><code># ファイルごと削除の場合
+git rm [対象ファイル名]
+
+# ディレクトリごと削除の場合
+git rm -r [対象ディレクトリ名]</code></pre>
+
+
+
+<p>上記二つの場合だと、Git管理下から除外されますが、ローカルの対象ファイルも削除されます。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">ローカルにはファイルを残してGitの管理だけ除外したい場合</span></h3>
+
+
+
+<p>Gitの管理だけ除外したい場合は、以下のコマンド</p>
+
+
+
+<pre class="wp-block-code"><code>git rm --cached [対象ファイル名]</code></pre>
+
+
+
+<p>※この場合、.gitignoreファイルの追記も忘れずに</p>The post <a href="https://blog.popweb.dev/programming/git/git-rm/">【Gitコマンド】管理したくないファイルを管理外にする</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-rm/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Gitの初期設定、やったほうがいい設定など</title>
+		<link>https://blog.popweb.dev/programming/git/git-nitial-setting/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-nitial-setting/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 17 Aug 2019 03:57:17 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=471</guid>
+
+					<description><![CDATA[<p>Gitをインストールしたら、まずやっておくべき初期設定です。 ユーザ情報の登録 設定内容の確認 とえあえず、はじめにこれをやっておきましょう。</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-nitial-setting/">Gitの初期設定、やったほうがいい設定など</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Gitをインストールしたら、まずやっておくべき初期設定です。</p>
+
+
+
+<h1 class="wp-block-heading">ユーザ情報の登録</h1>
+
+
+
+<pre class="wp-block-code"><code>git config --global user.name "user name"</code></pre>
+
+
+
+<pre class="wp-block-code"><code>git config --global user.email "mail@example.jp"</code></pre>
+
+
+
+<p>設定内容の確認</p>
+
+
+
+<pre class="wp-block-code"><code>git config --global -l</code></pre>
+
+
+
+<p>とえあえず、はじめにこれをやっておきましょう。 </p>The post <a href="https://blog.popweb.dev/programming/git/git-nitial-setting/">Gitの初期設定、やったほうがいい設定など</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-nitial-setting/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>既存のディレクトリにローカルリポジトリ作成しをGitHubに登録する</title>
+		<link>https://blog.popweb.dev/programming/git/git-regist/</link>
+					<comments>https://blog.popweb.dev/programming/git/git-regist/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 28 May 2019 16:53:01 +0000</pubDate>
+				<category><![CDATA[Git]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=155</guid>
+
+					<description><![CDATA[<p>※gitは事前にインストールしているものする。 git管理していない作業ディレクトリや、すでにローカルリポジトリがある場合にGitHubへ登録する手順を書く。 目次 ローカルリポジトリを作るGitHubでリポジトリを作る [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/git/git-regist/">既存のディレクトリにローカルリポジトリ作成しをGitHubに登録する</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>※gitは事前にインストールしているものする。</p>
+
+
+
+<p>git管理していない作業ディレクトリや、すでにローカルリポジトリがある場合にGitHubへ登録する手順を書く。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-14" checked><label class="toc-title" for="toc-checkbox-14">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">ローカルリポジトリを作る</a></li><li><a href="#toc2" tabindex="0">GitHubでリポジトリを作る</a></li><li><a href="#toc3" tabindex="0">ローカルとリモートを関連付ける</a></li><li><a href="#toc4" tabindex="0">リモートにpushする</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">ローカルリポジトリを作る</span></h2>
+
+
+
+<p>現在の作業ディレクトリで、バージョン管理していない場合、ますローカルのリポジトリを作ってディレクトリ内のファイルをコミットしておく。</p>
+
+
+
+<p>作業ディレクトリに移動して、git initする。</p>
+
+
+
+<pre class="wp-block-code"><code>cd 作業ディレクトリ
+git init</code></pre>
+
+
+
+<p>これで、.gitディレクトリができる。</p>
+
+
+
+<p>次に、ファイルたちをインデックスさせてコミットする。</p>
+
+
+
+<pre class="wp-block-code"><code>git add .
+git commit -m "first commit"</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">GitHubでリポジトリを作る</span></h2>
+
+
+
+<p>GitHubへ行き、「New Repository」ボタンを押して、リポジトリを作っておく。</p>
+
+
+
+<p>できたリポジトリURLをコピーしておく。</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" width="700" height="41" src="https://blog.pop-web.net/wp-content/uploads/2019/05/2019-05-29_01h45_32-700x41.png" alt="" class="wp-image-156" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-29_01h45_32-700x41.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-29_01h45_32-300x17.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-29_01h45_32-768x44.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/05/2019-05-29_01h45_32.png 795w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">ローカルとリモートを関連付ける</span></h2>
+
+
+
+<p>以下のコマンドでローカルとリモートをつなげる。</p>
+
+
+
+<pre class="wp-block-code"><code>git remote add origin https://github.com/username/sample.git</code></pre>
+
+
+
+<p>関連付けられているか確認</p>
+
+
+
+<pre class="wp-block-code"><code>git remote -v</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">リモートにpushする</span></h2>
+
+
+
+<pre class="wp-block-code"><code>git push origin master</code></pre>The post <a href="https://blog.popweb.dev/programming/git/git-regist/">既存のディレクトリにローカルリポジトリ作成しをGitHubに登録する</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/git/git-regist/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

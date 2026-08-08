@@ -1,0 +1,1470 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>JavaScript | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/javascript/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Mon, 17 Jul 2023 13:12:03 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>JavaScript | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>window.top === window.selfは何をしているのか？</title>
+		<link>https://blog.popweb.dev/programming/javascript/window-top-window-self/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/window-top-window-self/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 04 Jan 2022 13:48:00 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1745</guid>
+
+					<description><![CDATA[<p>プロジェクトで「if (window.top === window.self) {…}」という条件式を初めて見たので、その意味を調べてみました。 この条件式は、開いているページがiframeで読み込んだページを表示してい [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/window-top-window-self/">window.top === window.selfは何をしているのか？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>プロジェクトで「if (window.top === window.self) {…}」という条件式を初めて見たので、その意味を調べてみました。</p>
+
+
+
+<p>この条件式は、開いているページがiframeで読み込んだページを表示しているかどうかを判定するためのものです。</p>
+
+
+
+<p><code>window.top</code>は、最上位のコンテキスト（ウィンドウ）を返します。iframe要素を複数埋め込んでいる場合でも、一番上の親ウィンドウを取得することができます。</p>
+
+
+
+<p>一方、<code>window.self</code>は現在のウィンドウ自身を返します。</p>
+
+
+
+<p>したがって、iframeがないページでは<code>window.self</code>と<code>window.top</code>は等価になります。これを利用して、ページがiframeを含むかどうかを判定することができます。</p>The post <a href="https://blog.popweb.dev/programming/javascript/window-top-window-self/">window.top === window.selfは何をしているのか？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/window-top-window-self/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【JavaScript】プリミティブ型（基本型）とオブジェクト型（参照型）について</title>
+		<link>https://blog.popweb.dev/programming/javascript/primitive-object/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/primitive-object/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 16 Oct 2021 08:14:10 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1020</guid>
+
+					<description><![CDATA[<p>JavaScriptにのデータ型には、プリミティブ型（基本型）とオブジェクト型（参照型）がある 目次 プリミティブ型（基本型）オブジェクト型（参照型）プリミティブ型とオブジェクト型の違いプリミティブ型の場合オブジェクト型 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/primitive-object/">【JavaScript】プリミティブ型（基本型）とオブジェクト型（参照型）について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>JavaScriptにのデータ型には、プリミティブ型（基本型）とオブジェクト型（参照型）がある</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">プリミティブ型（基本型）</a></li><li><a href="#toc2" tabindex="0">オブジェクト型（参照型）</a></li><li><a href="#toc3" tabindex="0">プリミティブ型とオブジェクト型の違い</a><ol><li><a href="#toc4" tabindex="0">プリミティブ型の場合</a></li><li><a href="#toc5" tabindex="0">オブジェクト型の場合</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">プリミティブ型（基本型）</span></h2>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-ts" data-lang="TypeScript"><code>真偽値（boolean）
+数値（number）
+文字列（string）
+null
+undefined
+シンボル（symbol）</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">オブジェクト型（参照型）</span></h2>
+
+
+
+<p>プリミティブ型（基本型）以外のデータ型</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-plain"><code>オブジェクト（object）
+配列（array）
+関数（function）</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">プリミティブ型とオブジェクト型の違い</span></h2>
+
+
+
+<p>プリミティブ型は変数をコピーする時、変数の中身の値がそのままコピーされる。</p>
+
+
+
+<p>オブジェクト型は変数をコピーする時、その値がコピーされるのではなく、そのオブジェクトが持っているメモリ上のアドレスがコピーされる。</p>
+
+
+
+<p>以下がその例</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">プリミティブ型の場合</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>let a = 20;
+let b = a;
+a = 80;
+console.log(a); // 80
+console.log(b); // 20</code></pre></div>
+
+
+
+<p>bにaを代入した後にaに新たに100の値を代入しているが、bに影響は受けない。</p>
+
+
+
+<p>さっきも説明したように、メモリ参照せずに変数の値をそのままコピーしていることが分かる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">オブジェクト型の場合</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>let obj1 = {
+  name: &quot;ken&quot;,
+  age: 20
+};
+let obj2 = obj1;
+obj1.age = 80;
+console.log(obj1.age); // 100
+console.log(obj2.age); // 100</code></pre></div>
+
+
+
+<p>obj2にobj1を代入することで、obj1もobj2も同じメモリ上のアドレスと保持するようになったため、片方のageの値を変更すると、もう片方の値も同じになる。</p>The post <a href="https://blog.popweb.dev/programming/javascript/primitive-object/">【JavaScript】プリミティブ型（基本型）とオブジェクト型（参照型）について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/primitive-object/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>eslintのルールで特定ファイルのみ適用外にしたい場合の書き方</title>
+		<link>https://blog.popweb.dev/programming/javascript/eslint-overrides/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/eslint-overrides/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 28 May 2021 08:14:55 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1697</guid>
+
+					<description><![CDATA[<p>.eslintrcのrulesに「defalut export」の記述を禁止するルールを追加したとする。 このとき、sotrybookのstories.tsxにはこのルールは適用外にしたい。 その場合にはどうするか？ o [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/eslint-overrides/">eslintのルールで特定ファイルのみ適用外にしたい場合の書き方</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>.eslintrcのrulesに「defalut export」の記述を禁止するルールを追加したとする。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-file=".eslintrc" data-lang="JavaScript"><code>module.exports = {
+...
+  rules: {
+...
+    &quot;import/no-default-export&quot;: &quot;error&quot;,
+...
+  }
+};</code></pre></div>
+
+
+
+<p>このとき、sotrybookのstories.tsxにはこのルールは適用外にしたい。</p>
+
+
+
+<p>その場合にはどうするか？</p>
+
+
+
+<p>overridesを使って、適用したいファイル名とルールを無効化する記述すればよい。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-file=".eslintrc" data-lang="JavaScript" data-line="8-15"><code>module.exports = {
+...
+  rules: {
+...
+    &quot;import/no-default-export&quot;: &quot;error&quot;,
+...
+  },
+  overrides: [
+    {
+      files: [&quot;**/*.stories.tsx&quot;],
+      rules: {
+        &quot;import/no-default-export&quot;: &quot;off&quot;,
+      },
+    },
+  ],
+};</code></pre></div>
+
+
+
+<h2 class="wp-block-heading">参考文献</h2>
+
+
+
+
+
+<a rel="noopener" href="https://eslint.org/docs/user-guide/configuring/configuration-files#configuration-based-on-glob-patterns" title="Configuration Files - ESLint - Pluggable JavaScript Linter" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img fetchpriority="high" decoding="async" src="https://blog.popweb.dev/wp-content/uploads/cocoon-resources/blog-card-cache/09bad0d7a1afaf2bdcb73bcdd6814354.jpg" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">Configuration Files - ESLint - Pluggable JavaScript Linter</div><div class="blogcard-snippet external-blogcard-snippet">A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code qua...</div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img decoding="async" src="https://www.google.com/s2/favicons?domain=https://eslint.org/docs/latest/use/configure/configuration-files" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">eslint.org</div></div></div></div></a>The post <a href="https://blog.popweb.dev/programming/javascript/eslint-overrides/">eslintのルールで特定ファイルのみ適用外にしたい場合の書き方</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/eslint-overrides/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【JavaScript入門】reduceについて説明と使い方</title>
+		<link>https://blog.popweb.dev/programming/javascript/javascript-reduce/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/javascript-reduce/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 26 Jan 2021 09:06:52 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1476</guid>
+
+					<description><![CDATA[<p>reduce()の説明と使い方を説明する。 reduce()は、配列の隣り合う値に対して関数を適用させて、その実行結果を返すメソッド。 コードを書いて動きを確認してみる。 まず、第2引数のcurには、arrの値が順番に入 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/javascript-reduce/">【JavaScript入門】reduceについて説明と使い方</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>reduce()の説明と使い方を説明する。</p>
+
+
+
+<p>reduce()は、配列の隣り合う値に対して関数を適用させて、その実行結果を返すメソッド。</p>
+
+
+
+<p>コードを書いて動きを確認してみる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>const arr = [1, 2, 3]
+
+console.log(arr.reduce((acc, cur) =&gt; acc + cur)) // 6</code></pre></div>
+
+
+
+<p>まず、第2引数のcurには、arrの値が順番に入ってくる。</p>
+
+
+
+<p>第1引数accには前回実行時の値が入ってくる。</p>
+
+
+
+<p>そして、返値として最後に実行された値を返す。</p>
+
+
+
+<p>具体的に実行処理は以下。</p>
+
+
+
+<ul class="wp-block-list"><li>1回目の実行：cur=1となり、前回実行の値はないので、1が返る</li><li>2回目の実行：cur=2となり、前回実行の値はacc=1なので、1+2=3が返る</li><li>3回目の実行：cur=3となり、前回実行の値はacc=1なので、3+3=6が返る</li></ul>The post <a href="https://blog.popweb.dev/programming/javascript/javascript-reduce/">【JavaScript入門】reduceについて説明と使い方</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/javascript-reduce/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【コンソールエラーの原因】front.js:8 Uncaught ReferenceError: browser is not defined at HTMLDocument.</title>
+		<link>https://blog.popweb.dev/programming/javascript/browser-is-not-defined-at-htmldocument/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/browser-is-not-defined-at-htmldocument/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 29 May 2020 14:20:53 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1283</guid>
+
+					<description><![CDATA[<p>Google Chromeのデバッグコンソールに以下のようなエラーが出た。 色々調べた結果、今回の場合はGoogle Chromeの拡張機能が原因だった。 シークレットウィンドウで再度表示してみると、エラーはでない。 ど [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/browser-is-not-defined-at-htmldocument/">【コンソールエラーの原因】front.js:8 Uncaught ReferenceError: browser is not defined at HTMLDocument.<anonymous></a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Google Chromeのデバッグコンソールに以下のようなエラーが出た。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism lang-plain"><code>front.js:8 Uncaught ReferenceError: browser is not defined at HTMLDocument.&lt;anonymous&gt; (front.js:8)</code></pre></div>
+
+
+
+<p>色々調べた結果、今回の場合は<strong>Google Chromeの拡張機能が原因</strong>だった。</p>
+
+
+
+<p>シークレットウィンドウで再度表示してみると、エラーはでない。</p>
+
+
+
+<p>どの拡張機能が原因でエラーが出ているかは各自で調べて頂きたい。</p>
+
+
+
+<p>結論→あまり気にすることではなかった。</p>The post <a href="https://blog.popweb.dev/programming/javascript/browser-is-not-defined-at-htmldocument/">【コンソールエラーの原因】front.js:8 Uncaught ReferenceError: browser is not defined at HTMLDocument.<anonymous></a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/browser-is-not-defined-at-htmldocument/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>JavaScript（ES2015）アロー関数の省略の書き方とthisの束縛について</title>
+		<link>https://blog.popweb.dev/programming/javascript/arrow-function/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/arrow-function/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 09 May 2020 11:07:00 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1230</guid>
+
+					<description><![CDATA[<p>ES2015（ES6）から追加されたアロー関数だが、省略した書き方が色々あるのでまとめてみる。 目次 アロー関数の基本形普通の無名関数の記述アロー関数を使った無名関数の記述アロー関数の省略系引数が1つの時 引数の() を [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/arrow-function/">JavaScript（ES2015）アロー関数の省略の書き方とthisの束縛について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>ES2015（ES6）から追加されたアロー関数だが、省略した書き方が色々あるのでまとめてみる。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-12" checked><label class="toc-title" for="toc-checkbox-12">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">アロー関数の基本形</a><ol><li><a href="#toc2" tabindex="0">普通の無名関数の記述</a></li><li><a href="#toc3" tabindex="0">アロー関数を使った無名関数の記述</a></li></ol></li><li><a href="#toc4" tabindex="0">アロー関数の省略系</a><ol><li><a href="#toc5" tabindex="0">引数が1つの時 引数の() を省略できる</a></li><li><a href="#toc6" tabindex="0">処理の内容が1つだけの場合、{} を省略できる</a></li><li><a href="#toc7" tabindex="0">値を返すだけの時、return を省略できる</a></li></ol></li><li><a href="#toc8" tabindex="0">オブジェクトを返す時は() で囲む必要がある</a></li><li><a href="#toc9" tabindex="0">アロー関数におけるthisの束縛について</a><ol><li><a href="#toc10" tabindex="0">「thisを束縛」とは何か？</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">アロー関数の基本形</span></h2>
+
+
+
+<p>アロー関数は基本的には、無名関数（匿名関数）の省略記法で、その名の通り<code>=&gt;</code>を使って関数リテラルを定義する。</p>
+
+
+
+<p>まずは基本形から。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">普通の無名関数の記述</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function(params) {
+  // 処理の内容...
+}</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">アロー関数を使った無名関数の記述</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>(params) =&gt; {
+  // 処理の内容...
+}</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">アロー関数の省略系</span></h2>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">引数が1つの時 引数の() を省略できる</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>params =&gt; {
+  // 処理の内容...
+}</code></pre></div>
+
+
+
+<p>引数がない時は、<code>()</code> を書く必要がある。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>() =&gt; {
+  // 処理の内容...
+}</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">処理の内容が1つだけの場合、{} を省略できる</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>params =&gt; returen value</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">値を返すだけの時、return を省略できる</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>params =&gt; value</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">オブジェクトを返す時は() で囲む必要がある</span></h2>
+
+
+
+<p>オブジェクトリテラルを返す時は、<code>{}</code> が関数ブロックと解釈されてしまうため <code>()</code> で囲む必要がある。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>const f = param =&gt; ({foo: &quot;bar&quot;})
+console.log(f()) // { foo: &quot;bar&quot; }</code></pre></div>
+
+
+
+<p><code>()</code> で囲むルールが逆に見づらい場合は、素直に <code>return</code> でオブジェクトリテラルを返せばよい。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-plane"><code>const f = param =&gt; { return { foo: &quot;bar&quot; } }
+console.log(f()) // { foo: &quot;bar&quot; }</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">アロー関数におけるthisの束縛について</span></h2>
+
+
+
+<p>アロー関数内のthisと従来の無名関数の中のthisは違うところを指していることに注意する。</p>
+
+
+
+<p>以下のように、コードがあるとする。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function Count() {
+  this.count = 0 // 注①
+  setInterval(function() {
+    this.count++ // 注②
+  }, 1000)
+
+}
+
+const counter = new Count()
+
+// ３秒後に呼び出すので「3」と出力されるはずだが…
+setTimeout(() =&gt; console.log(counter.count), 3000) </code></pre></div>
+
+
+
+<p><code>Count()</code>は、1秒ごとに+1するコンストラクタである。</p>
+
+
+
+<p>それを3秒後に呼び出すので「3」と出力されるはずだが、実際は「0」のままになる。</p>
+
+
+
+<p>注①のthisは、<code>Count()</code>インスタタンスのthisとして定義されるが、注②のthisは、グローバルオブジェクトのthisとして定義されるため、注①のthis.countはずっと「0」のままになる。</p>
+
+
+
+<p>これを回避するための方法としてよく用いいられるのが、<code>var self = this</code>というコードを書いて呼び出し先のthisを制御する。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function Count() {
+  this.count = 0
+  var self = this // 一旦、インスタタンスのthisをselfに入れる。
+  setInterval(function() {
+    self.count++ // selfに変え、呼び出し元をインスタンスの方を参照するようにする。
+  }, 1000)
+
+}
+
+const counter = new Count()
+// 期待通り「3」と出力される。
+setTimeout(() =&gt; console.log(counter.count), 3000)</code></pre></div>
+
+
+
+<p>ここで、アロー関数に書き方を変更すると、<code>var self = this</code>は必要なくなる。</p>
+
+
+
+<p>なぜなら、アロー関数だと<strong>thisを束縛できる</strong>からである。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc10">「thisを束縛」とは何か？</span></h3>
+
+
+
+<p>従来のアロー関数ではない中のthisは関数が<strong>呼び出された時点でthisが決まっていく。</strong></p>
+
+
+
+<p>つまり、thisが確定していない。thisを束縛していないことになる。</p>
+
+
+
+<p>上のソースの例だとsetIntervalのコールバック関数として関数が実行されるためthisはクローバルオブジェクトのthisを指すことになる。</p>
+
+
+
+<p>アロー関数の場合、<strong>アロー関数内のthisは定義されて時点で確定（=束縛）する。</strong></p>
+
+
+
+<p>そのため、アロー関数内のthisは<code>Count()</code>インスタタンスを指すことになる。</p>
+
+
+
+<p>先ほどコードは、以下のようにアロー関数へ書き方を変えることで期待の動作をしてくれる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function Count() {
+  this.count = 0
+  setInterval(() =&gt; {
+    this.count++　// インスタンスのthisを参照する。
+  }, 1000)
+
+}
+
+const counter = new Count()
+setTimeout(() =&gt; console.log(counter.count), 3000)</code></pre></div>
+
+
+
+<p>以上のように、従来の無名関数の書き方より、アロー関数を使った方がthisの扱いが楽になり、混乱することがなくなるので基本的にはアロー関数を使うよう慣れた方良い。</p>The post <a href="https://blog.popweb.dev/programming/javascript/arrow-function/">JavaScript（ES2015）アロー関数の省略の書き方とthisの束縛について</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/arrow-function/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>npm installしたがキャッシュとパッケージ（node_modules）を削除して再インストールする方法</title>
+		<link>https://blog.popweb.dev/programming/javascript/npm-install-cache-clean/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/npm-install-cache-clean/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 01 Nov 2019 02:08:00 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=592</guid>
+
+					<description><![CDATA[<p>npm installでパッケージをインストールしたが、再インストールして入れなおすには以下のようにする。</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/npm-install-cache-clean/">npm installしたがキャッシュとパッケージ（node_modules）を削除して再インストールする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>npm installでパッケージをインストールしたが、再インストールして入れなおすには以下のようにする。</p>
+
+
+
+<pre class="wp-block-code"><code>npm cache clean
+rm -rf node_modules/
+npm install</code></pre>The post <a href="https://blog.popweb.dev/programming/javascript/npm-install-cache-clean/">npm installしたがキャッシュとパッケージ（node_modules）を削除して再インストールする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/npm-install-cache-clean/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【JS初心者向け】async/awaitのついて解説</title>
+		<link>https://blog.popweb.dev/programming/javascript/async-await/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/async-await/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 13 Sep 2019 18:39:20 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=559</guid>
+
+					<description><![CDATA[<p>前回記事のPromiseについて解説の続きで、今回はasync/awaitについて解説していく。 async/awaitを使うことで、前回に解説したPromiseの処理を同期的な記述で簡潔に書けるようになる。 目次 as [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/async-await/">【JS初心者向け】async/awaitのついて解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>前回記事の<a href="https://blog.popweb.dev/programming/javascript/js-promise/">Promiseについて解説</a>の続きで、今回はasync/awaitについて解説していく。</p>
+
+
+
+<p>async/awaitを使うことで、前回に解説したPromiseの処理を同期的な記述で簡潔に書けるようになる。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-16" checked><label class="toc-title" for="toc-checkbox-16">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">asyncとawaitと使う</a></li><li><a href="#toc2" tabindex="0">例外処理の方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">asyncとawaitと使う</span></h2>
+
+
+
+<p>Promiseインスタンスを返してくれるgetHello( )がある。前回のPromiseではこの関数にthenメソッドを繋いであげれば、非同期処理後の処理の記述ができた。</p>
+
+
+
+<p>まず、このthenメソッドを同じ役割をしてくれるのがawaitである。</p>
+
+
+
+<p><code>await getHello( )</code>とすることでgetHello(  )の非同期処理が終わるまで、その後に記述される処理を実行せずに待ってくれる。</p>
+
+
+
+<p>非同期処理が完了すれば、<code>hello = await getHello('Start!')</code>としているので、Promiseでラップされた値が取り出され変数helloに代入される。</p>
+
+
+
+<p>非同期処理が完了後、この後に記述される処理が順次実行されるという流れになる。</p>
+
+
+
+<p><strong>awaitを内部で使っている関数には、先頭にasyncをつけるルール</strong>になっているので忘れずにつけておく。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      resolve(&quot;Hello,World!&quot;)
+    }, 2000)
+  })
+}
+
+async function func() {
+  let hello
+  hello = await getHello(&#39;Start!&#39;)
+  console.log(hello)
+  hello = await getHello(&#39;Start!&#39;)
+  console.log(hello)
+}
+
+func()</code></pre></div>
+
+
+
+<p>上記のコード実行すると、2秒後ごとにコンソールへ文字が表示されることになる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">例外処理の方法</span></h2>
+
+
+
+<p>async/awaitの場合、try/catchブロックで例外処理を行う。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      resolve(&quot;Hello,World!&quot;)
+    }, 2000)
+  })
+}
+
+async function func() {
+  let hello
+  try {
+    hello = await getHello(&quot;Start!&quot;)
+    console.log(hello)
+  } catch (e) {
+    throw new Error(&quot;Error!&quot;, e)
+  }
+
+  return hello
+}
+
+func().then(()=&gt;{
+console.log(&#39;ttt&#39;)
+})</code></pre></div>
+
+
+
+<p>また、留意しておきたい点として、asyncの中でreturnされた値はPromiseでラップされた状態で返却されるということ。</p>
+
+
+
+<p>上のコードで<code>console.log(func())</code>で確認すると、Promiseインスタンスが返ってきていることがわかる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>console.log(func()) // Promiseインスタンスが返ってきていることを確認</code></pre></div>
+
+
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" src="https://storage.googleapis.com/gcs.pop-web.net/2020/04/e5678e7275e24ea57d65eaabac637153.png" alt="画像" class="wp-image-1150" width="455" height="107" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/e5678e7275e24ea57d65eaabac637153.png 580w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/e5678e7275e24ea57d65eaabac637153-300x70.png 300w" sizes="(max-width: 455px) 100vw, 455px" /></figure>
+
+
+
+<p>このように、thenメソッドを使っていた時より、分かりやすく非同期処理を書けるようになる。</p>
+
+
+
+<p>async/awaitをつかうと、あたかも非同期処理を同期的に記述できるのがメリットである。</p>The post <a href="https://blog.popweb.dev/programming/javascript/async-await/">【JS初心者向け】async/awaitのついて解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/async-await/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【JS初心者向け】Promiseについて解説</title>
+		<link>https://blog.popweb.dev/programming/javascript/js-promise/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/js-promise/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 06 Sep 2019 11:57:31 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=541</guid>
+
+					<description><![CDATA[<p>前回の「コールバック関数について解説」の続き。 非同期処理の際にコールバック関数を使うのは有効であるが、コールバック地獄に陥りやすいデメリットがある。 コールバック地獄対策として非同期処理を簡潔に書けるようにしたのが、P [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/js-promise/">【JS初心者向け】Promiseについて解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>前回の<a href="https://blog.popweb.dev/programming/javascript/js-callback/">「コールバック関数について解説」</a>の続き。</p>
+
+
+
+<p>非同期処理の際にコールバック関数を使うのは有効であるが、コールバック地獄に陥りやすいデメリットがある。</p>
+
+
+
+<p>コールバック地獄対策として非同期処理を簡潔に書けるようにしたのが、<strong>Promise</strong>である。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-18" checked><label class="toc-title" for="toc-checkbox-18">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Promiseについて</a></li><li><a href="#toc2" tabindex="0">Promiseの使い方</a></li><li><a href="#toc3" tabindex="0">エラー処理のrejectについて</a></li><li><a href="#toc4" tabindex="0">Promise.allで配列で処理</a></li><li><a href="#toc5" tabindex="0">省略して書くことも可能</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Promiseについて</span></h2>
+
+
+
+<p>Promiseについて簡単にいうと、<strong>非同期処理の処理状態を示してくれるやつ</strong>だ。</p>
+
+
+
+<p>非同期処理においてポイントなることは、<strong>非同期処理が終わった後のタイミングで、違う処理を処理をしたいということ。</strong></p>
+
+
+
+<p>そうなると、非同期処理の状態が完了しているのか？まだ終わってなのか？が知る必要がある。</p>
+
+
+
+<p>そこで、Promiseの登場。</p>
+
+
+
+<p>Promiseの引数に非同期処理を入れてやり、その戻り値を取得することでで状態を判別できる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">Promiseの使い方</span></h2>
+
+
+
+<p>Promiseの使い方は、return new Promise( )の引数としてコールバック関数を入れる。</p>
+
+
+
+<p>このコールバック関数に、非同期処理の内容を記述する。</p>
+
+
+
+<p>以下の例では、setTimeout( )関数を使って非同期処理を記述した。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      resolve("Hello,World!")
+    }, 2000)
+  })
+}
+
+getHello('Start!').then(msg =&gt; {
+  return getHello(msg)
+})</code></pre>
+
+
+
+<p>まず、関数であるgetHello( )を実行すると戻り値（return）としてPromiseクラスのインスタンスが返ってくる。</p>
+
+
+
+<p><strong>このPromiseインスタンスに、非同期処理の処理状態の情報が入っている。</strong></p>
+
+
+
+<p>console.log(getHello( ))で確認すると、確かにPromiseが返ってきていることがわかる。</p>
+
+
+
+<pre class="wp-block-code"><code>console.log(getHello()) // Promiseインスタンスが返ってきていることを確認</code></pre>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/04/ef95baeafef09d772c74a9e73bf5d8c8.png" alt="" class="wp-image-1137" width="407" height="125" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/ef95baeafef09d772c74a9e73bf5d8c8.png 580w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/ef95baeafef09d772c74a9e73bf5d8c8-300x92.png 300w" sizes="(max-width: 407px) 100vw, 407px" /></figure>
+
+
+
+<p>Promiseのコールバック関数の第一引数としてresolve、第二引数としてrejectを設定することができ、<strong>処理が成功した時はresolve、失敗した時はrejectが呼び出される。</strong></p>
+
+
+
+<p>コールバック関数の処理の最後に<strong>resolve又は、rejectメソッドを呼び出すことで処理の終了を明示的に表す。</strong></p>
+
+
+
+<p>次に、Promiseクラスのインスタンスはthenメソッドを持っており、引数にコールバック関数を入れてあげる。</p>
+
+
+
+<p>thenメソッドの第一引数には、resolve又は、rejectメソッドで渡された値が入る。</p>
+
+
+
+<p>つまり、Promiseで処理した後の値をthenメソッドに渡して処理をさせるということができる。</p>
+
+
+
+<p>また、thenメソッドの中でreturnで再度Promiseインスタンスを返すことで、非同期処理を実行することができる。</p>
+
+
+
+<p>上のコードでは、resolveメソッドで処理が終了して、thenメソッドで渡された値が処理されるという流れになり、2秒後に「Start!」、またその2秒後に「Hello,World!」と表示される。</p>
+
+
+
+<p>ポイントとしては、<strong>thenメソッドで値をPromiseインスタンスをreturnさせると、また次のthenメソッドのコールバック関数の第一引数として受け取ることができる。</strong></p>
+
+
+
+<p>上で使ったコードを書き直す。</p>
+
+
+
+<p>以下、getByebye( )という関数を追加して、thenメソッドを以下の方に追加して繋げる。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      resolve("Hello,World!")
+    }, 2000)
+  })
+}
+
+function getByebye() {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve("Bye!Bye!")
+    }, 3000)
+  })
+}
+
+getHello('Start!').then(msg =&gt; {
+  return getHello(msg)
+}).then(() =&gt; {
+  return getByebye()
+}).then(msg =&gt; {
+  console.log(msg)
+})</code></pre>
+
+
+
+<p>このコードを実行すると、2秒後に「Start!」、またその2秒後に「Hello,World!」と表示され、さらにその3秒後に「Bye!Bye!」と表示される。</p>
+
+
+
+<p>以下のように、thenメソッドの引数としてgetByebyeをそのまま渡してあげても同じになる。</p>
+
+
+
+<pre class="wp-block-code"><code>getHello('Start!').then(msg =&gt; {
+  return getHello(msg)
+}).then(getByebye)
+.then(msg =&gt; {
+  console.log(msg)
+})</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">エラー処理のrejectについて</span></h2>
+
+
+
+<p>Promiseの第二引数であるrejectはエラー処理を扱うもので、値をcatchメソッドで受け取る。</p>
+
+
+
+<p>さっきほどのgetHello関数のresolveで返却していたところをrejectに変更する。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      reject("Error!")
+    }, 2000)
+  })
+}
+
+function getByebye() {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve("Bye!Bye!")
+    }, 3000)
+  })
+}
+
+getHello('Start!').then(msg =&gt; {
+  return getHello(msg)
+}).then(() =&gt; {
+  return getByebye()
+}).then(msg =&gt; {
+  console.log(msg)
+}).catch(error =&gt; {
+  console.log(error)
+})</code></pre>
+
+
+
+<p>これを実行すると、getHello関数以降の処理が飛ばされて、「Error!」という表示される。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">Promise.allで配列で処理</span></h2>
+
+
+
+<p>Promise.allメッドを使うことで関数を配列として渡し、並列処理することができる。</p>
+
+
+
+<p>以下のよう、返却される値はresolveの値が配列として返ってくる。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello(msg) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      console.log(msg)
+      resolve("Hello,World!")
+    }, 2000)
+  })
+}
+
+function getByebye() {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve("Bye!Bye!")
+    }, 5000)
+  })
+}
+
+Promise.all(&#91;
+    getHello('Start!'),
+    getByebye()
+  ])
+  .then((msgs) =&gt; {
+    console.log(msgs)
+  })</code></pre>
+
+
+
+<p>上記のコードを実行すると、2秒と5秒で秒数は異なるが、すべてが完了するまでthenメソッドは実行されない。</p>
+
+
+
+<p>以下のように、5秒後にresolveの値がすべて入った配列が返される。</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/04/8edce85cb9fba74425402978459ae8c0.png" alt="" class="wp-image-1146" width="418" height="129" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/04/8edce85cb9fba74425402978459ae8c0.png 580w, https://storage.googleapis.com/gcs.pop-web.net/2020/04/8edce85cb9fba74425402978459ae8c0-300x92.png 300w" sizes="(max-width: 418px) 100vw, 418px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">省略して書くことも可能</span></h2>
+
+
+
+<p>Promiseの以下のコードは省略して書くことも可能。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello() {
+    return new Promise((resolve, reject) =&gt; {
+        resolve("Hello,World!")
+    })
+}</code></pre>
+
+
+
+<p>省略形は以下のよう。</p>
+
+
+
+<pre class="wp-block-code"><code>function getHello() {
+    return Promise.resolve("Hello,World!")
+}</code></pre>
+
+
+
+<p>次の記事では、Promiseを同期処理ように書くことができる<strong>async/await</strong>について解説していく。</p>
+
+
+
+<p><strong>async/await</strong>については下記↓</p>
+
+
+
+<figure class="wp-block-embed is-type-wp-embed is-provider-popweb wp-block-embed-popweb"><div class="wp-block-embed__wrapper">
+
+<a href="https://blog.popweb.dev/programming/javascript/async-await/" title="【JS初心者向け】async/awaitのついて解説" class="blogcard-wrap internal-blogcard-wrap a-wrap cf"><div class="blogcard internal-blogcard ib-left cf"><div class="blogcard-label internal-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail internal-blogcard-thumbnail"><img loading="lazy" decoding="async" src="https://blog.popweb.dev/wp-content/themes/cocoon-master/images/no-image-160.png" alt="" class=" internal-blogcard-thumb-image" width="160" height="90" /></figure><div class="blogcard-content internal-blogcard-content"><div class="blogcard-title internal-blogcard-title">【JS初心者向け】async/awaitのついて解説</div><div class="blogcard-snippet internal-blogcard-snippet">前回記事のPromiseについて解説の続きで、今回はasync/awaitについて解説していく。async/awaitを使うことで、前回に解説したPromiseの処理を同期的な記述で簡潔に書けるようになる。asyncとawaitと使うPro...</div></div><div class="blogcard-footer internal-blogcard-footer cf"><div class="blogcard-site internal-blogcard-site"><div class="blogcard-favicon internal-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.popweb.dev" alt="" class="blogcard-favicon-image internal-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain internal-blogcard-domain">blog.popweb.dev</div></div><div class="blogcard-date internal-blogcard-date"><div class="blogcard-post-date internal-blogcard-post-date">2019.09.13</div></div></div></div></a>
+</div></figure>The post <a href="https://blog.popweb.dev/programming/javascript/js-promise/">【JS初心者向け】Promiseについて解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/js-promise/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【JS初心者向け】コールバック関数について解説</title>
+		<link>https://blog.popweb.dev/programming/javascript/js-callback/</link>
+					<comments>https://blog.popweb.dev/programming/javascript/js-callback/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 05 Sep 2019 11:09:10 +0000</pubDate>
+				<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=539</guid>
+
+					<description><![CDATA[<p>JavaScriptをやっていて、「async/await」ってなんやって思って、ググったら「Promise」の進化版ってことらしい。 今度は「Promise」をググったら、コールバック関数の概念が必要ってことが分かった [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/javascript/js-callback/">【JS初心者向け】コールバック関数について解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>JavaScriptをやっていて、「async/await」ってなんやって思って、ググったら「Promise」の進化版ってことらしい。</p>
+
+
+
+<p>今度は「Promise」をググったら、コールバック関数の概念が必要ってことが分かった。</p>
+
+
+
+<p>とういうことで、コールバック関数とコールバック関数の必要性について説明する。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-20" checked><label class="toc-title" for="toc-checkbox-20">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">コールバック関数について</a><ol><li><a href="#toc2" tabindex="0">JavaScriptでは「関数」も「値」</a></li><li><a href="#toc3" tabindex="0">関数に関数を渡して実行することで順序を制御</a></li></ol></li><li><a href="#toc4" tabindex="0">コールバック関数の必要性と使い所について</a><ol><li><a href="#toc5" tabindex="0">コールバック関数と非同期処理の組み合わせ例</a></li><li><a href="#toc6" tabindex="0">コールバック地獄とは</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">コールバック関数について</span></h2>
+
+
+
+<p>コールバック関数とは、「<strong>引数として渡される関数</strong>」こと。</p>
+
+
+
+<p>そして、渡された先で関数を実行処理する。</p>
+
+
+
+<p>「<strong>あの処理が終わったタイミングで、この関数を実行したい</strong>」といった場面で使われる。</p>
+
+
+
+<p>まず、<strong>setTimeout関数</strong>を使って簡単にコールバック関数について説明する。</p>
+
+
+
+<p>以下のように、setTimeoutという関数の引数として関数を渡して、setTimeout内で実行させている。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>setTimeout(() =&gt; {
+  console.log(&#39;Hello,world!&#39;)
+}, 1000);</code></pre></div>
+
+
+
+<p>ここで、<strong>コールバック関数は、「() =&gt; {  console.log(&#8216;Hello,world!&#8217;)}」。</strong></p>
+
+
+
+<p>コールバック関数を受け取る側の関数は、setTimeout()ということになり、この<strong>「コールバック関数を受け取る側の関数」</strong>は、<strong>「高階関数」</strong>と呼ばれる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">JavaScriptでは「関数」も「値」</span></h3>
+
+
+
+<p>関数の引数へ、違う関数を渡すことができると説明した。</p>
+
+
+
+<p>これはJavaScriptでは、<strong>関数を値として扱うことができるからだ。</strong></p>
+
+
+
+<p>どういうことかというと、関数を変数に入れることができるということ。</p>
+
+
+
+<p>関数を変数に入れるには、関数名の後ろにカッコをつけない。</p>
+
+
+
+<p>以下のよう。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function hello(){
+  console.log(&#39;Hello,world!&#39;)
+}
+
+// 関数を変数へ代入するときは、カッコをつけない
+const helloFunc = hello
+
+// 関数を呼び出す場合はカッコをつける
+helloFunc() // Hello,world!とコンソールに表示
+hello() // Hello,world!とコンソールに表示</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">関数に関数を渡して実行することで順序を制御</span></h3>
+
+
+
+<p>関数は値なので、関数の引数へ渡すことができる。 </p>
+
+
+
+<p>そして、引数で渡した関数を渡した関数の中で実行ができる。</p>
+
+
+
+<p>さっきのコードにbye()とう関数を追加して、それをhello()関数の引数として渡す。</p>
+
+
+
+<p>そして、渡した関数を渡された関数の中で実行する。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function hello(func){
+  console.log(&#39;Hello,world!&#39;)
+  func()
+}
+
+function bye(){
+  console.log(&#39;Bye!Bye!&#39;)
+}
+
+hello(bye)
+// 表示結果
+// Hello,world!
+// Bye!Bye!</code></pre></div>
+
+
+
+<p>みてわかる通り、<strong>hello()関数の内容が実行された後からではないと、bye()関数が処理されないようになっており、実行順序を制御している。</strong></p>
+
+
+
+<p>このように、「あの関数処理の後に、この関数を実行する」といった処理にしたいときに使うのがコールバックだ。</p>
+
+
+
+<p>この場合、<strong>bye()がコールバック関数、hello()が高階関数</strong>になる。</p>
+
+
+
+<p>前述したように、高階関数はコーバック関数を受け取る側の関数のこと。</p>
+
+
+
+<p>また、bye()の内容をそのまま、hello()の引数に入れて、以下のように書くこともできる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function hello(func){
+  console.log(&#39;Hello,world!&#39;)
+  func()
+}
+
+hello(function(){
+  console.log(&#39;Bye!Bye!&#39;)
+})
+// 表示結果
+// Hello,world!
+// Bye!Bye!</code></pre></div>
+
+
+
+<p>さらに、渡した関数に値を渡して実行もできる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function hello(func){
+  console.log(&#39;Hello,world!&#39;)
+  func(&#39;Bye!Bye!&#39;)
+}
+
+hello(function(msg){
+  console.log(msg)
+})
+// 表示結果
+// Hello,world!
+// Bye!Bye!</code></pre></div>
+
+
+
+<p>ちなみに、この場合だと<strong>function(msg)がコールバック関数、hello()が高階関数</strong>になる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">コールバック関数の必要性と使い所について</span></h2>
+
+
+
+<p>JavaScriptでコールバック関数の使い所はというと、<strong>「非同期処理」と組み合わせて使われる。</strong></p>
+
+
+
+<p>まず、<strong>JavaScriptは非同期処理を前提として設計されたスクリプト</strong>であることを理解しておく。</p>
+
+
+
+<p>非同期処理では、実行順序がコードの通りにならない場合がある。</p>
+
+
+
+<p>例えば、APIを呼び出してそのデータを扱いたい場合、APIから渡してもらうデータを全て読み込んだ後に処理を実行しなければ、データを扱うことはできなくなる。</p>
+
+
+
+<p>つまり、実行順序を制御する必要がある。</p>
+
+
+
+<p>そのため、コールバック関数で制御処理するという方法が用いられる。</p>
+
+
+
+<p>次で例を出す。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">コールバック関数と非同期処理の組み合わせ例</span></h3>
+
+
+
+<p>非同期処理をする関数であるsetTimeoutを使って、コールバック関数と非同期処理の組み合わせ例と出す。</p>
+
+
+
+<p>まずは、コールバック関数なしだとうまくいかない例を出す。</p>
+
+
+
+<h4 class="wp-block-heading">うまくいかない例（コールバック関数なし）</h4>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function getHello(){
+  setTimeout(function(){
+    return &#39;Hello,World!&#39;
+  },2000)
+}
+
+const hello = getHello()
+console.log(hello) // undefinedになってしまう</code></pre></div>
+
+
+
+<p>これの例だと、getHello()の中の処理が、2秒後にしか実行されないので、console.log(hello)は、undefinedになる。</p>
+
+
+
+<h4 class="wp-block-heading">うまくいく例（コールバック関数あり）</h4>
+
+
+
+<p>先ほどのうまくいかない例に、コールバック関数をつかって書き直す。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function getHello(callback){
+  setTimeout(function(){
+    callback(&#39;Hello,World!&#39;)
+  },2000)
+}
+
+getHello(function(msg){
+  console.log(msg)
+})</code></pre></div>
+
+
+
+<p>まず、function(msg){console.log(msg)}というコールバック関数を作成して、getHello関数の引数として渡してあげる。</p>
+
+
+
+<p>そして、setTimeoutの中でコールバック関数を実行させてあげることで、2秒後に「Hello,World!」と表示されるようになる。</p>
+
+
+
+<p>つまり、<strong>非同期処理をする関数でも、コールバック関数を使えば、実行順序を思い通りに実行することが可能になる。</strong></p>
+
+
+
+<p>しかし、コールバック関数の処理が増えていくと、見た目の構造がどんどん複雑化していく傾向にある。</p>
+
+
+
+<p>この複雑化をコールバック地獄という。</p>
+
+
+
+<p>次に、コールバック地獄とはなにかについて説明する。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">コールバック地獄とは</span></h3>
+
+
+
+<p>コールバック地獄について、簡単に説明する。</p>
+
+
+
+<p>以下のように、<strong>2秒おきにメッセージを上から順番に出したい場合。</strong></p>
+
+
+
+<ul class="wp-block-list"><li>こんにちは、太郎。</li><li>やぁ、こんにちは、花子。</li><li>いい天気だね。</li><li>今日はどこに行こうか。</li><li>そうだね。とりあえずスタバに行こう。</li></ul>
+
+
+
+<p>これを2秒ごとに出してくとなると以下のようなコードになる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-js" data-lang="JavaScript"><code>function func_01(callback) {
+  setTimeout(function () {
+    console.log(&quot;こんにちは、太郎。&quot;);
+    callback();
+  }, 2000);
+}
+
+function func_02(callback) {
+  setTimeout(function () {
+    console.log(&quot;やぁ、こんにちは、花子。&quot;);
+    callback();
+  }, 2000);
+}
+
+function func_03(callback) {
+  setTimeout(function () {
+    console.log(&quot;いい天気だね。&quot;);
+    callback();
+  }, 2000);
+}
+
+function func_04(callback) {
+  setTimeout(function () {
+    console.log(&quot;今日はどこに行こうか。&quot;);
+    callback();
+  }, 2000);
+}
+
+function func_05() {
+  setTimeout(function () {
+    console.log(&quot;そうだね。とりあえずスタバに行こう。&quot;);
+  }, 2000);
+}
+
+func_01(function () {
+  func_02(function () {
+    func_03(function () {
+      func_04(function () {
+        func_05();
+      });
+    });
+  });
+});</code></pre></div>
+
+
+
+<p>最後の呼び出している関数が<strong>入れ子の入れ子の…状態</strong>になっている。</p>
+
+
+
+<p>とても分かりにくくする。</p>
+
+
+
+<p>これを俗に、<strong>コールバック地獄</strong>という。</p>
+
+
+
+<p>そして、コールバック地獄対策のために登場したのが<strong>「Promise」</strong>で、非同期処理を簡潔に書くことが可能になる。</p>
+
+
+
+<p>Promiseについては下記↓</p>
+
+
+
+<figure class="wp-block-embed is-type-wp-embed is-provider-popweb wp-block-embed-popweb"><div class="wp-block-embed__wrapper">
+
+<a href="https://blog.popweb.dev/programming/javascript/js-promise/" title="【JS初心者向け】Promiseについて解説" class="blogcard-wrap internal-blogcard-wrap a-wrap cf"><div class="blogcard internal-blogcard ib-left cf"><div class="blogcard-label internal-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail internal-blogcard-thumbnail"><img loading="lazy" decoding="async" src="https://blog.popweb.dev/wp-content/themes/cocoon-master/images/no-image-160.png" alt="" class=" internal-blogcard-thumb-image" width="160" height="90" /></figure><div class="blogcard-content internal-blogcard-content"><div class="blogcard-title internal-blogcard-title">【JS初心者向け】Promiseについて解説</div><div class="blogcard-snippet internal-blogcard-snippet">前回の「コールバック関数について解説」の続き。非同期処理の際にコールバック関数を使うのは有効であるが、コールバック地獄に陥りやすいデメリットがある。コールバック地獄対策として非同期処理を簡潔に書けるようにしたのが、Promiseである。Pr...</div></div><div class="blogcard-footer internal-blogcard-footer cf"><div class="blogcard-site internal-blogcard-site"><div class="blogcard-favicon internal-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.popweb.dev" alt="" class="blogcard-favicon-image internal-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain internal-blogcard-domain">blog.popweb.dev</div></div><div class="blogcard-date internal-blogcard-date"><div class="blogcard-post-date internal-blogcard-post-date">2019.09.06</div></div></div></div></a>
+</div></figure>The post <a href="https://blog.popweb.dev/programming/javascript/js-callback/">【JS初心者向け】コールバック関数について解説</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/javascript/js-callback/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

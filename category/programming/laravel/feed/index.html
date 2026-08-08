@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Laravel | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/laravel/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sat, 27 Nov 2021 08:45:03 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Laravel | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>【Laravel】中間テーブルのカラムに対して検索をかけたい時【whereHas】</title>
+		<link>https://blog.popweb.dev/programming/laravel/%e3%80%90laravel%e3%80%91%e4%b8%ad%e9%96%93%e3%83%86%e3%83%bc%e3%83%96%e3%83%ab%e3%81%ae%e3%82%ab%e3%83%a9%e3%83%a0%e3%81%ab%e5%af%be%e3%81%97%e3%81%a6%e6%a4%9c%e7%b4%a2%e3%82%92%e3%81%8b%e3%81%91/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/%e3%80%90laravel%e3%80%91%e4%b8%ad%e9%96%93%e3%83%86%e3%83%bc%e3%83%96%e3%83%ab%e3%81%ae%e3%82%ab%e3%83%a9%e3%83%a0%e3%81%ab%e5%af%be%e3%81%97%e3%81%a6%e6%a4%9c%e7%b4%a2%e3%82%92%e3%81%8b%e3%81%91/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 17 Mar 2021 01:10:12 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1677</guid>
+
+					<description><![CDATA[<p>タイトル通りだが、まずはやりたいことの説明 目次 やりたいこと状況解決方法 やりたいこと リレーション先の中間テーブルのカラムの値に対して検索をかけたい。 状況 menus、stores、menu_store（中間テーブ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/%e3%80%90laravel%e3%80%91%e4%b8%ad%e9%96%93%e3%83%86%e3%83%bc%e3%83%96%e3%83%ab%e3%81%ae%e3%82%ab%e3%83%a9%e3%83%a0%e3%81%ab%e5%af%be%e3%81%97%e3%81%a6%e6%a4%9c%e7%b4%a2%e3%82%92%e3%81%8b%e3%81%91/">【Laravel】中間テーブルのカラムに対して検索をかけたい時【whereHas】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>タイトル通りだが、まずはやりたいことの説明</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">やりたいこと</a></li><li><a href="#toc2" tabindex="0">状況</a></li><li><a href="#toc3" tabindex="0">解決方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">やりたいこと</span></h2>
+
+
+
+<p>リレーション先の中間テーブルのカラムの値に対して検索をかけたい。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">状況</span></h2>
+
+
+
+<p>menus、stores、menu_store（中間テーブル）とうテーブルを作成しており、</p>
+
+
+
+<p>モデルは以下のような感じで中間テーブルを置いてリレーションしている。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>class Menu extends Model
+{    
+    public function stores()
+    {
+      return $this-&gt;belongsToMany(&#39;App\Store&#39;,&#39;menu_store&#39;,&#39;menu_id&#39;,&#39;store_id&#39;)-&gt;withTimestamps();
+    }
+}</code></pre></div>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>class Store extends Model
+{    
+    public function menus()
+    {
+      return $this-&gt;belongsToMany(&#39;App\Menu&#39;);
+    }
+}</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">解決方法</span></h2>
+
+
+
+<p><strong>whereHasを使う。</strong></p>
+
+
+
+<p>以下だと、中間テーブルであるmenu_storeのstore_idでwhereInで条件を絞りたい時の場合。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>$storeId = [1,2,3]
+$query = Menu::query();
+$query-&gt;whereHas(&#39;stores&#39;, function($q) use($storeId)  {
+    $q-&gt;whereIn(&#39;menu_store.store_id&#39;, $storeId);
+});</code></pre></div>
+
+
+
+<p>コールバック関数の中でリレーション先である中間<meta charset="utf-8">テーブルの検索条件を指定してあげれば良い。</p>
+
+
+
+<p>中間テーブルのカラムではなく、中間テーブルを介して結合しているテーブル（storesテーブル）のカラムで検索することも可能。</p>
+
+
+
+<p>その場合も同様でコールバック関数の中の詳細条件を変更すれば良い。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>$q-&gt;whereIn(&#39;store.store_id&#39;, $storeId)</code></pre></div>
+
+
+
+<p></p>The post <a href="https://blog.popweb.dev/programming/laravel/%e3%80%90laravel%e3%80%91%e4%b8%ad%e9%96%93%e3%83%86%e3%83%bc%e3%83%96%e3%83%ab%e3%81%ae%e3%82%ab%e3%83%a9%e3%83%a0%e3%81%ab%e5%af%be%e3%81%97%e3%81%a6%e6%a4%9c%e7%b4%a2%e3%82%92%e3%81%8b%e3%81%91/">【Laravel】中間テーブルのカラムに対して検索をかけたい時【whereHas】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/%e3%80%90laravel%e3%80%91%e4%b8%ad%e9%96%93%e3%83%86%e3%83%bc%e3%83%96%e3%83%ab%e3%81%ae%e3%82%ab%e3%83%a9%e3%83%a0%e3%81%ab%e5%af%be%e3%81%97%e3%81%a6%e6%a4%9c%e7%b4%a2%e3%82%92%e3%81%8b%e3%81%91/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>LaravelでスクレイピングしてHerokuで定期実行する方法</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel%e3%81%a7%e3%82%b9%e3%82%af%e3%83%ac%e3%82%a4%e3%83%94%e3%83%b3%e3%82%b0%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel%e3%81%a7%e3%82%b9%e3%82%af%e3%83%ac%e3%82%a4%e3%83%94%e3%83%b3%e3%82%b0%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 22 Jan 2021 04:38:07 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1472</guid>
+
+					<description><![CDATA[<p>まず、LaravelでWebスクレイピングするため、ライブラリである「FriendsOfPHP/Goutte」をインストールする。 LaravelのバージョンはLaravel6.20。 目次 インストール実装contro [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel%e3%81%a7%e3%82%b9%e3%82%af%e3%83%ac%e3%82%a4%e3%83%94%e3%83%b3%e3%82%b0%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/">LaravelでスクレイピングしてHerokuで定期実行する方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>まず、LaravelでWebスクレイピングするため、ライブラリである「<a rel="noopener" href="https://github.com/FriendsOfPHP/Goutte" target="_blank">FriendsOfPHP/Goutte</a>」をインストールする。</p>
+
+
+
+<p>LaravelのバージョンはLaravel6.20。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">インストール</a></li><li><a href="#toc2" tabindex="0">実装</a><ol><li><a href="#toc3" tabindex="0">controllerに処理を書く</a></li><li><a href="#toc4" tabindex="0">viewを作る</a></li><li><a href="#toc5" tabindex="0">ルーティングの設定</a></li><li><a href="#toc6" tabindex="0">表示の確認</a></li></ol></li><li><a href="#toc7" tabindex="0">定期実行のやり方</a><ol><li><a href="#toc8" tabindex="0">コマンドクラスに処理を書く</a></li><li><a href="#toc9" tabindex="0">コマンドを実行してみる</a></li><li><a href="#toc10" tabindex="0">データベース保存</a></li><li><a href="#toc11" tabindex="0">データベース保存</a></li></ol></li><li><a href="#toc12" tabindex="0">Herokuに定期実行を設定</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">インストール</span></h2>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ composer require fabpot/goutte</code></pre></div>
+
+
+
+<p>以前のLaravelのバージョンではconfigファイルを設定する必要があるが、Laravel5.5以降はAutoDiscoveryがあるのでそのまま使える。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">実装</span></h2>
+
+
+
+<p>まず、controllerを作成する。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ php artisan make:controller ScrapingController</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">controllerに処理を書く</span></h3>
+
+
+
+<p>今回は漫画書籍ランキングからタイトルだけ取得してみる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="ScrapingController.php" data-lang="PHP"><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Goutte\Client;
+
+class ScrapingController extends Controller
+{
+    public function scraping()
+    {
+        $client = new Client();
+        $crawler = $client-&gt;request(&#39;GET&#39;, &#39;https://www.amazon.co.jp/gp/bestsellers/digital-text/2430812051/ref=pd_zg_hrsr_digital-text&#39;);
+        $titles = $crawler-&gt;filter(&#39;li.zg-item-immersion&#39;)-&gt;each(function ($li) {
+            $title = $li-&gt;filter(&#39;div.p13n-sc-truncate-desktop-type2&#39;)-&gt;text();
+            return $title;
+        });
+        return view(&#39;scraping&#39;, compact(&#39;titles&#39;));
+    }
+}
+</code></pre></div>
+
+
+
+<p>基本的には、<code>use Goutte\Client;</code>して<code>new Client();</code>でインスタンスを作ると色々メソッドが使えるようになる。</p>
+
+
+
+<p>使い方は、<a rel="noopener" href="https://github.com/FriendsOfPHP/Goutte" target="_blank">FriendsOfPHP/Goutte</a>や<a rel="noopener" href="https://symfony.com/doc/current/components/dom_crawler.html" target="_blank">DomCrawler</a>が参考になると思う。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">viewを作る</span></h3>
+
+
+
+<p>次に取得したタイトルを表示するviewをつくる。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="scraping.blade.php" data-lang="PHP"><code>@extends(&#39;layouts.app&#39;)
+
+@section(&#39;content&#39;)
+    &lt;ol class=&quot;container&quot;&gt;
+        @foreach($titles as $title)
+            &lt;li&gt;{{ $title }}&lt;/li&gt;
+        @endforeach
+    &lt;/ol&gt;
+@endsection</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">ルーティングの設定</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="web.php" data-lang="PHP"><code>Route::get(&#39;/scraping&#39;, &#39;ScrapingController@scraping&#39;)-&gt;name(&#39;scraping&#39;);</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">表示の確認</span></h3>
+
+
+
+<p>ブラウザで表示確認してみる。</p>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="700" height="514" src="https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39-700x514.jpg" alt="" class="wp-image-1610" srcset="https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39-700x514.jpg 700w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39-300x220.jpg 300w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39-768x564.jpg 768w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39-1536x1129.jpg 1536w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/fd3676a743390c818256a5c5fb2c2c39.jpg 1810w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">定期実行のやり方</span></h2>
+
+
+
+<p>定期実行されるには、まずコマンドラインで実行させるためコマンドクラスを作成する。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ php artisan make:command ScrapingCommand</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc8">コマンドクラスに処理を書く</span></h3>
+
+
+
+<p><code>app/Console/Commands/ScrapeCommand.php</code>が作成されているので、これを編集。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="ScrapingCommand.php" data-lang="PHP" data-line="5,6,16-17,24-25,44-51"><code>&lt;?php
+
+namespace App\Console\Commands;
+
+// useでGoutte\Clientをインポート
+use Goutte\Client;
+use Illuminate\Console\Command;
+
+class ScrapingCommand extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    // コマンド名を変更
+    protected $signature = &#39;command:ScrapingCommand&#39;;
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    // コマンドの説明を変更
+    protected $description = &#39;スクレイピングコマンド&#39;;
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        //　スクレイピング処理を書く
+        $client = new Client();
+        $crawler = $client-&gt;request(&#39;GET&#39;, &#39;https://www.amazon.co.jp/gp/bestsellers/digital-text/2430812051/ref=pd_zg_hrsr_digital-text&#39;);
+        $titles = $crawler-&gt;filter(&#39;li.zg-item-immersion&#39;)-&gt;each(function ($li) {
+            $title = $li-&gt;filter(&#39;div.p13n-sc-truncate-desktop-type2&#39;)-&gt;text();
+            return $title;
+        });
+        dd($titles);
+    }
+}
+</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc9">コマンドを実行してみる</span></h3>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ php artisan command:ScrapingCommand</code></pre></div>
+
+
+
+<p>コマンド実行後、コマンドラインから取得が確認できたらOK。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc10">データベース保存</span></h3>
+
+
+
+<p>データベースに保存する処理を追加。</p>
+
+
+
+<p>モデルとマイグレーションファイルを作成しておく。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-plane"><code>$ php artisan make:model Item -m</code></pre></div>
+
+
+
+<p>作成されたマイグレーションファイルを編集</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="2021_01_22_052810_create_items_table.php" data-lang="PHP" data-line="14"><code>&lt;?php
+
+//...
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create(&#39;items&#39;, function (Blueprint $table) {
+            $table-&gt;bigIncrements(&#39;id&#39;);
+            $table-&gt;string(&#39;title&#39;);
+            $table-&gt;timestamps();
+        });
+    }
+
+    //...
+}</code></pre></div>
+
+
+
+<p>マイグレーションを実行しておく。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ php artisan migrate</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc11">データベース保存</span></h3>
+
+
+
+<p>コマンドクラスにデータベース保存処理を追記。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-file="ScrapingCommand.php" data-lang="PHP" data-line="5,51-57"><code>&lt;?php
+
+namespace App\Console\Commands;
+
+use App\Item;
+use Goutte\Client;
+use Illuminate\Console\Command;
+
+class ScrapingCommand extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    // コマンド名
+    protected $signature = &#39;command:ScrapingCommand&#39;;
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    // コマンドの説明
+    protected $description = &#39;スクレイピングコマンド&#39;;
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        //　スクレイピング処理を書く
+        $client = new Client();
+        $crawler = $client-&gt;request(&#39;GET&#39;, &#39;https://www.amazon.co.jp/gp/bestsellers/digital-text/2430812051/ref=pd_zg_hrsr_digital-text&#39;);
+        $titles = $crawler-&gt;filter(&#39;li.zg-item-immersion&#39;)-&gt;each(function ($li) {
+            $title = $li-&gt;filter(&#39;div.p13n-sc-truncate-desktop-type2&#39;)-&gt;text();
+            return $title;
+        });
+        //データベース保存
+        foreach ($titles as $title)
+        {
+            $item = new Item;
+            $item-&gt;title = $title;
+            $item-&gt;save();
+        }
+    }
+}
+</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc12">Herokuに定期実行を設定</span></h2>
+
+
+
+<p>Herokuにアプリをデプロイしておく。</p>
+
+
+
+<p>次に、HerokuSchedulerアドオンをアプリに追加。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ heroku addons:create scheduler:standard</code></pre></div>
+
+
+
+<p>HerokuSchedulerのダッシュボードを開く。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-plane"><code>$ heroku addons:open scheduler</code></pre></div>
+
+
+
+<p>Add Jobをクリックして、ジョブを登録する。</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img decoding="async" src="https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-700x707.png" alt="" class="wp-image-1621" width="442" height="446" srcset="https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-700x707.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-297x300.png 297w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-150x150.png 150w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-768x776.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b-100x100.png 100w, https://storage.googleapis.com/gcs.pop-web.net/2021/01/74b4c3ddda793a88a3460ec49ba2d22b.png 806w" sizes="(max-width: 442px) 100vw, 442px" /></figure>
+
+
+
+<p>「Schedule」で実行時刻を選択し、「Run Command」に作成したコマンドクラスを実行するコマンドを入力しておく。</p>
+
+
+
+<p>これで、定期的にスクレイピングしてデータを取得できるようになる。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel%e3%81%a7%e3%82%b9%e3%82%af%e3%83%ac%e3%82%a4%e3%83%94%e3%83%b3%e3%82%b0%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/">LaravelでスクレイピングしてHerokuで定期実行する方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel%e3%81%a7%e3%82%b9%e3%82%af%e3%83%ac%e3%82%a4%e3%83%94%e3%83%b3%e3%82%b0%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Laravelで1ページ内に複数のpaginateを分けてページング方法</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-multiple-paginate/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-multiple-paginate/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 16 Mar 2020 16:48:00 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=809</guid>
+
+					<description><![CDATA[<p>Laravelでpaginateを1つのページで複数設置すると、ページングするに際にすべてが同時にページングされてしまう。 以下のようにすると、paginateの第3引数に設定したパラメータでそれぞれでリクエストがなされ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-multiple-paginate/">Laravelで1ページ内に複数のpaginateを分けてページング方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Laravelでpaginateを1つのページで複数設置すると、ページングするに際にすべてが同時にページングされてしまう。</p>
+
+
+
+<p>以下のようにすると、paginateの第3引数に設定したパラメータでそれぞれでリクエストがなされる。</p>
+
+
+
+<pre class="wp-block-code"><code>public function show(Request $request)
+{
+    $tags = Tag::paginate(10, &#91;'*'], 'tags');
+    $comments = Comments::paginate(10, &#91;'*'], 'comments');
+
+    return view('show.index', compact('tags','comments'));
+}</code></pre>
+
+
+
+<p><code>/show?page=2</code>だったものが、<code>/show?tags=2</code>と<code>/show?comments=2</code>とで分けられて同時にページングがされなくなる。</p>
+
+
+
+<p>ページングする際に、どちらのパラメータも残しつつページングを行いたい場合は、</p>
+
+
+
+<p>以下のように<code>appends</code>を使うとよい。</p>
+
+
+
+<pre class="wp-block-code"><code>public function show(Request $request)
+{
+    $tags = Tag::paginate(10, &#91;'*'], 'tags')->appends(&#91;"comments" => $request->input('comments')]);
+    $comments = Comments::paginate(10, &#91;'*'], 'comments')->appends(&#91;"tags" => $request->input('tags')]);
+
+    return view('show.index', compact('tags','comments'));
+}</code></pre>
+
+
+
+<p>これで両方でページングを行なっても、<code>/show?tags=2&amp;comments=2</code>となりそれぞれのページング状態が保持される。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-multiple-paginate/">Laravelで1ページ内に複数のpaginateを分けてページング方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-multiple-paginate/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>MacにComposerをインストール手順</title>
+		<link>https://blog.popweb.dev/programming/laravel/mac-composer/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/mac-composer/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 01 Oct 2019 14:02:45 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=586</guid>
+
+					<description><![CDATA[<p>MacOSにComposerをインストールする手順を説明する。 OpenSSLがないと、composerコマンドでライブラリダウンロードをするとエラーを起こすので手動でOpenSSLをインストールする。 OpenSSLを [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/mac-composer/">MacにComposerをインストール手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>MacOSにComposerをインストールする手順を説明する。</p>
+
+
+
+<p>OpenSSLがないと、composerコマンドでライブラリダウンロードをするとエラーを起こすので手動でOpenSSLをインストールする。</p>
+
+
+
+<p>OpenSSLをインストールするには、Homebrewが必要なのでインストールする。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-8" checked><label class="toc-title" for="toc-checkbox-8">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Homebrewのインストール</a></li><li><a href="#toc2" tabindex="0">OpenSSLをインストール</a></li><li><a href="#toc3" tabindex="0">Composerをインストール</a></li><li><a href="#toc4" tabindex="0">パスを通す</a></li><li><a href="#toc5" tabindex="0">バージョンを確認</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Homebrewのインストール</span></h2>
+
+
+
+<p>OpenSSLをインストールするために、Homebrewが必要。</p>
+
+
+
+<p>以下コマンドで、Homebrewをインストール</p>
+
+
+
+<pre class="wp-block-code"><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">OpenSSLをインストール</span></h2>
+
+
+
+<pre class="wp-block-code"><code>brew install openssl</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">Composerをインストール</span></h2>
+
+
+
+<p>Download Composerにあるコマンドをそのまま実行する。</p>
+
+
+
+<p>アップデートでコマンドの内容が変わることがあるので、直接公式ページに行きコマンドをコピペして実行する。</p>
+
+
+
+<pre class="wp-block-code"><code>php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">パスを通す</span></h2>
+
+
+
+<pre class="wp-block-code"><code>sudo mv composer.phar /usr/local/bin/composer</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">バージョンを確認</span></h2>
+
+
+
+<pre class="wp-block-code"><code>composer --version</code></pre>
+
+
+
+<p>バージョンが確認できたらOK！</p>The post <a href="https://blog.popweb.dev/programming/laravel/mac-composer/">MacにComposerをインストール手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/mac-composer/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Laravelのやっておいた方がいい初期設定</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-initial-setting/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-initial-setting/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 28 Jun 2019 06:20:28 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=293</guid>
+
+					<description><![CDATA[<p>Laravelをインストール後の、やってほい方がいい初期設定 タイムゾーンを日本時間に エラーメッセージを日本語化 目次 タイムゾーンを日本時間にエラーメッセージを日本語化resources/lang/ja/valida [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-initial-setting/">Laravelのやっておいた方がいい初期設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Laravelをインストール後の、やってほい方がいい初期設定</p>
+
+
+
+<ul class="wp-block-list"><li><strong>タイムゾーンを日本時間に</strong></li><li><strong>エラーメッセージを日本語化</strong></li></ul>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-10" checked><label class="toc-title" for="toc-checkbox-10">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">タイムゾーンを日本時間に</a></li><li><a href="#toc2" tabindex="0">エラーメッセージを日本語化</a><ol><li><a href="#toc3" tabindex="0">resources/lang/ja/validation.php作成</a></li></ol></li><li><a href="#toc4" tabindex="0">キャッシュをクリア</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">タイムゾーンを日本時間に</span></h2>
+
+
+
+<p>「/config/app.php」を編集します。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>&#39;timezone&#39; =&gt; &#39;UTC&#39;,
+↓
+&#39;timezone&#39; =&gt; &#39;Asia/Tokyo&#39;,</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">エラーメッセージを日本語化</span></h2>
+
+
+
+<p>「/config/app.php」を編集します。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-php" data-lang="PHP"><code>&#39;locale&#39; =&gt; &#39;en&#39;,
+↓
+&#39;locale&#39; =&gt; &#39;ja&#39;,</code></pre></div>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">resources/lang/ja/validation.php作成</span></h3>
+
+
+
+<p>エラーメッセージの日本語ファイルはデフォルトで設置されていないので、手動で設定していきます。</p>
+
+
+
+
+<a rel="noopener" href="https://gist.github.com/syokunin/b37725686b5baf09255b" title="Laravel 5.1 日本語バリデーションメッセージファイル" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img decoding="async" src="https://blog.popweb.dev/wp-content/uploads/cocoon-resources/blog-card-cache/e1243c1243ed74cc7f9615599f65ad74.png" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">Laravel 5.1 日本語バリデーションメッセージファイル</div><div class="blogcard-snippet external-blogcard-snippet">Laravel 5.1 日本語バリデーションメッセージファイル. GitHub Gist: instantly share code, notes, and snippets.</div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://gist.github.com/syokunin/b37725686b5baf09255b" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">gist.github.com</div></div></div></div></a>
+
+
+
+<p>上記、URLから「validation.php」をダウンロードしてきます。</p>
+
+
+
+<p>「resources/lang/ja/validation.php」という感じで設置します。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">キャッシュをクリア</span></h2>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ php artisan config:clear
+または
+$ php artisan config:cache</code></pre></div>
+
+
+
+<p>/config/*.phpを編集した後に反映されない場合は、「php artisan config:cache」をしていてキャッシュを読み込んでいるのが原因。</p>
+
+
+
+<p>なので、上の2つのどちらかのコマンドを実行する必要がある。</p>
+
+
+
+<p>使い分けとしては、開発環境では<code>php artisan config:clear</code>しておいて、本藩環境では<code>php artisan config:cache</code>とするこが推奨されている。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-initial-setting/">Laravelのやっておいた方がいい初期設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-initial-setting/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Eloquentモデルでtimestampがないテーブルに保存・更新でエラーが出たときの対処</title>
+		<link>https://blog.popweb.dev/programming/laravel/eloquent-timestamp-error/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/eloquent-timestamp-error/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 19 Jun 2019 10:04:54 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=188</guid>
+
+					<description><![CDATA[<p>日付情報が必要がなくタイムスタンプを作ってないテーブルへデータを更新・保存しようとすると、以下のようなエラーが出た。 「updated_atカラムがない」と言っている。 対処法 タイムスタンプを無効にするため、Model [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/eloquent-timestamp-error/">Eloquentモデルでtimestampがないテーブルに保存・更新でエラーが出たときの対処</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>日付情報が必要がなくタイムスタンプを作ってないテーブルへデータを更新・保存しようとすると、以下のようなエラーが出た。</p>
+
+
+
+<pre class="wp-block-code"><code>Column not found: 1054 Unknown column ‘updated_at’ in ‘field list’</code></pre>
+
+
+
+<p>「updated_atカラムがない」と言っている。</p>
+
+
+
+<h2 class="wp-block-heading">対処法</h2>
+
+
+
+<p>タイムスタンプを無効にするため、Modelクラスに以下のように記述をする。</p>
+
+
+
+<pre class="wp-block-code"><code>public $timestamps = false;</code></pre>The post <a href="https://blog.popweb.dev/programming/laravel/eloquent-timestamp-error/">Eloquentモデルでtimestampがないテーブルに保存・更新でエラーが出たときの対処</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/eloquent-timestamp-error/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Laravel リレーション先の値がなくて、Trying to get property of non-objectがでちゃった</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-relation-erroe/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-relation-erroe/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 10 Jun 2019 06:41:19 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=190</guid>
+
+					<description><![CDATA[<p>DBのメインテーブルからサブテーブルへリレーションさせて、メインテーブル側から値を取得しようとしたらエラー「Trying to get property &#8216;time&#8217; of non-object」 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-relation-erroe/">Laravel リレーション先の値がなくて、Trying to get property of non-objectがでちゃった</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>DBのメインテーブルからサブテーブルへリレーションさせて、メインテーブル側から値を取得しようとしたらエラー<strong>「Trying to get property &#8216;time&#8217; of non-object」</strong>が出た。</p>
+
+
+
+<p>コントロール側での値の呼び出し方はこんな感じ。 </p>
+
+
+
+<pre class="wp-block-code"><code>function getTime(){
+    $time = $this->hasOne('App\Time')->first()->time;
+}</code></pre>
+
+
+
+<p>そして、view側ではforeashでまわす。</p>
+
+
+
+<pre class="wp-block-code"><code>@foreach($item->getTime() as $yobi => $time)
+&lt;dl class="col-sm">
+    &lt;dt>{{$yobi}}&lt;/dt>
+    &lt;dd>{{$time}}&lt;/dd>
+&lt;/dl>
+@endforeach</code></pre>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-14" checked><label class="toc-title" for="toc-checkbox-14">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">原因は、リレーション先の値（time）が全て無いため。</a></li><li><a href="#toc2" tabindex="0">解決方法は２パターン</a><ol><li><a href="#toc3" tabindex="0">ヘルパー関数「optional()」を使う</a></li><li><a href="#toc4" tabindex="0">if文でNullでないことを確認する</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">原因は、リレーション先の値（time）が全て無いため。</span></h2>
+
+
+
+<p>foreachで回す場合、メインテーブルとサブテーブルでリレーションは同じだけ用意しないとエラーが出る。</p>
+
+
+
+<p>でも、サブテーブルの情報が全てそろってないことがほとんど。</p>
+
+
+
+<p>なので、ない場合はNullで返すか、値を呼び出さないようにすればよい。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">解決方法は２パターン</span></h2>
+
+
+
+<p>解決方法は２つある。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>ヘルパー関数「optional()」を使う</strong></li><li><strong> if文でNullでないことを確認する </strong></li></ul>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">ヘルパー関数「optional()」を使う</span></h3>
+
+
+
+<p>ヘルパー関数「optional()」は、リレーション先の値がない場合Nullで返してくれる関数。</p>
+
+
+
+<pre class="wp-block-code"><code>$time = optional($this->hasOne('App\Time')->first())->time;</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">if文でNullでないことを確認する</span></h3>
+
+
+
+<p>こっちの方がよくあるパターン。単純にNullでなかったら、値を返すというもの。</p>
+
+
+
+<pre class="wp-block-code"><code>$time = $this->hasOne('App\Time')->first()->time;
+if($time != null){
+    return $time;
+}</code></pre>
+
+
+
+<p>これら2つのどっちかで、non-objectエラーは回避できる。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-relation-erroe/">Laravel リレーション先の値がなくて、Trying to get property of non-objectがでちゃった</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-relation-erroe/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Laravelでルート以外のページが404（Not Found）になっちゃった時の対処</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-404-not-found/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-404-not-found/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 07 Jun 2019 00:57:17 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=182</guid>
+
+					<description><![CDATA[<p>Laravelで、トップページは表示できるけど他のページに飛ぶとなぜか404になっちゃう時に確認すべきことのメモ。 httpd.confを確認する ドキュメントルートのディレクティブ内の「AllowOverride」が「 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-404-not-found/">Laravelでルート以外のページが404（Not Found）になっちゃった時の対処</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Laravelで、トップページは表示できるけど他のページに飛ぶとなぜか404になっちゃう時に確認すべきことのメモ。</p>
+
+
+
+<h2 class="wp-block-heading">httpd.confを確認する</h2>
+
+
+
+<p>ドキュメントルートのディレクティブ内の「AllowOverride」が「None」になってたら、「All」に変更しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;Directory "/var/www/html">
+AllowOverride All
+&lt;/Directory></code></pre>
+
+
+
+<p>AllowOverride Noneになっていると、 .htaccessが無効になるので、Allにして有効に。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-404-not-found/">Laravelでルート以外のページが404（Not Found）になっちゃった時の対処</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-404-not-found/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Laravelでログイン機能の作り方手順【XAMPP】</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-login/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-login/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 05 Jun 2019 00:55:54 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=165</guid>
+
+					<description><![CDATA[<p>Laravelの認証機能をつかって、よくあるログイン機能を作っていきます。 目次 Laravelインストールデータベースの設定データベースの作成MySQLにログインします。データベース作成マイグレーションを実行する認証機 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-login/">Laravelでログイン機能の作り方手順【XAMPP】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Laravelの認証機能をつかって、よくあるログイン機能を作っていきます。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-18" checked><label class="toc-title" for="toc-checkbox-18">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Laravelインストール</a></li><li><a href="#toc2" tabindex="0">データベースの設定</a></li><li><a href="#toc3" tabindex="0">データベースの作成</a><ol><li><a href="#toc4" tabindex="0">MySQLにログインします。</a></li><li><a href="#toc5" tabindex="0">データベース作成</a></li></ol></li><li><a href="#toc6" tabindex="0">マイグレーションを実行する</a></li><li><a href="#toc7" tabindex="0">認証機能を作るartisanコマンドを実行する</a></li><li><a href="#toc8" tabindex="0">動作確認</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Laravelインストール</span></h2>
+
+
+
+<p>適当なプロジェクト名でLaravelをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>composer create-project --prefer-dist laravel/laravel laravel_login</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">データベースの設定</span></h2>
+
+
+
+<p>データベースは、MySQLを使用します。</p>
+
+
+
+<p>.envファイルを開いて以下ののように、データベース名、ユーザー名、パスワードを設定ます。</p>
+
+
+
+<pre class="wp-block-code"><code>DB_DATABASE=login_db
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">データベースの作成</span></h2>
+
+
+
+<p>データベースの設定で記述したデータベース名でデータベースを作成します。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">MySQLにログインします。</span></h3>
+
+
+
+<pre class="wp-block-code"><code>>mysql -u root</code></pre>
+
+
+
+<p>mysqlコマンドが使えない場合は、Pathを追加する必要があります。<br><a href="https://blog.pop-web.net/programming/xampp-mysql-command/" class="broken_link">XAMPPでMySQLコマンドを使えるようにする方法【Windows10】</a></p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">データベース作成</span></h3>
+
+
+
+<pre class="wp-block-code"><code>mysql> create database login_db;</code></pre>
+
+
+
+<p>作成されたか確認しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>mysql> show databases;</code></pre>
+
+
+
+<p>できたら一旦、MySQLを終了しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>mysql> exit;</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">マイグレーションを実行する</span></h2>
+
+
+
+<pre class="wp-block-code"><code>>php artisan migrate
+Migration table created successfully.
+Migrating: 2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">認証機能を作るartisanコマンドを実行する</span></h2>
+
+
+
+<pre class="wp-block-code"><code>>php artisan make:auth
+Authentication scaffolding generated successfully.</code></pre>
+
+
+
+<p>これでなんと、認証機能に最低限必要なファイルは生成されていまうんです。</p>
+
+
+
+<p>以下の3つの機能が実装されています。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>ログイン</strong></li><li><strong>登録</strong></li><li><strong>パスワードリセット</strong></li></ul>
+
+
+
+<p>ブラウザで確認します。</p>
+
+
+
+<p>「/home」へアクセスしてください。</p>
+
+
+
+<figure class="wp-block-image"><img loading="lazy" decoding="async" width="700" height="415" src="https://blog.pop-web.net/wp-content/uploads/2019/06/laravel_login-700x415.jpg" alt="" class="wp-image-173" srcset="https://storage.googleapis.com/gcs.pop-web.net/2019/06/laravel_login-700x415.jpg 700w, https://storage.googleapis.com/gcs.pop-web.net/2019/06/laravel_login-300x178.jpg 300w, https://storage.googleapis.com/gcs.pop-web.net/2019/06/laravel_login-768x456.jpg 768w, https://storage.googleapis.com/gcs.pop-web.net/2019/06/laravel_login-1200x712.jpg 1200w, https://storage.googleapis.com/gcs.pop-web.net/2019/06/laravel_login.jpg 1202w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>こんな感じで、ログインフォームやら、登録機能やらができあがっています。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">動作確認</span></h2>
+
+
+
+<p>「登録」や「ログイン」、「パスワードリセット」を実際に動作するか確認しておきます。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-login/">Laravelでログイン機能の作り方手順【XAMPP】</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-login/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>共有するLaravelプロジェクトをgit cloneしてきた後の設定手順</title>
+		<link>https://blog.popweb.dev/programming/laravel/laravel-project-git-clone/</link>
+					<comments>https://blog.popweb.dev/programming/laravel/laravel-project-git-clone/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 28 May 2019 13:47:39 +0000</pubDate>
+				<category><![CDATA[Laravel]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=150</guid>
+
+					<description><![CDATA[<p>Laravelのチーム開発で、途中から参加する場合、リモートリポジトリからプロジェクトデータをgit cloneすることはよくあります。 Laravelは、元から「.gitignore」ファイルが存在している為、gitリ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/laravel/laravel-project-git-clone/">共有するLaravelプロジェクトをgit cloneしてきた後の設定手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Laravelのチーム開発で、途中から参加する場合、リモートリポジトリからプロジェクトデータをgit cloneすることはよくあります。</p>
+
+
+
+<p>Laravelは、元から「.gitignore」ファイルが存在している為、gitリポジトリからデータを落としてきても不完全なわけです。</p>
+
+
+
+<p>よくあるのが、「vendor」ディレクトリや「.env」ファイルがなくて動かないよってやつです。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-20" checked><label class="toc-title" for="toc-checkbox-20">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">git cloneでプロジェクトを落としてくる</a></li><li><a href="#toc2" tabindex="0">composerでライブラリを入れる</a></li><li><a href="#toc3" tabindex="0">.envファイルの作成</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">git cloneでプロジェクトを落としてくる</span></h2>
+
+
+
+<p>まず、はじめに開発するLaravelプロジェクトをgit cloneします。</p>
+
+
+
+<pre class="wp-block-code"><code>git clone [gitリモートリポジトリのURL]</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">composerでライブラリを入れる</span></h2>
+
+
+
+<p>ライブラリ群をインストールします。</p>
+
+
+
+<p> 「composer.lock」ファイルを読み込みに行かせるために、以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code>composer install</code></pre>
+
+
+
+<p>これで、「vendor」ディレクトリができて中に、ライブラリ群が入っている状態になります。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">.envファイルの作成</span></h2>
+
+
+
+<p>設定ファイルである「.env」ファイルを作成します。</p>
+
+
+
+<p>すでに、ある「.env.example」ファイルをリネームして作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>cp .env.example .env</code></pre>
+
+
+
+<p> アプリケーションキーの設定</p>
+
+
+
+<p> 「.env」ファイルの中の、APP_KEY値がデフォルトままなので、以下のコマンドで値をセットします。</p>
+
+
+
+<pre class="wp-block-code"><code>php artisan key:generate</code></pre>
+
+
+
+<p>この設定で、ユーザーセッションや他の暗号化済みデーターは安全に守られるようになります。</p>
+
+
+
+<p>これで、Laravelプロジェクトをブラウザで確認してちゃんと表示できているか確認します。</p>
+
+
+
+<p>別途、ドキュメントルートの設定が必要な場合がありますので、その場合も各自設定しておきましょう。</p>The post <a href="https://blog.popweb.dev/programming/laravel/laravel-project-git-clone/">共有するLaravelプロジェクトをgit cloneしてきた後の設定手順</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/laravel/laravel-project-git-clone/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

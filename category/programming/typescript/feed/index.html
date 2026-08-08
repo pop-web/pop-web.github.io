@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>TypeScript | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/typescript/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sun, 14 Jun 2020 15:29:08 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>TypeScript | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>TypeScriptの型まとめ</title>
+		<link>https://blog.popweb.dev/programming/typescript-type/</link>
+					<comments>https://blog.popweb.dev/programming/typescript-type/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 11 Jun 2020 14:01:20 +0000</pubDate>
+				<category><![CDATA[TypeScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1313</guid>
+
+					<description><![CDATA[<p>TypeScriptの方の書き方をまとめていく。 目次 boolean型number型string型オブジェクト型配列型Tuple型Enum型Any型Union型リテラル型typeエイリアス関数宣言で型を使う場合unde [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/typescript-type/">TypeScriptの型まとめ</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>TypeScriptの方の書き方をまとめていく。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">boolean型</a></li><li><a href="#toc2" tabindex="0">number型</a></li><li><a href="#toc3" tabindex="0">string型</a></li><li><a href="#toc4" tabindex="0">オブジェクト型</a></li><li><a href="#toc5" tabindex="0">配列型</a></li><li><a href="#toc6" tabindex="0">Tuple型</a></li><li><a href="#toc7" tabindex="0">Enum型</a></li><li><a href="#toc8" tabindex="0">Any型</a></li><li><a href="#toc9" tabindex="0">Union型</a></li><li><a href="#toc10" tabindex="0">リテラル型</a></li><li><a href="#toc11" tabindex="0">typeエイリアス</a></li><li><a href="#toc12" tabindex="0">関数宣言で型を使う場合</a></li><li><a href="#toc13" tabindex="0">undefined型とnull型</a></li><li><a href="#toc14" tabindex="0">関数の変数に型付けする関数型</a></li><li><a href="#toc15" tabindex="0">コールバック関数に型付け</a></li><li><a href="#toc16" tabindex="0">unknown型</a></li><li><a href="#toc17" tabindex="0">never型</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">boolean型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const value: boolean;</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">number型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const num: number;</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">string型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const greet: string;</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">オブジェクト型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const cat: {
+  name: string;
+  age: number;
+} = {
+  name: "tama",
+  age: 2,
+};</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">配列型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const colors: string&#91;] = &#91;"red", "blue"];</code></pre>
+
+
+
+<p>配列にstring型やnumber型が混在する場合はanyなどが使える。</p>
+
+
+
+<pre class="wp-block-code"><code>const colors: any&#91;] = &#91;"red", "blue", 9999];</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">Tuple型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const human: &#91;string, number, boolean] = &#91;"man", 26, true];</code></pre>
+
+
+
+<p>配列の中身の型を制限する。</p>
+
+
+
+<p>上記の例だと、1番目はstring型、2番目はnumber型、3番目はboolean型しか受け付けない。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">Enum型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>// メダルの色を列挙させておく。
+// MedalColorという型ができる。
+enum MedalColor {
+  GOLD = "金メダル",
+  SILVER = "銀メダル",
+  BRONZE = "銅メダル",
+}
+
+const medal = {
+  color: MedalColor.GOLD,
+};
+
+// 上で列挙した値以外はエラーとなる。
+
+// NG。
+medal.color = "金メダル";
+
+// OK。
+medal.color = MedalColor.GOLD;</code></pre>
+
+
+
+<p>Enumは、Enumeration（列挙）の略。</p>
+
+
+
+<p>その名の通り、値を列挙されておいてそれ以外は受け付けない。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">Any型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>let variable: any = "foo";
+variable = {};
+variable.bar = "bar";</code></pre>
+
+
+
+<p>any型は、なんでも入れることができる。</p>
+
+
+
+<p>つまり、素のJavaScriptと同じ。</p>
+
+
+
+<p>TypeScriptを使う意味があまりなくなるので、基本使わないこと。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">Union型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>let union: number | string = "Hello";
+union = 6;</code></pre>
+
+
+
+<p>複数の型を受け付けれるようにする。</p>
+
+
+
+<p>上の例だと、<code>|</code>はor演算子のようにnumber型か、string型かを受け付けることができる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">リテラル型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const foo: "foo" = "foo"; // OK
+const foo: "foo" = 2; // NG
+const foo: "foo" = false; // NG</code></pre>
+
+
+
+<p>リテラル型は決まった値しか受け付けない。</p>
+
+
+
+<p>上の例のように「foo」という文字列のリテラル型しか受け付けなくなる。</p>
+
+
+
+<p>ちなみに、リテラルとは、<strong>直接記述されたデータ値</strong>のこと。</p>
+
+
+
+<p>上の例では「foo」が文字列リテラル、「2」が整数リテラル、「false」が真偽値リテラルとなる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc11">typeエイリアス</span></h2>
+
+
+
+<pre class="wp-block-code"><code>type StringNumber = string | number;
+const foobar: StringNumber = 3;</code></pre>
+
+
+
+<p>別名をつけることで、型を変数のように扱うことができる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc12">関数宣言で型を使う場合</span></h2>
+
+
+
+<pre class="wp-block-code"><code>function numCheck(num1: number, num2: number): boolean {
+  if (num1 === num2) {
+    return true;
+  } else {
+    return false;
+  }
+}</code></pre>
+
+
+
+<p>引数にそれぞれ型付けはする。戻り値の型付けは引数のあとに指定する。</p>
+
+
+
+<p>何も返さない関数の場合は、<strong>void型</strong>を使う。</p>
+
+
+
+<pre class="wp-block-code"><code>function helloWorld(): void {
+  console.log("Hello World!");
+}</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc13">undefined型とnull型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>const foo: undefined = undefined; // OK
+const bar: null = null; // OK
+
+const baz: undefined = null; // OK
+const qux: null = undefined; // OK</code></pre>
+
+
+
+<p>undefined型とnull型はそれぞれundefinedとnullを変数入れることができる。それ以外はエラーとなる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc14">関数の変数に型付けする関数型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>function NumCheck(num1: number, num2: number): boolean {
+  if (num1 === num2) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// 関数を入れる型をつける（型注釈）
+const tmpNumCheck: (num: number, num2: number) => boolean = NumCheck;</code></pre>
+
+
+
+<p>変数へ関数を代入するときに型付けするときに明示的に記述する。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc15">コールバック関数に型付け</span></h2>
+
+
+
+<pre class="wp-block-code"><code>function plusOne(val: number, callback: (val: number) => number): void {
+  const result = callback(val + 1);
+  console.log(result);
+}
+plusOne(1, (val) => {
+  return val * 2;
+});</code></pre>
+
+
+
+<p>前述の関数の型付け同様に、callback関数の後にセミコロンをつけて型付けを指定する。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc16">unknown型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>let unknownValue: unknown;
+unknownValue = "foo"; // OK
+unknownValue = false; // OK
+unknownValue = 1; // OK
+let bar = unknownValue; // NG
+
+if(typeof unknownValue === 'string'){
+  let bar = unknownValue // OK
+}</code></pre>
+
+
+
+<p>代入するときはany型のようになんにでも入れることができるが、他の変数に代入するなど使うときに注意が必要。</p>
+
+
+
+<p>typeofで明示的に型のチェックを行えば、使うことができる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc17">never型</span></h2>
+
+
+
+<pre class="wp-block-code"><code>function error(msg: string): never {
+    throw new Error(msg);
+}</code></pre>
+
+
+
+<p>存在する可能性がない、値を返すことがない場合に使う。</p>The post <a href="https://blog.popweb.dev/programming/typescript-type/">TypeScriptの型まとめ</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/typescript-type/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>TypeScriptのインストールとJavaScriptへのコンパイル方法</title>
+		<link>https://blog.popweb.dev/programming/typescript-install/</link>
+					<comments>https://blog.popweb.dev/programming/typescript-install/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 07 Jun 2020 14:21:00 +0000</pubDate>
+				<category><![CDATA[TypeScript]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1306</guid>
+
+					<description><![CDATA[<p>タイトル通りTypeScriptのインストールとJavaScriptのコンパイル方法をやっていく。 目次 TyepScriptのインストールJavaScriptへのコンパイル方法targetオプションwatchオブション [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/typescript-install/">TypeScriptのインストールとJavaScriptへのコンパイル方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>タイトル通りTypeScriptのインストールとJavaScriptのコンパイル方法をやっていく。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">TyepScriptのインストール</a></li><li><a href="#toc2" tabindex="0">JavaScriptへのコンパイル方法</a></li><li><a href="#toc3" tabindex="0">targetオプション</a></li><li><a href="#toc4" tabindex="0">watchオブション</a></li><li><a href="#toc5" tabindex="0">まとめてコンパイルする場合</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">TyepScriptのインストール</span></h2>
+
+
+
+<p>Node.jsは事前にインストールされているものとする。</p>
+
+
+
+<p>以下のコマンドでTyepScriptをインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>npm install -g typescript</code></pre>
+
+
+
+<p>-gオプションはクローバルインストールでどこでもTypeScriptを使えるのようにするオプション。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">JavaScriptへのコンパイル方法</span></h2>
+
+
+
+<p>適当にtsファイルを作成する。</p>
+
+
+
+<p><strong>・test.ts</strong></p>
+
+
+
+<pre class="wp-block-code"><code>const a = "Hello World";
+console.log(a)</code></pre>
+
+
+
+<p>これを以下のコマンドでコンパイルする</p>
+
+
+
+<pre class="wp-block-code"><code>tsc test.ts</code></pre>
+
+
+
+<p>実行するとindex.jsファイルが生成されてコンパイルがされていることが確認できる。</p>
+
+
+
+<p><strong>・test.js</strong></p>
+
+
+
+<pre class="wp-block-code"><code>var a = "Hello World";</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">targetオプション</span></h2>
+
+
+
+<p><code>--target</code>オプションで指定した仕様にトランスパイルできる。</p>
+
+
+
+<p>例えば、ES2015（ES6）仕様にしたい場合、以下のように入力する。</p>
+
+
+
+<pre class="wp-block-code"><code>tsc index.ts --target es2015</code></pre>
+
+
+
+<p>ちなみに、<code>--target</code>オプションしない場合は、ES3にトラスパイルされる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">watchオブション</span></h2>
+
+
+
+<p><code>--watch</code>オプションで保存と同時に自動コンパイルしてくれる。</p>
+
+
+
+<pre class="wp-block-code"><code>tsc test.ts --watch
+// または
+tsc test.ts -w</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">まとめてコンパイルする場合</span></h2>
+
+
+
+<p>複数のtsファイルをコンパイルする場合、まず以下のコマンドでtsconfig.jsonという設定ファイルを作成する。</p>
+
+
+
+<pre class="wp-block-code"><code>tsc --init</code></pre>
+
+
+
+<p>設定ファイルを作成してからは、tscコマンドを入力するだけでtsconfig.jsonの設定を見に行ってくれるので複数ファイルでもコンパイルすることができる。</p>
+
+
+
+<pre class="wp-block-code"><code>tsc</code></pre>
+
+
+
+<p></p>The post <a href="https://blog.popweb.dev/programming/typescript-install/">TypeScriptのインストールとJavaScriptへのコンパイル方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/typescript-install/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

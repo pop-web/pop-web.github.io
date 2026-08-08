@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Docker | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/server/docker/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Fri, 29 Oct 2021 03:53:17 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Docker | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>ngrokでDockerのローカル開発環境を簡単にWEB公開する方法</title>
+		<link>https://blog.popweb.dev/server/ngrok-docker/</link>
+					<comments>https://blog.popweb.dev/server/ngrok-docker/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 18 Dec 2020 07:48:53 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.popweb.dev/?p=1543</guid>
+
+					<description><![CDATA[<p>ローカル開発環境の状況をクライアントへ確認してもらいたい時、もしくは複数端末でブラウザ確認したい時は多々ある。 しかし、ちょっと確認してもらえればいいのに、いちいちテスト環境用のサーバを用意してにアップロードするのは面倒 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/ngrok-docker/">ngrokでDockerのローカル開発環境を簡単にWEB公開する方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>ローカル開発環境の状況を<strong>クライアントへ確認してもらいたい時、もしくは複数端末でブラウザ確認したい時</strong>は多々ある。</p>
+
+
+
+<p>しかし、ちょっと確認してもらえればいいのに、いちいちテスト環境用のサーバを用意してにアップロードするのは面倒。</p>
+
+
+
+<p>そこで、ローカル開発環境を簡単にWEB上に公開できるツール<strong>「ngrok」</strong>（エヌジーロック?</p>
+
+
+
+<p>）を使う。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">ngrokのインストール</a></li><li><a href="#toc2" tabindex="0">Dockerのローカル開発環境をWEB公開する</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">ngrokのインストール</span></h2>
+
+
+
+<p>Homebrewがインストールしているか確認。</p>
+
+
+
+<p>していなければインストールしておく。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ brew -v</code></pre></div>
+
+
+
+<p>以下のコマンドでngrokをインストール</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ brew install --cask ngrok
+又は、
+$ brew cask install ngrok</code></pre></div>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">Dockerのローカル開発環境をWEB公開する</span></h2>
+
+
+
+<p>Dockerのローカル開発環境をWEB公開するには、まずはポートを確認。</p>
+
+
+
+<p>以下のようなURLで開発環境を確認している場合</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-plain"><code>http://localhost:10080/</code></pre></div>
+
+
+
+<p>以下の、コマンドでngrokが起動する</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ ngrok http 10080</code></pre></div>
+
+
+
+<p>起動すると公開用のURLが発行される。</p>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="700" height="295" src="https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2-700x295.png" alt="" class="wp-image-1548" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2-700x295.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2-300x126.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2-768x323.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2-1536x647.png 1536w, https://storage.googleapis.com/gcs.pop-web.net/2020/12/3dd6d4c28da25ecb8ae3334d2da835a2.png 1572w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>Forwardingのhttp://〜にアクセスすれば、WEB公開できたことが確認できる。</p>
+
+
+
+<p>公開を止める時は、<code>Ctrl + C</code>。</p>The post <a href="https://blog.popweb.dev/server/ngrok-docker/">ngrokでDockerのローカル開発環境を簡単にWEB公開する方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/ngrok-docker/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>DockerfileのEXPOSE命令は実際にポートをあけない</title>
+		<link>https://blog.popweb.dev/server/dockerfile-expose/</link>
+					<comments>https://blog.popweb.dev/server/dockerfile-expose/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 25 Mar 2020 16:03:04 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=867</guid>
+
+					<description><![CDATA[<p>DockerfileのEXPOSEに外部に公開するポートを記述するが、これを記述することで実際にポートをあけて公開するわけではない。 開発者がDockerfileを見たときに「コンテナ起動時にどのポートを使用するのか」を [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/dockerfile-expose/">DockerfileのEXPOSE命令は実際にポートをあけない</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<pre class="wp-block-code"><code>EXPOSE 5000</code></pre>
+
+
+
+<p>DockerfileのEXPOSEに外部に公開するポートを記述するが、これを記述することで<strong>実際にポートをあけて公開するわけではない。</strong></p>
+
+
+
+<p>開発者がDockerfileを見たときに「コンテナ起動時にどのポートを使用するのか」を確認するためものであり、公開されると想定されるポートを記述しているだけである。</p>
+
+
+
+<p>実際にコンテナ起動時にポートを外部へ公開する場合は、docker run に-pオプションを使う。</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -p 5000:5000 sample-image
+</code></pre>
+
+
+
+<p>また、-Pオプションをつけた場合は全ポート公開となる。</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -P sample-image</code></pre>The post <a href="https://blog.popweb.dev/server/dockerfile-expose/">DockerfileのEXPOSE命令は実際にポートをあけない</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/dockerfile-expose/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>docker-compose runとdocker-compose execの違い</title>
+		<link>https://blog.popweb.dev/server/docker-compose-run-exec/</link>
+					<comments>https://blog.popweb.dev/server/docker-compose-run-exec/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 23 Mar 2020 15:26:57 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=853</guid>
+
+					<description><![CDATA[<p>docker-composeコマンドのrunとexecの大まかな違いについて説明。 目次 run例exec例 run コンテナを起動し、コマンドを実行できる。 起動していないコンテナに実行することができる。 例 exec [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-compose-run-exec/">docker-compose runとdocker-compose execの違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>docker-composeコマンドのrunとexecの大まかな違いについて説明。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">run</a><ol><li><a href="#toc2" tabindex="0">例</a></li></ol></li><li><a href="#toc3" tabindex="0">exec</a><ol><li><a href="#toc4" tabindex="0">例</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">run</span></h2>
+
+
+
+<p>コンテナを起動し、コマンドを実行できる。</p>
+
+
+
+<p>起動していないコンテナに実行することができる。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">例</span></h3>
+
+
+
+<pre class="wp-block-code"><code>docker-compose run app ash</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">exec</span></h2>
+
+
+
+<p>起動中のコンテナに対して、コマンドを実行できる。</p>
+
+
+
+<p>起動していないコンテナには実行できないが、runよりも高速に動作する。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">例</span></h3>
+
+
+
+<pre class="wp-block-code"><code>docker-compose exec app ash</code></pre>The post <a href="https://blog.popweb.dev/server/docker-compose-run-exec/">docker-compose runとdocker-compose execの違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-compose-run-exec/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>docker-composeの「up」「run」「start」の違い</title>
+		<link>https://blog.popweb.dev/server/docker-compose-up-run-start/</link>
+					<comments>https://blog.popweb.dev/server/docker-compose-up-run-start/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 13 Mar 2020 16:45:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=786</guid>
+
+					<description><![CDATA[<p>docker-compseコマンドの「up」「run」「start」の違いがよく分かっていなくて、ちゃんと調べてみた。 そしたら、以下の日本語版のドキュメントで詳しく解説してくれていた。 up ・ run ・ start [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-compose-up-run-start/">docker-composeの「up」「run」「start」の違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>docker-compseコマンドの「up」「run」「start」の違いがよく分かっていなくて、ちゃんと調べてみた。</p>
+
+
+
+<p>そしたら、以下の日本語版のドキュメントで詳しく解説してくれていた。</p>
+
+
+
+<p><a rel="noopener" href="http://docs.docker.jp/compose/faq.html#up-run-start" target="_blank" aria-label="up ・ run ・ start の違いは何ですか？ (新しいタブで開く)">up ・ run ・ start の違いは何ですか？</a></p>The post <a href="https://blog.popweb.dev/server/docker-compose-up-run-start/">docker-composeの「up」「run」「start」の違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-compose-up-run-start/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Dockerのクラスタとは？</title>
+		<link>https://blog.popweb.dev/server/docker-cluster/</link>
+					<comments>https://blog.popweb.dev/server/docker-cluster/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 10 Mar 2020 16:04:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=765</guid>
+
+					<description><![CDATA[<p>Dockerには、Docker Swarmというクラスタ管理機能というツールがある。 このクラスタとはなにか。 クラスタとは、複数のシステムをまとめて1つのシステムとして振る舞っているもの。 クラスタ化することをクラスタ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-cluster/">Dockerのクラスタとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Dockerには、Docker Swarmというクラスタ管理機能というツールがある。</p>
+
+
+
+<p>このクラスタとはなにか。</p>
+
+
+
+<p>クラスタとは、<strong>複数のシステムをまとめて1つのシステムとして振る舞っているもの。</strong></p>
+
+
+
+<p>クラスタ化することをクラスタリングと言われたりもする。</p>
+
+
+
+<p>Docker Swarmでは、複数のDockerホストをネットワーク接続しグループ化することで1つのDockerホストのように管理ができる。</p>
+
+
+
+<p>これを、Dockerのクラスタ管理という。</p>The post <a href="https://blog.popweb.dev/server/docker-cluster/">Dockerのクラスタとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-cluster/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Dockerコンテナの一括削除コマンド</title>
+		<link>https://blog.popweb.dev/server/docker-container-all-remove/</link>
+					<comments>https://blog.popweb.dev/server/docker-container-all-remove/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 09 Mar 2020 13:11:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=760</guid>
+
+					<description><![CDATA[<p>停止中のコンテナ、未使用イメージ、未使用ボリュームを削除するコマンド ※ちなみに「prune」は、切り取る、削る、取り除くといった意。</p>
+The post <a href="https://blog.popweb.dev/server/docker-container-all-remove/">Dockerコンテナの一括削除コマンド</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<h2 class="wp-block-heading">停止中のコンテナ、未使用イメージ、未使用ボリュームを削除するコマンド</h2>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-bash" data-lang="Bash"><code>$ docker system prune</code></pre></div>
+
+
+
+<p>※ちなみに「prune」は、切り取る、削る、取り除くといった意。</p>The post <a href="https://blog.popweb.dev/server/docker-container-all-remove/">Dockerコンテナの一括削除コマンド</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-container-all-remove/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Docker初心者向け】Docker Machineとは？</title>
+		<link>https://blog.popweb.dev/server/docker-machine/</link>
+					<comments>https://blog.popweb.dev/server/docker-machine/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 07 Mar 2020 15:56:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=748</guid>
+
+					<description><![CDATA[<p>Docker MachineとはDocker（Dockerホスト）の実行させる仮想環境を管理するツール。 当初、DockerはLinux環境でしか使えなかった。そのため、MacやWindowsではVirtualBoxで仮 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-machine/">【Docker初心者向け】Docker Machineとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Docker MachineとはDocker（Dockerホスト）の実行させる仮想環境を管理するツール。</p>
+
+
+
+<p>当初、DockerはLinux環境でしか使えなかった。そのため、MacやWindowsではVirtualBoxで仮想環境を構築しその上にDockerを動作させていた。</p>
+
+
+
+<p>しかし、Docker for MacやDocker for Windowsなどが登場して、単にDockerを利用する際には、Docker Machineは使われなくなった。</p>
+
+
+
+<p>使われる場合としては、AWSやGCPといったクラウド環境へDocker環境を構築する際にに使われる。</p>
+
+
+
+<p>Docker Machineが便利なところは、<strong>コマンドラインからリモートのクラウド環境下でDockerホストを簡単に作成・管理するができること。</strong></p>
+
+
+
+<p>Docker Machineは使うには、事前にVirtualBoxをインストールしておく。</p>
+
+
+
+<h1 class="wp-block-heading">Docker Machineの基本操作</h1>
+
+
+
+<h4 class="wp-block-heading">Dockerホストのリスト表示</h4>
+
+
+
+<pre class="wp-block-code"><code>docker-machine ls</code></pre>
+
+
+
+<h4 class="wp-block-heading">Dockerホストの作成・起動</h4>
+
+
+
+<p>「&#8211;driver」で仮想化のドライバーとしてvirtualboxを使用し名前をdefaultという名のDockerホストを作成する。作成と同時に起動もしてくれる。<code>--driver virtualbox</code>は省略可。</p>
+
+
+
+<pre class="wp-block-code"><code>docker-machine create --driver virtualbox default</code></pre>
+
+
+
+<h4 class="wp-block-heading">Dockerホストの停止</h4>
+
+
+
+<pre class="wp-block-code"><code>docker-machine stop default</code></pre>
+
+
+
+<h4 class="wp-block-heading">Dockerホストの起動</h4>
+
+
+
+<pre class="wp-block-code"><code>docker-machine start default</code></pre>
+
+
+
+<h4 class="wp-block-heading">Dockerホストに接続</h4>
+
+
+
+<p>作成したDockerホストへ接続する。</p>
+
+
+
+<p>まず、接続対象のDockerホストを設定する。<code>env</code>コマンドを使う。</p>
+
+
+
+<pre class="wp-block-code"><code>docker-machine env default
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/hogeyama/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
+# Run this command to configure your shell:
+# eval $(docker-machine env default)</code></pre>
+
+
+
+<p>いろいろと環境設定がでてくるが、一番下のコマンドを入力すれば自動で設定される。</p>
+
+
+
+<pre class="wp-block-code"><code>eval $(docker-machine env default)</code></pre>
+
+
+
+<p><code>docker-machine ls</code>でdockerホストのACTIVEステータスが「*」になってアクティブになっていること確認。</p>
+
+
+
+<p>適当なコンテナを起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -d -p 8080:80 nginx</code></pre>
+
+
+
+<p><code>ssh</code>コマンドでssh接続する。</p>
+
+
+
+<pre class="wp-block-code"><code>docker-machine ssh default</code></pre>
+
+
+
+<p>接続できたら、<code>docker ps -a</code>などで先程作成したnginxのコンテナがあることが確認できる。</p>
+
+
+
+<p>また、DockerホストのIPを確認するには<code>ip</code>コマンド確認できる。</p>
+
+
+
+<pre class="wp-block-code"><code>docker-machine ip default</code></pre>
+
+
+
+<p>表示されたIPの8080番ポートをつかってブラウザでアクセスすると、nginxデフォルトページが確認できる。</p>
+
+
+
+<pre class="wp-block-code"><code>http:&#47;&#47;{IPアドレス}:8080</code></pre>
+
+
+
+<h4 class="wp-block-heading">Dockerホストの接続対象の解除</h4>
+
+
+
+<p>接続対象のDockerホストを解除するには、<code>env</code>コマンドに<code>-u</code>オプションをつける。</p>
+
+
+
+<pre class="wp-block-code"><code>docker-machine env -u</code></pre>
+
+
+
+<p>そして、このコマンドで最後に表示されたコマンドを入力することで解除ができる。</p>
+
+
+
+<pre class="wp-block-code"><code>eval $(docker-machine env -u)</code></pre>
+
+
+
+<p><code>docker-machine ls</code>でdockerホストのACTIVEステータスが「-」になっていることを確認。</p>The post <a href="https://blog.popweb.dev/server/docker-machine/">【Docker初心者向け】Docker Machineとは？</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-machine/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Docker Machine】docker-machine command not foundとなるので手動でインストール</title>
+		<link>https://blog.popweb.dev/server/docker-machine-install/</link>
+					<comments>https://blog.popweb.dev/server/docker-machine-install/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 06 Mar 2020 10:52:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=745</guid>
+
+					<description><![CDATA[<p>Docker for Macをインストールしたが、docker-machineとコマンド入力してもそんなもんは見つからないと言われ、Docker Machineが使えなかった。 調べてみると、以前はDockerインストー [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-machine-install/">【Docker Machine】docker-machine command not foundとなるので手動でインストール</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Docker for Macをインストールしたが、<code>docker-machine</code>とコマンド入力してもそんなもんは見つからないと言われ、Docker Machineが使えなかった。</p>
+
+
+
+<p>調べてみると、以前はDockerインストールと同時に一緒インストールされていたが、今はされない模様。</p>
+
+
+
+<p>なので、以下のURL先を参考に手動でインストールする。</p>
+
+
+
+
+<a rel="noopener" href="https://github.com/docker/machine/releases/" title="Releases · docker-archive-public/docker.machine" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img decoding="async" src="https://blog.popweb.dev/wp-content/uploads/cocoon-resources/blog-card-cache/c04f6232b6dd3e223a807521f225dc92.machine" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">Releases · docker-archive-public/docker.machine</div><div class="blogcard-snippet external-blogcard-snippet">Machine management for a container-centric world. Contribute to docker-archive-public/docker.machine development by crea...</div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img decoding="async" src="https://www.google.com/s2/favicons?domain=https://github.com/docker/machine/releases/" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">github.com</div></div></div></div></a>
+
+
+
+<p>URL先を参考に以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code>curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine &amp;&amp; \
+  chmod +x /usr/local/bin/docker-machine</code></pre>
+
+
+
+<p>これで、Docker Machineが使えるようになる。</p>The post <a href="https://blog.popweb.dev/server/docker-machine-install/">【Docker Machine】docker-machine command not foundとなるので手動でインストール</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-machine-install/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Docker初心者向け】commitコマンドでイメージを作成</title>
+		<link>https://blog.popweb.dev/server/docker-commit/</link>
+					<comments>https://blog.popweb.dev/server/docker-commit/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 05 Mar 2020 10:10:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=743</guid>
+
+					<description><![CDATA[<p>docker commitでコンテナ内で作業した内容を、イメージとして保存することができる。 コマンドは以下のよう。 実際に適当なコンテナを起動してシェルに接続して変更をしてみる。 シェルに接続する。 tmpディレクトリ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-commit/">【Docker初心者向け】commitコマンドでイメージを作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><code>docker commit</code>でコンテナ内で作業した内容を、イメージとして保存することができる。</p>
+
+
+
+<p>コマンドは以下のよう。</p>
+
+
+
+<pre class="wp-block-code"><code>docker commit {コンテナID or コンテナ名} {新しいイメージ名}:{タグ名}</code></pre>
+
+
+
+<p>実際に適当なコンテナを起動してシェルに接続して変更をしてみる。</p>
+
+
+
+<pre class="wp-block-code"><code>docker run --name nginx-test -it -d --rm nginx /bin/bash</code></pre>
+
+
+
+<p>シェルに接続する。</p>
+
+
+
+<pre class="wp-block-code"><code>docker exec -it nginx-test /bin/bash</code></pre>
+
+
+
+<p>tmpディレクトリに任意サイズのファイルを作成する。</p>
+
+
+
+<p>ここでは、1MBファイルを作成</p>
+
+
+
+<pre class="wp-block-code"><code>cd tmp/
+dd if=/dev/zero of=dummy10M bs=1M count=1</code></pre>
+
+
+
+<p>exitで接続を抜ける</p>
+
+
+
+<pre class="wp-block-code"><code>exit</code></pre>
+
+
+
+<p><code>docker commit</code>で新しいイメージを作成する。</p>
+
+
+
+<pre class="wp-block-code"><code>docker commit nginx-test nginx-test:tag1</code></pre>
+
+
+
+<p><code>docker images</code>で新しくイメージができていることを確認。</p>
+
+
+
+<p>新しいイメージでコンテナを起動してシェルに接続、1MBファイルがあることを確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -it nginx-test:tag1 /bin/bash</code></pre>
+
+
+
+<pre class="wp-block-code"><code>cd tmp/
+ls -lh
+total 1.0M
+-rw-r--r-- 1 root root 1.0M Mar  1 08:54 dummy10M</code></pre>
+
+
+
+<p>また、イメージに過去にどんなレイヤーが追加されたの確認するには<code>docker history</code>を使う。</p>
+
+
+
+<pre class="wp-block-code"><code>docker history {イメージID or イメージ名}</code></pre>
+
+
+
+<p>ちなみに、<code>docker history</code>を確認しても、詳しいコンテナ内のコマンド操作は記載されることはない。</p>
+
+
+
+<p>なので、基本的にはDockerfileでコマンド操作を記述しイメージを変更・作成することが推奨されている。</p>The post <a href="https://blog.popweb.dev/server/docker-commit/">【Docker初心者向け】commitコマンドでイメージを作成</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-commit/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【Docker初心者向け】シェルの接続（attach,exec）</title>
+		<link>https://blog.popweb.dev/server/docker-attach-exec/</link>
+					<comments>https://blog.popweb.dev/server/docker-attach-exec/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 04 Mar 2020 07:35:00 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=739</guid>
+
+					<description><![CDATA[<p>Dockerのコンテナにシェル接続する方法は2つある。 docker attachとdocker exec。 docker attach exitコマンドで接続を抜けると、コンテナが停止してしまう。 コンテナを停止させず [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/docker-attach-exec/">【Docker初心者向け】シェルの接続（attach,exec）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Dockerのコンテナにシェル接続する方法は2つある。</p>
+
+
+
+<p><code>docker attach</code>と<code>docker exec</code>。</p>
+
+
+
+<h1 class="wp-block-heading">docker attach</h1>
+
+
+
+<pre class="wp-block-code"><code>docker attach {コンテナID or コンテナ名}</code></pre>
+
+
+
+<p>exitコマンドで接続を抜けると、コンテナが停止してしまう。</p>
+
+
+
+<p>コンテナを停止させずに接続から抜けたい場合は、「Ctrl + P」「Ctrl + Q」とする。</p>
+
+
+
+<h1 class="wp-block-heading">docker exec</h1>
+
+
+
+<pre class="wp-block-code"><code>docker exec -it {コンテナID or コンテナ名} /bin/bash</code></pre>
+
+
+
+<p>exexは、コンテナ内の任意のコマンドを実行できるコマンド。</p>
+
+
+
+<p>exitコマンドで接続を抜けても、コンテナは停止しない。</p>The post <a href="https://blog.popweb.dev/server/docker-attach-exec/">【Docker初心者向け】シェルの接続（attach,exec）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/docker-attach-exec/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

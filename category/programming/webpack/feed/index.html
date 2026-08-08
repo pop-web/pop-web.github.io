@@ -1,0 +1,1798 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>webpack | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/webpack/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sun, 14 Mar 2021 15:12:00 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>webpack | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>【初心者向け】webpackとは？使い方を解説④-css分離化&#038;圧縮化</title>
+		<link>https://blog.popweb.dev/programming/webpack/beginner-webpack-04/</link>
+					<comments>https://blog.popweb.dev/programming/webpack/beginner-webpack-04/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 15 Aug 2019 16:17:36 +0000</pubDate>
+				<category><![CDATA[webpack]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=463</guid>
+
+					<description><![CDATA[<p>前回記事の続きです。 目次 スタイルシートを分離するプラグインwebpack.config.jsを編集ビルドするCSSファイルを圧縮するには？webpack.config.jsを編集まとめ スタイルシートを分離するプラグ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-04/">【初心者向け】webpackとは？使い方を解説④-css分離化&圧縮化</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><a href="https://blog.pop-web.net/programming/beginner-webpack-03/" class="broken_link">前回記事</a>の続きです。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">スタイルシートを分離するプラグイン</a><ol><li><a href="#toc2" tabindex="0">webpack.config.jsを編集</a></li></ol></li><li><a href="#toc3" tabindex="0">ビルドする</a></li><li><a href="#toc4" tabindex="0">CSSファイルを圧縮するには？</a><ol><li><a href="#toc5" tabindex="0">webpack.config.jsを編集</a></li></ol></li><li><a href="#toc6" tabindex="0">まとめ</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">スタイルシートを分離するプラグイン</span></h2>
+
+
+
+<p>これまでは、スタイルシートはHTML内のヘッダー内に記述されてきました。</p>
+
+
+
+<p>ファイルを分けて分離させたいときは、「mini-css-extract-plugin」というプラグインを使っていきます。</p>
+
+
+
+<p>インストールしていきます。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info mini-css-extract-plugin
+npm i -D mini-css-extract-plugin@0.8.0</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">webpack.config.jsを編集</span></h3>
+
+
+
+<p>webpack.config.jsを編集します。</p>
+
+
+
+<p>requireでプラグインを読み込んで、plugins:の配列に記述します。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin') //プラグインを読込
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:[
+          {
+              test:/\.(sc|c)ss$/,
+              use:
+              [
+                  MiniCssExtractPlugin.loader, //style-loaderの代わりにMiniCssExtractPluginのloaderを追記
+                  'css-loader',
+                  'sass-loader'
+              ]
+          }
+      ]
+    },
+    "devServer": {
+        contentBase:outputPath
+    },
+    // プラグインに追加
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css'
+        })
+    ]
+    op
+}</code></pre>
+
+
+
+<p>「filename: &#8216;[name].[hash].css&#8217;」の[name]にはmain、[hash]には適当なハッシュ値が入ります。</p>
+
+
+
+<p>ハッシュ値はキャッシュ対策として入れます。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">ビルドする</span></h2>
+
+
+
+<p>それでは、ビルドしてcssファイルが生成されるが確認します。</p>
+
+
+
+<p>以下のコマンドを入力して実行</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack --mode development</code></pre>
+
+
+
+<p>そうすると、distディレクトリの中にcssファイルが出力されていると思います。</p>
+
+
+
+<p>ファイル名にもハッシュ値が付与されていることが確認できればOKです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">CSSファイルを圧縮するには？</span></h2>
+
+
+
+<p>CSSファイルを圧縮するには「optimize-css-assets-webpack-plugin」というプラグインを使っていきます。</p>
+
+
+
+<p>インスールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm i -D optimize-css-assets-webpack-plugin</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">webpack.config.jsを編集</span></h3>
+
+
+
+<p>webpack.config.jsを編集します。</p>
+
+
+
+<p>以下のように、</p>
+
+
+
+<p>const OptimizeCssAssetsPluginと、optimization:のところに追記してあげます。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+const MiniCssExractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+//インストールしたプラグインを取り込む
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:[
+          {
+              test:/\.(sc|c)ss$/,
+              use:
+              [
+                MiniCssExractPlugin.loader,
+                'css-loader',
+                'sass-loader'
+              ]
+          },
+          {
+            test:/\.html$/,
+            loader:'html-loader'
+          }
+      ]
+    },
+    devServer: {
+        contentBase:outputPath
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            template:'./src/index.html',
+            filename:'index.html'
+        }),
+        new MiniCssExractPlugin({
+            filename:'[name].[hash].css'
+        })
+    ],
+    //optimizationに追記
+    optimization:{
+        minimizer:[
+            new OptimizeCssAssetsPlugin({})
+        ]
+    }
+}</code></pre>
+
+
+
+<p>設定が終わったらビルドして確認します。</p>
+
+
+
+<p>ビルドするときは、productionモードでビルドしてあげます。</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack --mode production</code></pre>
+
+
+
+<p>そうすると、distディレクトリに圧縮されたcssファイルが生成できています。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">まとめ</span></h2>
+
+
+
+<p>webpackでcssファイルを別出力する&amp;圧縮する方法は以上です。</p>The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-04/">【初心者向け】webpackとは？使い方を解説④-css分離化&圧縮化</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/webpack/beginner-webpack-04/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【初心者向け】webpackとは？使い方を解説③-Babel設定</title>
+		<link>https://blog.popweb.dev/programming/webpack/beginner-webpack-03/</link>
+					<comments>https://blog.popweb.dev/programming/webpack/beginner-webpack-03/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 11 Aug 2019 10:26:04 +0000</pubDate>
+				<category><![CDATA[webpack]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=441</guid>
+
+					<description><![CDATA[<p>前回記事の続きです。 Babelの導入ついてです。 webpackのBabelの設定についは以下の公式サイトでも解説があります。 Babelbabeljs.io 飛び先で「webpack」を選択すれば手順がみれます。 目 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-03/">【初心者向け】webpackとは？使い方を解説③-Babel設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><a href="https://blog.pop-web.net/programming/beginner-webpack-02/" class="broken_link">前回記事</a>の続きです。</p>
+
+
+
+<p>Babelの導入ついてです。</p>
+
+
+
+<p>webpackのBabelの設定についは以下の公式サイトでも解説があります。</p>
+
+
+
+
+<a rel="noopener" href="https://babeljs.io/setup#installation" title="Babel" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img fetchpriority="high" decoding="async" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fbabeljs.io%2Fsetup%23installation?w=320&#038;h=180" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">Babel</div><div class="blogcard-snippet external-blogcard-snippet"></div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img decoding="async" src="https://www.google.com/s2/favicons?domain=https://babeljs.io/setup#installation" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">babeljs.io</div></div></div></div></a>
+
+
+
+<p>飛び先で「webpack」を選択すれば手順がみれます。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Babelとは</a><ol><li><a href="#toc2" tabindex="0">必要なものをインスールしていく</a></li><li><a href="#toc3" tabindex="0">.babelrcを作成</a></li><li><a href="#toc4" tabindex="0">webpack.config.jsの編集</a></li></ol></li><li><a href="#toc5" tabindex="0">まとめ</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Babelとは</span></h2>
+
+
+
+<p>Babelはトランスパイラというツールで、バージョンが新しいJavaScript（ES6など）の場合、新しい記法で書いたときにそれに対応していないブラウザだと、うまく動作しません。</p>
+
+
+
+<p>Babelは、そんなモダンなJavaScriptの記法でも対応できるように変換してくれるツールです。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">必要なものをインスールしていく</span></h3>
+
+
+
+<p>最新版を確認し、以下の3つをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm i -D babel-loader @babel/core @babel/preset-env</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">.babelrcを作成</span></h3>
+
+
+
+<p>先ほどインストールした@babel/preset-envを有効するには、.babelrcが必要なので作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>touch .babelrc</code></pre>
+
+
+
+<p>以下のように編集。</p>
+
+
+
+<pre class="wp-block-code"><code>{
+  "presets": &#91;"@babel/preset-env"]
+}</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">webpack.config.jsの編集</span></h3>
+
+
+
+<p>以下を、module:{}のrules:[]内に追記。</p>
+
+
+
+<pre class="wp-block-code"><code>以上、省略…
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
+以下、省略…</code></pre>
+
+
+
+<p>それでは、npm webpackでコンパイルします。</p>
+
+
+
+<p>そうすると、main.jsが更新されます。</p>
+
+
+
+<p>みてみると、ES2015(ES6)で導入されたconstが、varに変換されていたりとちゃんと変換されているのが分かります。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">まとめ</span></h2>
+
+
+
+<p>モダンなJavaScriptフレームワークのReactやVueは、ES2015(ES6)以降の記述で書かれているので、Babelの導入は必須になります。</p>
+
+
+
+<p>とりあえず、基本的なBabelの設定は以上です。</p>
+
+
+
+<p>また次に続きます↓</p>
+
+
+
+<figure class="wp-block-embed-wordpress wp-block-embed is-type-wp-embed is-provider-yusuke-log"><div class="wp-block-embed__wrapper">
+
+<a rel="noopener" href="https://blog.pop-web.net/programming/webpack/beginner-webpack-04/" title="https://blog.pop-web.net/programming/webpack/beginner-webpack-04/" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img decoding="async" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fblog.pop-web.net%2Fprogramming%2Fwebpack%2Fbeginner-webpack-04%2F?w=320&#038;h=180" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">https://blog.pop-web.net/programming/webpack/beginner-webpack-04/</div><div class="blogcard-snippet external-blogcard-snippet"></div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.pop-web.net/programming/webpack/beginner-webpack-04/" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">blog.pop-web.net</div></div></div></div></a>
+</div></figure>The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-03/">【初心者向け】webpackとは？使い方を解説③-Babel設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/webpack/beginner-webpack-03/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【初心者向け】webpackとは？使い方を解説②-Loader設定</title>
+		<link>https://blog.popweb.dev/programming/webpack/beginner-webpack-02/</link>
+					<comments>https://blog.popweb.dev/programming/webpack/beginner-webpack-02/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 10 Aug 2019 07:44:29 +0000</pubDate>
+				<category><![CDATA[webpack]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=419</guid>
+
+					<description><![CDATA[<p>前回の記事の第2弾です。 webpackにJavaScriptファイルをバンドルする機能以外にも様々な便利機能があります。 Loaderについて解説します。 目次 Loader（ローダー）とは？LoaderでCSSを扱う [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-02/">【初心者向け】webpackとは？使い方を解説②-Loader設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p><a href="https://blog.pop-web.net/programming/webpack/beginner-webpack-01/" class="broken_link">前回の記事</a>の第2弾です。</p>
+
+
+
+<p>webpackにJavaScriptファイルをバンドルする機能以外にも様々な便利機能があります。</p>
+
+
+
+<p>Loaderについて解説します。 </p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Loader（ローダー）とは？</a></li><li><a href="#toc2" tabindex="0">LoaderでCSSを扱う</a><ol><li><a href="#toc3" tabindex="0">css-loaderのインストール</a></li><li><a href="#toc4" tabindex="0">cssファイルを作成する</a></li><li><a href="#toc5" tabindex="0">style-loaderをインストール</a></li><li><a href="#toc6" tabindex="0">webpack.config.jsを編集</a></li></ol></li><li><a href="#toc7" tabindex="0">LoaderでSASSを扱う</a><ol><li><a href="#toc8" tabindex="0">sass-loaderのインストール</a></li><li><a href="#toc9" tabindex="0">webpack.config.jsを編集</a></li><li><a href="#toc10" tabindex="0">scssファイルを作成</a></li></ol></li><li><a href="#toc11" tabindex="0">Loaderで画像を扱う</a><ol><li><a href="#toc12" tabindex="0">画像を用意</a></li><li><a href="#toc13" tabindex="0">url-loaderのインストール</a></li><li><a href="#toc14" tabindex="0">webpack.config.jsを編集</a></li><li><a href="#toc15" tabindex="0">file-loaderをインストール</a></li><li><a href="#toc16" tabindex="0">webpack.config.jsを編集</a></li></ol></li><li><a href="#toc17" tabindex="0">LoaderでHTMLファイルを扱う</a><ol><li><a href="#toc18" tabindex="0">webpack.config.jsを編集</a></li><li><a href="#toc19" tabindex="0">テンプレートとなるhtmlファイルを作成</a></li></ol></li><li><a href="#toc20" tabindex="0">LoaderでESLintを 扱う</a></li><li><a href="#toc21" tabindex="0">まとめ</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Loader（ローダー）とは？</span></h2>
+
+
+
+<p>JavaScript以外のファイルをJavaScriptとして扱えるようにする機能です。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">LoaderでCSSを扱う</span></h2>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">css-loaderのインストール</span></h3>
+
+
+
+<p>「css-loader」でcssファイルをJavaScriptのオブジェクトとしてして扱えるようにできます。</p>
+
+
+
+<p>インストールをします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info css-loader //最新版の確認
+npm i -D css-loader@3.2.0 //インストール</code></pre>
+
+
+
+<p>webpack.config.jsに設定を記載していきます。</p>
+
+
+
+<p>ローダー登録には、moduleプロパティに以下のように書きます。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:&#91;
+          {
+              test:/\.css$/, //testには正規表現でcss拡張子を設定
+              use:&#91;'css-loader'] //useには使用するローダーを設定
+          }
+      ]
+    },
+    devServer: {
+        contentBase:outputPath
+    }
+}</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">cssファイルを作成する</span></h3>
+
+
+
+<pre class="wp-block-code"><code>touch src/style.css</code></pre>
+
+
+
+<p>以下のように編集</p>
+
+
+
+<pre class="wp-block-code"><code>.bdy-color{
+    background:#b3ff66;
+    color: #ff1e74;
+}</code></pre>
+
+
+
+<p>JavaScriptにインポートします。</p>
+
+
+
+<p>index.jsへ以下のようにスタイルシートをimportさせます。</p>
+
+
+
+<pre class="wp-block-code"><code>import $ from 'jquery'
+import './style.css' //作成したstyle.cssをインポート
+
+$(function () {
+    $('body').prepend('&lt;p>Hello,webpack!&lt;/p>')
+})</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">style-loaderをインストール</span></h3>
+
+
+
+<p>これで、スタイルシートをimportさせることができたのですが、</p>
+
+
+
+<p>このスタイルシートをindex.htmlに適用されるには、もうひとつローダーが必要で「style-loader」というものをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info style-loader //最新版の確認
+npm i -D style-loader@1.0.0 //インストール</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">webpack.config.jsを編集</span></h3>
+
+
+
+<p>それでは次に、webpack.config.jsのuseにstyle-loaderを追加します。</p>
+
+
+
+<p>ここで、<strong><em>注意点としては「css-loader」の上に「style-loader」を書いて下さい。</em></strong></p>
+
+
+
+<p>なぜなら、<strong><em>ローダーは下から上に順番に実行されていくからです。</em></strong></p>
+
+
+
+<p>この場合、「css-loader」でstyle.cssをJavaScriptのオブジェクトとして扱えるようにしてから、「style-loader」でスタイルタグとしてそれを読み込むという順序になります。</p>
+
+
+
+<p>逆にすると上手くいかないので注意です。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:&#91;
+          {
+              test:/\.css$/,
+              use:
+              &#91;
+                  'style-loader', //style-loaderを追記（※css-loaderの上に！）
+                  'css-loader'
+              ]
+          }
+      ]
+    },
+    devServer: {
+        contentBase:outputPath
+    }
+}</code></pre>
+
+
+
+<p>次に、index.jsを編集します。</p>
+
+
+
+<p>以下のように、bodyタグにクラス名「bdy-color」を付与させるようにします。</p>
+
+
+
+<pre class="wp-block-code"><code>import $ from 'jquery'
+import './style.css'
+
+$(function () {
+    $('body').prepend('&lt;p>Hello,webpack!&lt;/p>')
+})
+
+document.body.classList.add('bdy-color') //bodyタグにクラス名「bdy-color」を付与</code></pre>
+
+
+
+<p>これで、<code>npm run start</code>を実行してブラウザで確認します。</p>
+
+
+
+<p>CSSが適用されて背景色が緑で、文字がピンクになっていればOKです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">LoaderでSASSを扱う</span></h2>
+
+
+
+<h3 class="wp-block-heading"><span id="toc8">sass-loaderのインストール</span></h3>
+
+
+
+<p>sassファイルをJavaScriptオブジェクトとして扱うためローダーです。</p>
+
+
+
+<p>インストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info sass-loader //最新版の確認
+npm i -D sass-loader@7.2.0 //インストール</code></pre>
+
+
+
+<p>次に、sassをcssにコンパイルするためのローダーであるnode-sassインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info node-sass //最新版の確認
+npm i -D node-sass@4.12.0 //インストール</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc9">webpack.config.jsを編集</span></h3>
+
+
+
+<p>useに「&#8217;sass-loader&#8217;」を追記します。</p>
+
+
+
+<p>ここでも注意点としては、ローダーは下から上へ処理されていくので、sass-loaderは一番初めに処理させたいので、一番下に記載します。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:&#91;
+          {
+              test:/\.(sc|c)ss$/, //正規表現でcss、scssのどちらも適用されるように
+              use:
+              &#91;
+                  'style-loader',
+                  'css-loader',
+                  'sass-loader' //sass-loaderを追記（※一番下に記載）
+              ]
+          }
+      ]
+    },
+    devServer: {
+        contentBase:outputPath
+    }
+}</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc10">scssファイルを作成</span></h3>
+
+
+
+<pre class="wp-block-code"><code>touch src/style.scss</code></pre>
+
+
+
+<p>sassでは変数が使用できるので、</p>
+
+
+
+<p>以下のように編集しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>$big-font:100px;
+$font-style:italic;
+
+.bdy-color{
+  font-size: $big-font;
+  font-style: $font-style;
+}</code></pre>
+
+
+
+<p>次に、index.jsを編集します。</p>
+
+
+
+<p>index.jsへ以下のようにsassファイルをimportさせます。</p>
+
+
+
+<pre class="wp-block-code"><code>import $ from 'jquery'
+import './style.css'
+import './style.scss' //作成したsassファイルをインポート
+
+$(function () {
+    $('body').prepend('&lt;p>Hello,webpack!&lt;/p>')
+})
+
+document.body.classList.add('bdy-color')</code></pre>
+
+
+
+<p>それでは、<code>npm run start</code>をしてブラウザで確認します。</p>
+
+
+
+<p>scssファイルで設定したように、文字が大きくなり斜体文字になっていればOKです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc11">Loaderで画像を扱う</span></h2>
+
+
+
+<h3 class="wp-block-heading"><span id="toc12">画像を用意</span></h3>
+
+
+
+<p>srcの中に、適当に画像を用意しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>src/sample.jpg</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc13">url-loaderのインストール</span></h3>
+
+
+
+<p>画像ファイルをJavaScriptオブジェクトとして扱うためローダーです。</p>
+
+
+
+<p>インストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info url-loader //最新版の確認
+npm i -D url-loader@2.1.0 //インストール</code></pre>
+
+
+
+<p>次に、sassをcssにコンパイルするためのローダーであるnode-sassインストールします。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc14">webpack.config.jsを編集</span></h3>
+
+
+
+<p>moduleのなかのrulesに追記します。</p>
+
+
+
+<pre class="wp-block-code"><code>以上、省略…
+            {
+                test:/\.(gif|jpe?g|png|svg|ico)$/i,
+                loader: 'url-loader'
+            }
+以下、省略…</code></pre>
+
+
+
+<p>次に、index.jsを編集していきます。</p>
+
+
+
+<pre class="wp-block-code"><code>import $ from 'jquery'
+import './style.css'
+import './style.scss'
+import photo from './sample.jpg'
+
+$(function () {
+    $('body').prepend('&lt;p>Hello, webpack!!&lt;/p>')
+})
+
+document.body.classList.add('bdy-color')
+
+//imgタグをbodyに挿入
+const image = new Image()
+image.src = photo
+document.body.appendChild(image)</code></pre>
+
+
+
+<p>それでは、<code>npm run start</code>をしてブラウザで確認します。</p>
+
+
+
+<p>画像が挿入されていればOKです。</p>
+
+
+
+<p>ここで、ソースを見るとimgタグにはbase64でエンコードされた文字列データとして使用されていることが分かります。</p>
+
+
+
+<p>base64でエンコードすることでサーバへのリクエストが減り表示速度が速くなる利点がありますが、</p>
+
+
+
+<p><strong>大きな画像になるほど、Base64にエンコードされた文字列は増えていくため、逆にファイルが重くなります。</strong></p>
+
+
+
+<p>そこで、base64ではなくて、通常の画像パスを読み込む形式に変えてくれる「file-loader」がローダーがあります。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc15">file-loaderをインストール</span></h3>
+
+
+
+<pre class="wp-block-code"><code>npm info file-loader
+npm i -D file-loader@4.2.0</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc16">webpack.config.jsを編集</span></h3>
+
+
+
+<p>url-loaderの設定内にoptionsを追加し、file-loaderを有効にします。</p>
+
+
+
+<pre class="wp-block-code"><code>以上、省略…
+            {
+                test:/\.(gif|jpe?g|png|svg|ico)$/i,
+                loader: 'url-loader',
+                //optionsを追記
+                options: {
+                    limit:1024, //閾値は、1キロバイト以上に設定
+                    name:'./images/&#91;name].&#91;ext]' //画像ファイルを分離して読込む
+                }
+            }
+以下、省略…</code></pre>
+
+
+
+<p>limitは容量を指定して、これ以上の容量だったらnameで設定した画像パスにになるといった感じです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc17">LoaderでHTMLファイルを扱う</span></h2>
+
+
+
+<p>HTMLファイルをローダーで扱うには、「html-loader」を使用します。</p>
+
+
+
+<p>インストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info html-loader
+npm i -D html-loader@0.5.5</code></pre>
+
+
+
+<p>次に、HTMLを生成するためのプラグインをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info html-webpack-plugin
+npm i -D html-loader@0.5.5</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc18">webpack.config.jsを編集</span></h3>
+
+
+
+<p>html-loaderとプラグインの設定を以下のように行います。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+// プラグインの読み込み
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    module:{
+      rules:&#91;
+          {
+              test:/\.(sc|c)ss$/,
+              use:
+              &#91;
+                  'style-loader',
+                  'css-loader',
+                  'sass-loader'
+              ]
+          },
+          //html-loaderの設定
+          {
+            test:/\.html$/,
+            loader:'html-loader'
+        }
+      ]
+    },
+    devServer: {
+        contentBase:outputPath
+    },
+    // プラグインの設定
+    plugins:&#91;
+        new HtmlWebPackPlugin({
+            template:'./src/index.html',
+            filename:'./index.html'
+        })
+    ],
+    devtool:'source-map'
+}</code></pre>
+
+
+
+<p>プラグインの設定では、「template」には、ひな形となるhtmlファイルの設定。</p>
+
+
+
+<p>「filename」に出力時のファイル名を設定します。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc19">テンプレートとなるhtmlファイルを作成</span></h3>
+
+
+
+<p>テンプレートとなるhtmlファイルを作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>touch src/index.html</code></pre>
+
+
+
+<p>以下のように編集しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!doctype html>
+&lt;html lang="ja">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>Hello,World!&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;/body>
+&lt;/html></code></pre>
+
+
+
+<p>これで、ビルドします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm run start</code></pre>
+
+
+
+<p>これで、ブラウザが起動し、「Hello,webpack!」と表示され、スタイルシートも適用されていればOKです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc20">LoaderでESLintを 扱う</span></h2>
+
+
+
+<p>ESLintってなにかっていうと、JavaScriptの構文チェックツールです。</p>
+
+
+
+<p>導入することいによって、構文エラーをチェックしてくれるので初期段階でバグの発見することができます。</p>
+
+
+
+<p>また、コードルールを統一することができるので、開発の手間を省くことできます。</p>
+
+
+
+<p>ESLintをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info eslint
+npm i -D  eslint@6.1.0</code></pre>
+
+
+
+<p>eslint-loaderをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info eslint-loader
+npm info eslint-loader@2.2.1</code></pre>
+
+
+
+<p>初期化処理をします</p>
+
+
+
+<pre class="wp-block-code"><code>npx eslint --init</code></pre>
+
+
+
+<p>そうすると、設定の選択をいくつかしていきます。</p>
+
+
+
+<p>今回は以下のような選択をしました。</p>
+
+
+
+<pre class="wp-block-code"><code>? How would you like to use ESLint?
+To check syntax, find problems, and enforce code style
+? What type of modules does your project use?
+JavaScript modules (import/export)
+? Which framework does your project use?
+None of these
+? Where does your code run? (Press &lt;space> to select, &lt;a> to toggle all, &lt;i> to invert selection)
+Browser
+? How would you like to define a style for your project?
+Use a popular style guide      
+? Which style guide do you want to follow?
+Airbnb (https://github.com/airbnb/javascript)
+? What format do you want your config file to be in?
+JSON
+Checking peerDependencies of eslint-config-airbnb-base@latest
+The config that you've selected requires the following dependencies:
+? Would you like to install them now with npm?
+Yes</code></pre>
+
+
+
+<p>初期化処理の設定が終わると、「.eslintrc.json」というファイルが出来上がっていると思います。</p>
+
+
+
+<p>次に、webpack.config.jsを編集して、eslint-loaderの設定を追記します。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+
+const outputPath = path.resolve(__dirname, 'dist')
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: outputPath,
+  },
+  module: {
+    rules: &#91;
+    // eslint-loaderの設定追記、enforceは優先的にローダを実行する設定
+      {
+        enforce: 'pre',
+        test: /js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
+      {
+        test: /\.(sc|c)ss$/,
+        use:
+              &#91;
+                'style-loader',
+                'css-loader',
+                'sass-loader',
+              ],
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+      },
+    ],
+  },
+  devServer: {
+    contentBase: outputPath,
+  },
+  plugins: &#91;
+    new HtmlWebPackPlugin({
+      template: './src/index.html',
+      filename: './index.html',
+    }),
+  ],
+  devtool: 'source-map',
+};</code></pre>
+
+
+
+<p>構文チェックは、他のローダーが実行される前に行いたいので、eslint-loaderの優先順位を一番にします。</p>
+
+
+
+<p>そこで、「enforce: &#8216;pre&#8217;」という設定をします。</p>
+
+
+
+<p>これは、一番初めにローダーを実行するという設定です。</p>
+
+
+
+<p>次に、babel-eslintをインストールします。</p>
+
+
+
+<p>これは、babelのバーサーでbabelによるトランスファイル前のJavaScriptをチェックするために必要になります。</p>
+
+
+
+<pre class="wp-block-code"><code>npm i -D babel-eslint</code></pre>
+
+
+
+<p>「.eslintrc.json」でパーサーの設定します。</p>
+
+
+
+<pre class="wp-block-code"><code>{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": &#91;
+        "airbnb-base"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+    },
+    "parser":"babel-eslint" //パーサー設定を追記
+}</code></pre>
+
+
+
+<p>それでは、構文チェックするためファイルを指定して、eslintを実行します。</p>
+
+
+
+<pre class="wp-block-code"><code>npx eslint src/index.js</code></pre>
+
+
+
+<p>構文エラーなどがでてきたら、チェックが正常に行われていることが分かります。</p>
+
+
+
+<p>自動で構文エラーをなおす場合は「&#8211;fix」のオプションをつけます。</p>
+
+
+
+<pre class="wp-block-code"><code>npx eslint --fix src/index.js</code></pre>
+
+
+
+<p>再度、eslintを実行してエラーが出なくなっていればOKです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc21">まとめ</span></h2>
+
+
+
+<p>とりあえず。Loaderの基礎については以上です。</p>
+
+
+
+<p>次に続きます↓</p>
+
+
+
+<figure class="wp-block-embed-wordpress wp-block-embed is-type-wp-embed is-provider-popweb"><div class="wp-block-embed__wrapper">
+
+<a rel="noopener" href="https://blog.pop-web.net/programming/webpack/beginner-webpack-03/" title="https://blog.pop-web.net/programming/webpack/beginner-webpack-03/" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img loading="lazy" decoding="async" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fblog.pop-web.net%2Fprogramming%2Fwebpack%2Fbeginner-webpack-03%2F?w=320&#038;h=180" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">https://blog.pop-web.net/programming/webpack/beginner-webpack-03/</div><div class="blogcard-snippet external-blogcard-snippet"></div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.pop-web.net/programming/webpack/beginner-webpack-03/" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">blog.pop-web.net</div></div></div></div></a>
+</div></figure>The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-02/">【初心者向け】webpackとは？使い方を解説②-Loader設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/webpack/beginner-webpack-02/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【初心者向け】webpackとは？使い方を解説①</title>
+		<link>https://blog.popweb.dev/programming/webpack/beginner-webpack-01/</link>
+					<comments>https://blog.popweb.dev/programming/webpack/beginner-webpack-01/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 08 Aug 2019 14:06:55 +0000</pubDate>
+				<category><![CDATA[webpack]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=408</guid>
+
+					<description><![CDATA[<p>目次 webpackって？モジュールバンドラーって？モジュール化して統合させるのってなんで？事前に必要なものwebpackインストールの準備webpackのインストールディレクトリを作成するindex.htmlを作成Ja [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-01/">【初心者向け】webpackとは？使い方を解説①</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-8" checked><label class="toc-title" for="toc-checkbox-8">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">webpackって？</a></li><li><a href="#toc2" tabindex="0">モジュールバンドラーって？</a></li><li><a href="#toc3" tabindex="0">モジュール化して統合させるのってなんで？</a></li><li><a href="#toc4" tabindex="0">事前に必要なもの</a></li><li><a href="#toc5" tabindex="0">webpackインストールの準備</a></li><li><a href="#toc6" tabindex="0">webpackのインストール</a></li><li><a href="#toc7" tabindex="0">ディレクトリを作成する</a><ol><li><a href="#toc8" tabindex="0">index.htmlを作成</a></li><li><a href="#toc9" tabindex="0">JavaScriptを作成</a></li></ol></li><li><a href="#toc10" tabindex="0">webpackでバンドルを実行</a><ol><li><a href="#toc11" tabindex="0">ブラウザで確認</a></li></ol></li><li><a href="#toc12" tabindex="0">webpack.config.jsの作成と設定</a><ol><li><a href="#toc13" tabindex="0">entryとoutputの設定</a></li></ol></li><li><a href="#toc14" tabindex="0">ライブサーバのパッケージで快適に</a><ol><li><a href="#toc15" tabindex="0">ドキュメントルートを変更したい場合</a></li></ol></li><li><a href="#toc16" tabindex="0">package.jsonのタスクの登録で快適に</a></li><li><a href="#toc17" tabindex="0">ソースマップの作成</a></li><li><a href="#toc18" tabindex="0">まとめ</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">webpackって？</span></h2>
+
+
+
+<p>フロントエンド開発の現場において使用されており、作業の効率化を目的として<strong><em>「モジュールバンドラー」</em></strong>と呼ばれる便利ツール。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">モジュールバンドラーって？</span></h2>
+
+
+
+<p>CSS、JavaScript、画像といったアセットファイルをJavaScriptのモジュールに変換して合体させるものです。</p>
+
+
+
+<p>module（モジュール）は「部品」で、bundle（バンドル）は「束ねる」という意味。</p>
+
+
+
+<p>webpackの他にも、browserify、RequireJS、rollup.jsといったモジュールハンドラーが存在しますが、webpackがモジュールハンドラーの中で一番人気なので、とりあえずwebpackを知っとけばOKという感じです。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">モジュール化して統合させるのってなんで？</span></h2>
+
+
+
+<p>webサイトでは、CSS、JavaScript、画像といった必要なファイルが増えるにつれて、サーバーになんどもリクエストしなければならなくなります。</p>
+
+
+
+<p>そうなると、画面表示をするためにコストがかかり表示速度が遅くなってしまいます。</p>
+
+
+
+<p>そこで、webpackの登場。</p>
+
+
+
+<p>webpackは、様々なアセットファイル（JavaScript、CSS、画像など）を1つのファイルに統合してくれるため、サーバーへのリクエスト数も減らせるわけです。</p>
+
+
+
+<p>しかも、<strong>単に統合させるだけでなく依存関係を解決してから統合してくれます。</strong></p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">事前に必要なもの</span></h2>
+
+
+
+<ul class="wp-block-list"><li>Node.jsが必要【LTS(Long Time Support)が推奨】</li></ul>
+
+
+
+<p><a href="https://nodejs.org/ja/">公式サイト</a>へ行って、「推奨版」てやつをダウンロードしておけばOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">webpackインストールの準備</span></h2>
+
+
+
+<p>webpackをインストールするための準備をします。</p>
+
+
+
+<p>プロジェクトフォルダを作成して、npmの初期化処理をしておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>mkdir webpack-test
+npm init -y</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">webpackのインストール</span></h2>
+
+
+
+<p>最新バージョンを確認</p>
+
+
+
+<pre class="wp-block-code"><code>npm info webpack</code></pre>
+
+
+
+<p>「latest:〇〇〇」と書かれているところが最新版なので、それをインストールします。</p>
+
+
+
+<p>webpackの後に@マークを足して、そのあとにバージョンを書きます。</p>
+
+
+
+<pre class="wp-block-code"><code> npm i -D webpack@4.39.1</code></pre>
+
+
+
+<p>「i」は、installの省略で、「-D」は&#8211;save-devの省略です。</p>
+
+
+
+<p>開発環境のみ使用するパッケージの場合は、「-D」（&#8211;save-dev）オプションを付けます。</p>
+
+
+
+<p>つづて、コマンドラインからwebpackを利用するためのパッケージである「webpack-cli」もインストールします。</p>
+
+
+
+<p>同様に、最新パージョンを確認してインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info wepack-cli</code></pre>
+
+
+
+<pre class="wp-block-code"><code>npm i -D webpack-cli@3.3.6</code></pre>
+
+
+
+<p>package.jsonを確認してみます。</p>
+
+
+
+<pre class="wp-block-code"><code>  "devDependencies": {
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
+  }</code></pre>
+
+
+
+<p>devDependenciesに、webpackとwebpack-cliがあればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">ディレクトリを作成する</span></h2>
+
+
+
+<p>次に、バンドルする前のソースファイルを置くsrcディレクトリと、バンドルされて吐き出されるdistディレクトを作成しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>mkdir src
+mkdir dist</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc8">index.htmlを作成</span></h3>
+
+
+
+<p>distディレクトリにindex.htmlを作成しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>touch dist/index.html</code></pre>
+
+
+
+<p>index.htmlのソースは以下のように適当でOK。</p>
+
+
+
+<p>あとで、バンドルされて生成されるmain.jsをここで読み込んでおきます。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!doctype html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Hello,World!&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Hello,World!
+    &lt;script src="main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc9">JavaScriptを作成</span></h3>
+
+
+
+<p>srcディレクトリにindex.jsを作成します。</p>
+
+
+
+<pre class="wp-block-code"><code>touch src/index.js</code></pre>
+
+
+
+<p>今回は、jQueryを使用してスクリプトを作っていこうと思うので、</p>
+
+
+
+<p>npmでjQueryをインストールします。最新版を確認したらそれをインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info jquery</code></pre>
+
+
+
+<pre class="wp-block-code"><code>npm i -S jquery@3.4.1</code></pre>
+
+
+
+<p>「-S」は、&#8211;saveの省略です。jQueryは開発環境だけでなく、本番環境でも必要なパッケージなのでこのようにします。</p>
+
+
+
+<p>index.jsにjQueryをインポートしてjQueryのスクリプトを書いていきます。</p>
+
+
+
+<p>以下のように書いてみました。</p>
+
+
+
+<p>bodyタグの中にpタグをを挿入して「Hello, webpack!!」という文字を出力するjQueryのスクリプトです。</p>
+
+
+
+<pre class="wp-block-code"><code>import $ from 'jquery'
+
+$(function () {
+    $('body').prepend('&lt;p&gt;Hello, webpack!!&lt;/p&gt;')
+})</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">webpackでバンドルを実行</span></h2>
+
+
+
+<p>webpackコマンドを実行して、バンドルしていきます。</p>
+
+
+
+<p>以下のようにコマンドを入力してwebpackを実行します。</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack --mode development</code></pre>
+
+
+
+<p>「 &#8211;mode development」のオプションは、モードオプションを設定する必要があり、今回は開発中ということで「development」を指定します。</p>
+
+
+
+<p>本番環境の場合は、「&#8211;mode production」とします。 </p>
+
+
+
+<p>distディレクトリを確認してみてください。</p>
+
+
+
+<p>main.jsが生成されているのが分かると思います。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc11">ブラウザで確認</span></h3>
+
+
+
+<p>それでは、index.htmlをブラウザで開いて確認します。</p>
+
+
+
+<p>「Hello, webpack!!」と表示されればOKです。</p>
+
+
+
+<p>これからわかるように、<strong><em>jQueryのライブラリと自分で書いたindex.jsとが合体してmain.jsになった</em></strong>ということが分かると思います。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc12">webpack.config.jsの作成と設定</span></h2>
+
+
+
+<p><code>npx webpack</code>を実行すると、srcディレクトリのjsファイルをバンドルして、distディレクトリにmain.jsとして出力するという流れになっていました。</p>
+
+
+
+<p>こういった、どこのファイルをバンドルして、どこへ出力するのかを設定する設定ファイルが「webpack.config.js」というものです。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc13">entryとoutputの設定</span></h3>
+
+
+
+<p>「webpack.config.js」を作成して編集します。</p>
+
+
+
+<pre class="wp-block-code"><code>touch webpack.config.js</code></pre>
+
+
+
+<p>以下のように編集します。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path') //現在のパスを変数へ
+
+const outputPath = path.resolve(__dirname,'dist') //distまでの絶対パスの生成
+
+module.exports = {
+    entry:'./src/index.js', //バンドルする対象ファイルの指定
+    output:{
+        filename:'main.js', //バンドルされたファイル名の指定
+        path:outputPath //バンドルされたファイルを出力する場所の指定
+    }
+}</code></pre>
+
+
+
+<p>コードの意味はコメントアウトで書いた通りです。</p>
+
+
+
+<p>編集したら、再度webpackを実行してバンドルされていることを確認しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack --mode development</code></pre>
+
+
+
+<p>コマンドを実行する同じ階層に「webpack.config.js」がなく、他の階層にある場合、オプションを付けてパス指定で実行することができます。</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack --mode development --config (path)/webpack.config.js</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc14">ライブサーバのパッケージで快適に</span></h2>
+
+
+
+<p>ファイルの更新されたら自動リロードしてくれる「webpack-dev-server」をインストールします。</p>
+
+
+
+<p>最新版を確認してからインストールします。</p>
+
+
+
+<pre class="wp-block-code"><code>npm info webpack-dev-server
+npm i -D webpack-dev-server@3.7.2</code></pre>
+
+
+
+<p>それでは、実行します。</p>
+
+
+
+<pre class="wp-block-code"><code>npx webpack-dev-server</code></pre>
+
+
+
+<p>http://localhost:8080/へアクセスしてください。</p>
+
+
+
+<p>そしてdistをクリックしてindex.htmlの表示を確認してください。</p>
+
+
+
+<p>注意点としては、webpack-dev-server起動中にファイルが変更されると自動リロードされて更新されますが、</p>
+
+
+
+<p>dist内のファイルへのビルドはされないで、適宜、npx webpackでビルドする必要があります。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc15">ドキュメントルートを変更したい場合</span></h3>
+
+
+
+<p>今の状態だと「/dist」にアクセスしないとindex.htmlは表示できません。</p>
+
+
+
+<p>http://localhost:8080/でindex.htmlを表示されるようにするには、webpack.config.jsを編集すればできます。</p>
+
+
+
+<p>webpack.config.jsへ、以下のようにdevServerプロパティを追記をしましょう。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    devServer: {
+        contentBase:outputPath //内部サーバーのドキュメントルートをdistディレクリに設定
+    }
+}</code></pre>
+
+
+
+<p>設定し終わったら、再度<code>npx webpack-dev-server</code>を実行してブラウザでindex.htmlがhttp://localhost:8080/で確認できることを確認しておきましょう。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc16">package.jsonのタスクの登録で快適に</span></h2>
+
+
+
+<p>package.jsonにタスク登録というものをしておくことで、より効率的に開発が行えるようになります。</p>
+
+
+
+<p>package.jsonの「&#8221;scripts&#8221;:」のところを以下のように編集しておきます。</p>
+
+
+
+<pre class="wp-block-code"><code>  "scripts": {
+    "start": "npx webpack-dev-server --open"
+  },
+  以下省略・・・</code></pre>
+
+
+
+<p>このように登録しておくことで、npm run 〇〇という形でツールを実行することができます.</p>
+
+
+
+<p>では、実際に実行します。</p>
+
+
+
+<pre class="wp-block-code"><code>npm run start</code></pre>
+
+
+
+<p>同様に、内部サーバーが立ち上がっていることを確認してください。</p>
+
+
+
+<p>ちなみに、「&#8211;open」のオプションを付けることで、自動でブラウザを起動してくれます。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc17">ソースマップの作成</span></h2>
+
+
+
+<p>コードにエラーがあった時に、ブラウザ上からどこでエラーが発生しているか分かりやすくするためにソースマップの作成を行います。</p>
+
+
+
+<p>webpack.config.jsを編集します。</p>
+
+
+
+<p> devtool:source-mapを追記します。</p>
+
+
+
+<pre class="wp-block-code"><code>const path = require('path')
+
+const outputPath = path.resolve(__dirname,'dist')
+
+module.exports = {
+    entry:'./src/index.js',
+    output:{
+        filename:'main.js',
+        path:outputPath
+    },
+    devServer: {
+        contentBase:outputPath
+    },
+    devtool:'source-map' //ここに追記
+}</code></pre>
+
+
+
+<p>これで、エラーなどをブラウザ上で確認する際には、ビルド前のファイルの状態で確認することができるようになり、開発がしやすくなります。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc18">まとめ</span></h2>
+
+
+
+<p>とりあえず、webpackの基本的な機能は以上です。</p>
+
+
+
+<p>次に続きます↓</p>
+
+
+
+<figure class="wp-block-embed is-type-wp-embed is-provider-popweb wp-block-embed-popweb"><div class="wp-block-embed__wrapper">
+
+<a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-02/" title="【初心者向け】webpackとは？使い方を解説②-Loader設定" class="blogcard-wrap internal-blogcard-wrap a-wrap cf"><div class="blogcard internal-blogcard ib-left cf"><div class="blogcard-label internal-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail internal-blogcard-thumbnail"><img loading="lazy" decoding="async" src="https://blog.popweb.dev/wp-content/themes/cocoon-master/images/no-image-160.png" alt="" class=" internal-blogcard-thumb-image" width="160" height="90" /></figure><div class="blogcard-content internal-blogcard-content"><div class="blogcard-title internal-blogcard-title">【初心者向け】webpackとは？使い方を解説②-Loader設定</div><div class="blogcard-snippet internal-blogcard-snippet">前回の記事の第2弾です。webpackにJavaScriptファイルをバンドルする機能以外にも様々な便利機能があります。Loaderについて解説します。 Loader（ローダー）とは？JavaScript以外のファイルをJavaScript...</div></div><div class="blogcard-footer internal-blogcard-footer cf"><div class="blogcard-site internal-blogcard-site"><div class="blogcard-favicon internal-blogcard-favicon"><img loading="lazy" decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.popweb.dev" alt="" class="blogcard-favicon-image internal-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain internal-blogcard-domain">blog.popweb.dev</div></div><div class="blogcard-date internal-blogcard-date"><div class="blogcard-post-date internal-blogcard-post-date">2019.08.10</div></div></div></div></a>
+</div></figure>
+
+
+
+<p></p>The post <a href="https://blog.popweb.dev/programming/webpack/beginner-webpack-01/">【初心者向け】webpackとは？使い方を解説①</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/webpack/beginner-webpack-01/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

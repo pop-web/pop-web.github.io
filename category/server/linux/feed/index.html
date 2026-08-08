@@ -1,0 +1,1786 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Linux | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/server/linux/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Mon, 29 Jun 2020 22:15:21 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Linux | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Nginxでphp.iniの更新やモジュールを追加した場合、systemctl restart php-fpmで反映</title>
+		<link>https://blog.popweb.dev/server/linux/nginx-php-ini-php-fpm/</link>
+					<comments>https://blog.popweb.dev/server/linux/nginx-php-ini-php-fpm/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 20 Apr 2020 04:04:09 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1046</guid>
+
+					<description><![CDATA[<p>Nginxでphp-fpmサーバーを使っている場合、php.iniの編集やPHPのモジュールを追加の反映は以下のコマンドでphp-fpmを再起動する。 Apacheとは違ってWebサーバー（Nginx）をを再起動しても設 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/nginx-php-ini-php-fpm/">Nginxでphp.iniの更新やモジュールを追加した場合、systemctl restart php-fpmで反映</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Nginxでphp-fpmサーバーを使っている場合、php.iniの編集やPHPのモジュールを追加の反映は以下のコマンドでphp-fpmを再起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl restart php-fpm</code></pre>
+
+
+
+<p><strong>Apacheとは違ってWebサーバー（Nginx）をを再起動しても設定は反映されないので注意。</strong></p>The post <a href="https://blog.popweb.dev/server/linux/nginx-php-ini-php-fpm/">Nginxでphp.iniの更新やモジュールを追加した場合、systemctl restart php-fpmで反映</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/nginx-php-ini-php-fpm/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>さくらVPSとさくらのメールボックスを同じ独自ドメインにする方法</title>
+		<link>https://blog.popweb.dev/server/linux/vps-mailbox-domain/</link>
+					<comments>https://blog.popweb.dev/server/linux/vps-mailbox-domain/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 14 Apr 2020 16:01:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1040</guid>
+
+					<description><![CDATA[<p>さくらのVPSで独自ドメインでWEBサーバーを運用している場合、メールアドレスのドメイン も同じドメインで使用したい場合があると思う。 でも、メールサーバーをたてるには、PostfixやDovecotの設定が必要で結構め [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/vps-mailbox-domain/">さくらVPSとさくらのメールボックスを同じ独自ドメインにする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>さくらのVPSで独自ドメインでWEBサーバーを運用している場合、メールアドレスのドメイン も同じドメインで使用したい場合があると思う。</p>
+
+
+
+<p>でも、メールサーバーをたてるには、PostfixやDovecotの設定が必要で結構めんどい。</p>
+
+
+
+<p>そこで「さくらのメールボックス」。</p>
+
+
+
+<p>このサービスは月額換算約86円と安い。</p>
+
+
+
+<p>この「さくらのメールボックス」を使ってメールアドレスのドメインもWEBサーバーと同じ独自ドメインにする。</p>
+
+
+
+<p>やることは、ネームサーバの設定でAレコードにはさくらのVPSのIPアドレスを設定し、MXレコードにさくらのレンタルサーバの初期ドメインを設定すること。</p>
+
+
+
+<ul class="wp-block-list"><li><strong>Aレコード・・・さくらのVPSのIPアドレス</strong></li><li><strong>MXレコード・・・さくらのレンタルサーバの初期ドメイン</strong></li></ul>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-4" checked><label class="toc-title" for="toc-checkbox-4">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">既存ソーンの削除</a></li><li><a href="#toc2" tabindex="0">さくらのメールボックスの設定</a></li><li><a href="#toc3" tabindex="0">ネームサーバの編集</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">既存ソーンの削除</span></h2>
+
+
+
+<p>すでに、ネームサーバの設定をしている場合は、ネームサーバのゾーン情報を一度削除する必要がある。</p>
+
+
+
+<p>会員メニュー → 契約情報 → ドメインメニューから該当ドメインの「ゾーン削除」をクリックして削除する。</p>
+
+
+
+<p>再度、左メニューのドメインメニューの「ネームサーバ新規登録」をクリックしてドメインを登録する。</p>
+
+
+
+<p>設定の反映には2時間ほどかかるようだ。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">さくらのメールボックスの設定</span></h2>
+
+
+
+<p>さくらインターネットサーバコントロールパネルに行く。</p>
+
+
+
+<p>左メニューのドメイン設定 → ドメイン/SSL設定 → 新しいドメインの追加をクリック。</p>
+
+
+
+<p>「2. さくらインターネットで取得したドメインを使う」で、前述の「ネームサーバ新規登録」で登録した同じドメイン名を選択して「送信する」をクリック。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">ネームサーバの編集</span></h2>
+
+
+
+<p>再度、会員メニュー → 契約情報 → ドメインメニューで該当のドメインの「ゾーン編集」をクリック。</p>
+
+
+
+<p>エントリ名「@」のAレコードをさくらのVPSのIPアドレスに変更する。</p>
+
+
+
+<p>エントリ名「@」のMXレコード「10 @」を「10 hogehoge.sakura.ne.jp.（レンタルサーバーの初期ドメイン）」に変更する。</p>
+
+
+
+<p>ちなみに、「レンタルサーバーの初期ドメイン」は、サーバコントロールパネル管理画面の左メニューの「お客さま情報」で確認できる。</p>
+
+
+
+<p><strong>注意点として、MXレコードの最後には「.」ピリオドが必要。</strong></p>
+
+
+
+<p>最後に、左の「データ送信」リンクをクリックする。</p>
+
+
+
+<p>反映までには数時間から48時間かかる。</p>
+
+
+
+<p>48時間を超えても反映が確認できない場合は再度設定を見直すか、さくらインターネットへ直接問い合わせをして確認をしてみる。</p>The post <a href="https://blog.popweb.dev/server/linux/vps-mailbox-domain/">さくらVPSとさくらのメールボックスを同じ独自ドメインにする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/vps-mailbox-domain/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【さくらVPS】NginxをLet&#8217;s EncryptでSSL化させる</title>
+		<link>https://blog.popweb.dev/server/linux/nginx-lets-encrypt-ssl/</link>
+					<comments>https://blog.popweb.dev/server/linux/nginx-lets-encrypt-ssl/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 13 Apr 2020 18:24:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=1044</guid>
+
+					<description><![CDATA[<p>さくらのVPSにてLet&#8217;s EncryptでSSL化させる手順を説明する。 目次 環境についてCertbotインストール証明書の設定Nginxの設定編集前編集後 環境について 環境については以下の通り。 さ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/nginx-lets-encrypt-ssl/">【さくらVPS】NginxをLet’s EncryptでSSL化させる</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>さくらのVPSにてLet&#8217;s EncryptでSSL化させる手順を説明する。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-6" checked><label class="toc-title" for="toc-checkbox-6">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">環境について</a></li><li><a href="#toc2" tabindex="0">Certbotインストール</a></li><li><a href="#toc3" tabindex="0">証明書の設定</a></li><li><a href="#toc4" tabindex="0">Nginxの設定</a><ol><li><a href="#toc5" tabindex="0">編集前</a></li><li><a href="#toc6" tabindex="0">編集後</a></li></ol></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">環境について</span></h2>
+
+
+
+<p>環境については以下の通り。</p>
+
+
+
+<ul class="wp-block-list"><li>さくらのVPS</li><li>CentOS 7</li><li>Nginx 1.17</li></ul>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">Certbotインストール</span></h2>
+
+
+
+<p>適切な場所移動してgit cloneする。</p>
+
+
+
+<pre class="wp-block-code"><code>cd /usr/local
+git clone https://github.com/certbot/certbot</code></pre>
+
+
+
+<p>certbotに移動して確認</p>
+
+
+
+<pre class="wp-block-code"><code>cd certbot/
+./certbot-auto --version
+certbot 1.4.0</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">証明書の設定</span></h2>
+
+
+
+<p>Nginxは一旦停止する。</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl stop nginx</code></pre>
+
+
+
+<p>また、80番、443番のポートは開けておく。</p>
+
+
+
+<p>以下のコマンドで証明書の設定を実行する。</p>
+
+
+
+<pre class="wp-block-code"><code>./certbot-auto certonly --standalone -d &lt;SSL化したいドメイン> -m &lt;連絡用のメールアドレス> --agree-tos -n</code></pre>
+
+
+
+<p>最後に、Congratulations!とでればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc4">Nginxの設定</span></h2>
+
+
+
+<p>Ngixnの設定ファイルを開いて編集する、。</p>
+
+
+
+<pre class="wp-block-code"><code>vi /etc/nginx/conf.d/default.conf</code></pre>
+
+
+
+<p>以下の箇所を編集・変更する。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">編集前</span></h3>
+
+
+
+<pre class="wp-block-code"><code>server {
+    listen 80;
+.....</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">編集後</span></h3>
+
+
+
+<pre class="wp-block-code"><code>server {
+    listen 443 ssl;
+    ssl_certificate     /etc/letsencrypt/live/&lt;SSL化したいドメイン>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/SSL化したいドメイン>/privkey.pem;
+.....</code></pre>
+
+
+
+<p>Nginxを再起動して確認</p>
+
+
+
+<pre class="wp-block-code"><code>systemctl restart nginx</code></pre>
+
+
+
+<p>Nginxを再起動してブラウザでSSL化になっていることが確認できればOK。</p>The post <a href="https://blog.popweb.dev/server/linux/nginx-lets-encrypt-ssl/">【さくらVPS】NginxをLet’s EncryptでSSL化させる</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/nginx-lets-encrypt-ssl/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>SSHキーの作成手順（for Windows）</title>
+		<link>https://blog.popweb.dev/server/linux/ssh-for-windows/</link>
+					<comments>https://blog.popweb.dev/server/linux/ssh-for-windows/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 26 Mar 2020 11:35:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=505</guid>
+
+					<description><![CDATA[<p>SSH公開鍵認証について 公開鍵認証は通常のパスワード認証よりも、安全にsshのログインができる認証方法 鍵は2つ必要（秘密鍵・公開鍵） 秘密鍵ファイルはローカルにおく（人に知られてはダメ） 公開鍵ファイルはサーバが側に [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/ssh-for-windows/">SSHキーの作成手順（for Windows）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<h1 class="wp-block-heading" id="__wiki_header_0">SSH公開鍵認証について</h1>
+
+
+
+<p>公開鍵認証は通常のパスワード認証よりも、安全にsshのログインができる認証方法</p>
+
+
+
+<ul class="wp-block-list"><li><strong>鍵は2つ必要</strong>（秘密鍵・公開鍵）</li><li>秘密鍵ファイルはローカルにおく（人に知られてはダメ）</li><li>公開鍵ファイルはサーバが側におく（人に知られても良い）</li><li><strong>秘密鍵を持っていないパソコンからはログイン接続できない</strong>。</li></ul>
+
+
+
+<h1 class="wp-block-heading" id="__wiki_header_1">SourceTreeでSSH keysの生成</h1>
+
+
+
+<p>SourceTreeを起動する</p>
+
+
+
+<ul class="wp-block-list"><li>[<strong>ツール</strong>] で、[<strong>SSH キーの作成またはインポート</strong>] を選択する。 </li><li>[<strong>PuTTY キー ジェネレーター</strong>] ダイアログで、[<strong>Generate</strong>] をクリック</li><li>マウスポインタを空白領域で適当に動かして、SSH キーの生成する。  </li><li>[<strong>Key passphrase</strong>] と [<strong>Confirm passphrase</strong>] は空のまま</li><li>[<strong>Save public key</strong>] （公開鍵）と[<strong>Save private key</strong>]（秘密鍵） をクリックして、それぞれ保存する  。 </li><li>公開鍵には、ファイルに &#8220;.pub&#8221; ファイル拡張子をつける。</li><li>保存先は慣例的に「C:¥Users¥{ユーザー名}¥.ssh」へ</li></ul>
+
+
+
+<h1 class="wp-block-heading" id="__wiki_header_2">SSHエージェントに登録</h1>
+
+
+
+<ul class="wp-block-list"><li>タスクトレイに「<strong>Pageant</strong>」というものがあるので、それをダブルクリック。  </li><li>Pageant Key Listが開かれるので、【<strong>Add Key</strong>】を選択。  </li><li>作成した秘密鍵「〇〇.ppk」を選択。 </li><li>キーの詳細が表示されたら【<strong>Close</strong>】で閉じる。  </li></ul>
+
+
+
+<h1 class="wp-block-heading" id="__wiki_header_3">Gitホスティングサービスに公開鍵の登録 </h1>
+
+
+
+<p>作成した公開鍵をGitHubなどのホスティングサービスに登録する。</p>
+
+
+
+<p> SourceTreeでpullやpushができるか確認する。</p>The post <a href="https://blog.popweb.dev/server/linux/ssh-for-windows/">SSHキーの作成手順（for Windows）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/ssh-for-windows/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>プログラムがどのポート番号を使っているか確認のLinuxコマンド</title>
+		<link>https://blog.popweb.dev/server/linux/port/</link>
+					<comments>https://blog.popweb.dev/server/linux/port/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 21 Mar 2020 17:58:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=841</guid>
+
+					<description><![CDATA[<p>Docker等を使っていて以下のようなエラーが出る場合がある。 そんな場合、以下のコマンドでLISTENしているポートを確認できる。</p>
+The post <a href="https://blog.popweb.dev/server/linux/port/">プログラムがどのポート番号を使っているか確認のLinuxコマンド</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Docker等を使っていて以下のようなエラーが出る場合がある。</p>
+
+
+
+<pre class="wp-block-code"><code>ERROR: for web Cannot start service web: Ports are not available: listen tcp 0.0.0.0:80: bind: address already in use</code></pre>
+
+
+
+<p>そんな場合、以下のコマンドでLISTENしているポートを確認できる。</p>
+
+
+
+<pre class="wp-block-code"><code>lsof -i -n -P | grep "LISTEN"</code></pre>The post <a href="https://blog.popweb.dev/server/linux/port/">プログラムがどのポート番号を使っているか確認のLinuxコマンド</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/port/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>npm insallすると&#8221;Error: pngquant failed to build, make sure that libpng-dev is installed&#8221;</title>
+		<link>https://blog.popweb.dev/server/linux/npm-insall-error-pngquant-failed-to-build/</link>
+					<comments>https://blog.popweb.dev/server/linux/npm-insall-error-pngquant-failed-to-build/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Wed, 18 Mar 2020 05:02:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=789</guid>
+
+					<description><![CDATA[<p>DockerでLaravel開発環境を構築時にLaravel Mixを使おうと、npm installした時に以下エラー発生。 以下のパッケージをインストールすると解決。 Dockerfileに追記して再度buildすれ [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/npm-insall-error-pngquant-failed-to-build/">npm insallすると”Error: pngquant failed to build, make sure that libpng-dev is installed”</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>DockerでLaravel開発環境を構築時にLaravel Mixを使おうと、<code>npm install</code>した時に以下エラー発生。</p>
+
+
+
+<pre class="wp-block-code"><code>Error: pngquant failed to build, make sure that libpng-dev is installed</code></pre>
+
+
+
+<p>以下のパッケージをインストールすると解決。</p>
+
+
+
+<pre class="wp-block-code"><code>yum install -y bash gcc make libpng-devel</code></pre>
+
+
+
+<p>Dockerfileに追記して再度buildすればよい。</p>
+
+
+
+<p>または、<code>docker exec</code>かなんかでコンテナのシェルに接続して上記のコマンドを直接打ち込んでインストールするか。</p>The post <a href="https://blog.popweb.dev/server/linux/npm-insall-error-pngquant-failed-to-build/">npm insallすると”Error: pngquant failed to build, make sure that libpng-dev is installed”</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/npm-insall-error-pngquant-failed-to-build/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>プロキシサーバとリバースプロキシの違い</title>
+		<link>https://blog.popweb.dev/server/linux/proxy-reverse-proxy/</link>
+					<comments>https://blog.popweb.dev/server/linux/proxy-reverse-proxy/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Tue, 03 Mar 2020 06:53:00 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=737</guid>
+
+					<description><![CDATA[<p>プロキシ（Proxy）は「代理」という意味。 目次 プロキシサーバとはリバースプロキシサーバとは プロキシサーバとは プロキシサーバは、基本的に社内ネットワークの境界に設置される。 そのため、社内ネットワーク内のクライア [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/proxy-reverse-proxy/">プロキシサーバとリバースプロキシの違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>プロキシ（Proxy）は「代理」という意味。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-14" checked><label class="toc-title" for="toc-checkbox-14">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">プロキシサーバとは</a></li><li><a href="#toc2" tabindex="0">リバースプロキシサーバとは</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">プロキシサーバとは</span></h2>
+
+
+
+<p>プロキシサーバは、基本的に社内ネットワークの境界に設置される。</p>
+
+
+
+<p>そのため、社内ネットワーク内のクライアントからインターネットへアクセスする際は、必ずプロキシサーバを経由することになる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">リバースプロキシサーバとは</span></h2>
+
+
+
+<p>リバースプロキシサーバは、基本的にDMZに設置される。</p>
+
+
+
+<p>DMZとは何かというと、インターネット（外部）と内部ネットワークの中間に作られる領域のこと。「非武装地帯(DeMilitarized Zone)」とも呼ばれる。</p>
+
+
+
+<p>リバースプロキシサーバは、プロキシサーバとは逆で、インターネットからサーバ側の内部ネットワークへアクセスする際に経由させるサーバーのこと。</p>The post <a href="https://blog.popweb.dev/server/linux/proxy-reverse-proxy/">プロキシサーバとリバースプロキシの違い</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/proxy-reverse-proxy/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>デーモンとは（UNIX系OS/Linux, MacOSX）</title>
+		<link>https://blog.popweb.dev/server/linux/daemon/</link>
+					<comments>https://blog.popweb.dev/server/linux/daemon/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Thu, 27 Feb 2020 15:42:54 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=714</guid>
+
+					<description><![CDATA[<p>Linuxなどを界隈でよく聞くデーモンとは？ デーモンとは、UNIX系のOS（Linux, MacOSX）における常駐プログラム。 主にバックグラウンドで動作している。 利用者が直接操作することはできない。 末尾に「d」 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/daemon/">デーモンとは（UNIX系OS/Linux, MacOSX）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Linuxなどを界隈でよく聞くデーモンとは？</p>
+
+
+
+<p>デーモンとは、UNIX系のOS（Linux, MacOSX）における常駐プログラム。</p>
+
+
+
+<p>主にバックグラウンドで動作している。</p>
+
+
+
+<p>利用者が直接操作することはできない。</p>
+
+
+
+<p>末尾に「d」が付くものはだいたいデーモンで、httpd、sshd、firewalldなどなどがある。</p>The post <a href="https://blog.popweb.dev/server/linux/daemon/">デーモンとは（UNIX系OS/Linux, MacOSX）</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/daemon/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【さくらVPS】CentOS7+Nginx+PHP7+MariaDBの環境構築</title>
+		<link>https://blog.popweb.dev/server/linux/nginx-php-mariadb/</link>
+					<comments>https://blog.popweb.dev/server/linux/nginx-php-mariadb/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 03 Jan 2020 16:32:42 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=634</guid>
+
+					<description><![CDATA[<p>さくらVPSでCentOS7+Nginx+PHP7+MariaDBの構築手順を説明する。 Nginxのインストールと設定については、以前の記事を参照。 ・【さくらVPS】Nginxのインストール手順 ・【さくらVPS】N [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/nginx-php-mariadb/">【さくらVPS】CentOS7+Nginx+PHP7+MariaDBの環境構築</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>さくらVPSでCentOS7+Nginx+PHP7+MariaDBの構築手順を説明する。</p>
+
+
+
+<p>Nginxのインストールと設定については、以前の記事を参照。</p>
+
+
+
+<p>・<a href="https://blog.pop-web.net/programming/nginx-install/" class="broken_link">【さくらVPS】Nginxのインストール手順</a></p>
+
+
+
+<p>・<a href="https://blog.pop-web.net/programming/nginx-virtualhost/" class="broken_link">【さくらVPS】Nginxバーチャルホストの設定</a></p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-18" checked><label class="toc-title" for="toc-checkbox-18">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">PHP5系の削除</a></li><li><a href="#toc2" tabindex="0">remiレポジトリの追加</a></li><li><a href="#toc3" tabindex="0">PHP74パッケージのインストール</a><ol><li><a href="#toc4" tabindex="0">PHPがインストールされたか、バージョンの確認</a></li></ol></li><li><a href="#toc5" tabindex="0">php.iniの基本設定</a><ol><li><a href="#toc6" tabindex="0">HTTPヘッダーのバージョン非表示</a></li><li><a href="#toc7" tabindex="0">アップロードサイズの変更</a></li><li><a href="#toc8" tabindex="0">タイムゾーンの設定</a></li><li><a href="#toc9" tabindex="0">マルチバイト対応</a></li></ol></li><li><a href="#toc10" tabindex="0">php-fpmのインストール</a></li><li><a href="#toc11" tabindex="0">php-fpm設定ファイルの変更</a><ol><li><a href="#toc12" tabindex="0">www.confファイルの編集</a></li></ol></li><li><a href="#toc13" tabindex="0">php-fpmの起動</a></li><li><a href="#toc14" tabindex="0">php-fpm自動起動設定</a></li><li><a href="#toc15" tabindex="0">Nginxの設定変更</a></li><li><a href="#toc16" tabindex="0">Nginxの再起動</a></li><li><a href="#toc17" tabindex="0">テスト用のPHPファイルを作成</a></li><li><a href="#toc18" tabindex="0">ブラウザで動作確認</a></li><li><a href="#toc19" tabindex="0">MariaDBバージョン5系の削除</a></li><li><a href="#toc20" tabindex="0">MariaDBレポジトリの作成</a></li><li><a href="#toc21" tabindex="0">MariaDBの起動</a></li><li><a href="#toc22" tabindex="0">MariaDBの自動起動設定</a></li><li><a href="#toc23" tabindex="0">mysql_secure_installationの設定</a></li><li><a href="#toc24" tabindex="0">MariaDBの基本設定</a></li><li><a href="#toc25" tabindex="0">MariaDBへの接続確認</a><ol><li><a href="#toc26" tabindex="0">テスト用のDBを作成</a></li></ol></li><li><a href="#toc27" tabindex="0">最後に</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">PHP5系の削除</span></h2>
+
+
+
+<p>もしデフォルトでPHP5系の古いバージョンのPHPがインストールされている場合は、削除する。</p>
+
+
+
+<p>以下のコマンドですでにPHPがインストールされていないか確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list installed | grep php</code></pre>
+
+
+
+<p>何も表示されなければ、PHPはインストールされていない。</p>
+
+
+
+<p>もし、PHPがインストールされていれば、以下のコマンドで削除する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum remove php*</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">remiレポジトリの追加</span></h2>
+
+
+
+<p>最新のPHPモジュールを取得するために、Redhat enterprise linux 7用のremiレポジトリをインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm</code></pre>
+
+
+
+<p>最後に、『完了しました！』が表示されればOK。</p>
+
+
+
+<p>追加されたレポジトリファイルは「/etc/yum.repos.d/」に置かれるので、PHP関連のファイルがあるか確認しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>ls /etc/yum.repos.d/
+CentOS-Base.repo       epel.repo          remi-php70.repo
+CentOS-CR.repo         nginx.repo         remi-php71.repo
+CentOS-Debuginfo.repo  remi-glpi91.repo   remi-php72.repo
+CentOS-Media.repo      remi-glpi92.repo   remi-php73.repo
+CentOS-Sources.repo    remi-glpi93.repo   remi-php74.repo
+CentOS-Vault.repo      remi-glpi94.repo   remi-safe.repo
+CentOS-fasttrack.repo  remi-modular.repo  remi.repo
+epel-testing.repo      remi-php54.repo</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">PHP74パッケージのインストール</span></h2>
+
+
+
+<p>以下のコマンドでPHP7.4と必要なパッケージらをインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum -y install --enablerepo=remi,remi-php74 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">PHPがインストールされたか、バージョンの確認</span></h3>
+
+
+
+<p>以下のphpコマンドで、PHPバージョンを確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>php -v
+PHP 7.4.1 (cli) (built: Dec 17 2019 16:35:58) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v3.4.0, Copyright (c) Zend Technologies</code></pre>
+
+
+
+<p>上記のようになれば、PHP7.4がインストールされたこととなる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">php.iniの基本設定</span></h2>
+
+
+
+<p>「/etc/php.ini」ファイルを編集して基本設定を行う。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/php.ini</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">HTTPヘッダーのバージョン非表示</span></h3>
+
+
+
+<p>セキュリティ的にバージョンは非公開の方がいいので非表示にしておく。</p>
+
+
+
+<pre class="wp-block-code"><code>expose_php = On
+↓
+expose_php = Off</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">アップロードサイズの変更</span></h3>
+
+
+
+<p>デフォルト設定ではアップロードできるファイルサイズが小さいので変更しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>post_max_size = 8M
+↓
+post_max_size = 20M</code></pre>
+
+
+
+<pre class="wp-block-code"><code>upload_max_filesize = 2M
+↓
+upload_max_filesize = 20M</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc8">タイムゾーンの設定</span></h3>
+
+
+
+<p>タイムゾーンは、”Asia/Tokyo”に設定しておく。アプリケーションで時間を扱う場合これを設定しておかないと挙動がおかしくなってしまいます。</p>
+
+
+
+<pre class="wp-block-code"><code>;date.timezone =
+↓
+date.timezone = "Asia/Tokyo"</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc9">マルチバイト対応</span></h3>
+
+
+
+<p>日本語を利用する場合、マルチバイト対応の設定が必要になる。</p>
+
+
+
+<p>mbstringの言語デフォルト値を定義するmbstring.languageを設定。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.language = Japanese
+↓
+mbstring.language = Japanese</code></pre>
+
+
+
+<p>内部文字エンコーディングの設定をUTF-8へ設定する。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.internal_encoding =
+↓
+mbstring.internal_encoding = UTF-8</code></pre>
+
+
+
+<p>HTTP通信時のinput文字コードもUTF-8に指定。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.http_input =
+↓
+mbstring.http_input = UTF-8</code></pre>
+
+
+
+<p>HTTP 出力文字コードを指定するmbstring.http_outputは、自動変換を不可にするのでpassを指定する。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.http_output =
+↓
+mbstring.http_output = pass</code></pre>
+
+
+
+<p>HTTP入力変換を有効化する。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.encoding_translation = Off
+↓
+mbstring.encoding_translation = On</code></pre>
+
+
+
+<p>文字コードの自動検出の優先順位の設定するmbstring.detect_orderを編集する。autoにしておくとUTF-8がデフォルトで選択されるためautoにしておく。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.detect_order = auto
+↓
+mbstring.detect_order = auto</code></pre>
+
+
+
+<p>変換不可の文字列がある場合、代わりの文字を表示させないようにmbstring.substitute_characterを有効にする。</p>
+
+
+
+<pre class="wp-block-code"><code>;mbstring.substitute_character = none
+↓
+mbstring.substitute_character = none</code></pre>
+
+
+
+<p>これで、php.iniファイルの設定は以上。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">php-fpmのインストール</span></h2>
+
+
+
+<p>php-fpm(FastCGI Process Manager)は、phpスクリプトをCGIで動かすためのパッケージ。</p>
+
+
+
+<p>ちなみに、phpはモジュール版とCGI版があり、Apacheではモジュール版が使用される。Webサーバーのプロセス内でPHPを実行するやり方。</p>
+
+
+
+<p>一方、CGI版は、Webサーバとは別プロセセスで実行させるやり方。Nginxではモジュール版がないので、CGI版を使っていくこととなる。</p>
+
+
+
+<p>php-fpmパッケージは、remiレポジトリにあるため以下のコマンでインスールできる。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum -y install --enablerepo=remi,remi-php74 php-fpm</code></pre>
+
+
+
+<p>最後に、「完了しました！」が表示されればOK。</p>
+
+
+
+<p>インストールされたかの確認は、以下のコマンドを入力。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list installed | grep php-fpm
+php-fpm.x86_64 7.4.1-1.el7.remi @remi-php74</code></pre>
+
+
+
+<p>上記のような表示になればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc11">php-fpm設定ファイルの変更</span></h2>
+
+
+
+<p>php-fpm設定ファイルを変更していく。</p>
+
+
+
+<p>まずはバックアップをとる。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo cp -p /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.org</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc12">www.confファイルの編集</span></h3>
+
+
+
+<p>以下のコマンドでwww.confを編集していく。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/php-fpm.d/www.conf</code></pre>
+
+
+
+<p>まずは、nginxのシステムユーザをwwwに変更する。</p>
+
+
+
+<pre class="wp-block-code"><code>; RPM: apache user chosen to provide access to the same directories as httpd
+user = apache
+; RPM: Keep a group allowed to write in log dir.
+group = apache
+↓
+; RPM: apache user chosen to provide access to the same directories as httpd
+user = www
+; RPM: Keep a group allowed to write in log dir.
+group = www</code></pre>
+
+
+
+<p>編集が終わったら保存しておく。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc13">php-fpmの起動</span></h2>
+
+
+
+<p>php-fpmを起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl start php-fpm</code></pre>
+
+
+
+<p>起動されているかの確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl status php-fpm</code></pre>
+
+
+
+<p>「Active: active (running)」になっていればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc14">php-fpm自動起動設定</span></h2>
+
+
+
+<p>サーバ再起動時にも、php-fpmが自動的に起動するように設定する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl enable php-fpm</code></pre>
+
+
+
+<p>自動起動が設定されていることを確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl is-enabled php-fpm
+enabled</code></pre>
+
+
+
+<p>上記のように「enabled」と表示されればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc15">Nginxの設定変更</span></h2>
+
+
+
+<p>次は、nginxでphp-fpmへスクリプトのファイルが動作するにようにNginx側の設定を変更する。</p>
+
+
+
+<p>default.confを編集する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/nginx/conf.d/default.conf</code></pre>
+
+
+
+<p>locationディレクティブへ、index.phpを追加する。</p>
+
+
+
+<pre class="wp-block-code"><code>location / {
+  index index.html index.htm;
+}
+↓ 
+location / {
+  index index.php index.html index.htm;
+}</code></pre>
+
+
+
+<p>また、locationディレクティブの下へ、以下のPHP用の設定内容を追記する。</p>
+
+
+
+<pre class="wp-block-code"><code>location ~ \.php$ {
+  fastcgi_pass 127.0.0.1:9000;
+  fastcgi_index index.php;
+  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  include fastcgi_params;
+}</code></pre>
+
+
+
+<p>設定ファイルを保存して、以下のコマンドを入力して設定ファイルに間違いがないかチェックする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful</code></pre>
+
+
+
+<p>上記のように「syntax is ok」と「test is successful」を表示がでればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc16">Nginxの再起動</span></h2>
+
+
+
+<p>Nginxの設定を変更したのでこれを反映させるため、Nginxを再起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl restart nginx</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc17">テスト用のPHPファイルを作成</span></h2>
+
+
+
+<p>PHPが実行されているか、バーチャルホストのドキュメントルートへphpファイルを配置する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /home/www/yusuke.com/index.php</code></pre>
+
+
+
+<p>フィアルの内容は以下。</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;?php
+    phpinfo();
+?></code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc18">ブラウザで動作確認</span></h2>
+
+
+
+<p>ブラウザを起動して、yusuke.comを表示する。</p>
+
+
+
+<p><strong>※</strong>この動作確認では、DNS設定の必要で、ドメイン名（blog.pop-web.net）からIPが引けるようにしておく。ドメインをお名前ドットコム等のサービスで取得している場合は、ネームサーバ設定変更で、さくらのVPSのネームサーバを指定しておけば良い。</p>
+
+
+
+<p>以下のようにphpinfoの表示がされればOK。</p>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="700" height="676" src="https://storage.googleapis.com/gcs.pop-web.net/2020/01/9e23518c4905c026694256969cdbaa32-700x676.png" alt="" class="wp-image-635" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/01/9e23518c4905c026694256969cdbaa32-700x676.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/01/9e23518c4905c026694256969cdbaa32-300x290.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/01/9e23518c4905c026694256969cdbaa32-768x742.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/01/9e23518c4905c026694256969cdbaa32.png 944w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc19">MariaDBバージョン5系の削除</span></h2>
+
+
+
+<p>MariaDBをインストールしていく。</p>
+
+
+
+<p>バージョンは10系をいれていくので、すでにデフォルトでMariaDBがインストールされていないか確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list maria*</code></pre>
+
+
+
+<pre class="wp-block-code"><code>インストール済みパッケージ
+mariadb-libs.x86_64                          1:5.5.64-1.el7</code></pre>
+
+
+
+<p>上記のような表示が出た場合、MariaDBの5.5がインストールされていることとなる。</p>
+
+
+
+<p>10系をインストールするので、このMariaDB5.5は削除する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum remove mariadb-libs</code></pre>
+
+
+
+<p>以下のコマンドで削除されたかの確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list installed | grep mariadb-libs</code></pre>
+
+
+
+<p>なにも表示されなければ削除されたことが確認できる。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc20">MariaDBレポジトリの作成</span></h2>
+
+
+
+<p>現状のレポジトリを確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>ls -a /etc/yum.repos.d/
+.                      epel-testing.repo  remi-php70.repo
+..                     epel.repo          remi-php71.repo
+CentOS-Base.repo       nginx.repo         remi-php72.repo
+CentOS-CR.repo         remi-glpi91.repo   remi-php73.repo
+CentOS-Debuginfo.repo  remi-glpi92.repo   remi-php74.repo
+CentOS-Media.repo      remi-glpi93.repo   remi-safe.repo
+CentOS-Sources.repo    remi-glpi94.repo   remi.repo
+CentOS-Vault.repo      remi-modular.repo
+CentOS-fasttrack.repo  remi-php54.repo</code></pre>
+
+
+
+<p>ここへ、MariaDBレポジトリを追加する。</p>
+
+
+
+<p>レポジトリファイルの内容は、MariaDB公式サイトの作成画面を参考にする。</p>
+
+
+
+<p>まず、<a href="https://downloads.mariadb.org/mariadb/repositories/#mirror=cyanlink">MariaDB公式サイトのDownloads画面</a>へいく。</p>
+
+
+
+<p>環境に合わせて、以下のように選択していく。</p>
+
+
+
+<p>「CentOS」→「CentOS 7 (x86_64)」→「10.4 [Stable]」</p>
+
+
+
+<p>選択が終わると、自動でレポジトリファイルの内容が生成されるので、これをコピーしておく。</p>
+
+
+
+<p>![スクリーンショット 2020-01-04 15.51.05](/Users/koga/Dropbox/md/投稿済み/img/スクリーンショット 2020-01-04 15.51.05.png)</p>
+
+
+
+<p>次に、コピー先であるレポジトリファイルを作成する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/yum.repos.d/mariadb.repo</code></pre>
+
+
+
+<p>先ほど、コピーした内容を貼り付ける。</p>
+
+
+
+<p>※また、レポジトリを有効化するため最終行に「<strong>enable=1</strong>」を追記する。</p>
+
+
+
+<pre class="wp-block-code"><code># MariaDB 10.4 CentOS repository list - created 2020-01-04 06:50 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+&#91;mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.4/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+enable=1</code></pre>
+
+
+
+<p>これでファイルを保存すれば、レポジトリの追加完了。</p>
+
+
+
+<p>yumコマンドでMariaDBをインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum -y install MariaDB-devel MariaDB-client MariaDB-server</code></pre>
+
+
+
+<p>最後に、「完了しました！」が表示されればOK。</p>
+
+
+
+<p>インストールされたか、以下のコマンドで確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum list installed | grep MariaDB
+MariaDB-client.x86_64                10.4.11-1.el7.centos            @mariadb
+MariaDB-common.x86_64                10.4.11-1.el7.centos            @mariadb
+MariaDB-compat.x86_64                10.4.11-1.el7.centos            @mariadb
+MariaDB-devel.x86_64                 10.4.11-1.el7.centos            @mariadb
+MariaDB-server.x86_64                10.4.11-1.el7.centos            @mariadb</code></pre>
+
+
+
+<p>上記のように、バージョン10.4が確認できればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc21">MariaDBの起動</span></h2>
+
+
+
+<p>MariaDBを以下のコマンドで起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl start mariadb</code></pre>
+
+
+
+<p>起動したら、以下のコマンで正常起動しているか確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl status mariadb</code></pre>
+
+
+
+<p>Active: active (running)と表示されればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc22">MariaDBの自動起動設定</span></h2>
+
+
+
+<p>サーバーの再起動時もMariaDBが起動するように設定する</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl enable mariadb</code></pre>
+
+
+
+<p>自動起動が設定されていることを確認。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl is-enabled mariadb
+enabled</code></pre>
+
+
+
+<p>enabledが表示されればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc23">mysql_secure_installationの設定</span></h2>
+
+
+
+<p>MariaDBのセキュリティ設定をmysql_secure_installationで行う。</p>
+
+
+
+<p>このmysql_secure_installationは何をしてくれるかというと、DB管理者のパスワード設定やサンプルDBの削除などしてくれる</p>
+
+
+
+<p>MariaDBをインストール時には実行した方が良い。</p>
+
+
+
+<p>以下のコマンドを実行。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo mysql_secure_installation</code></pre>
+
+
+
+<p>実行するとまず、『Enter current password for root (enter for none):』となるが、これはrootのパスワードが設定されている場合、そのパスワードを入力する。</p>
+
+
+
+<p>今回はまだ設定していないので、enterキーを押下して進める。</p>
+
+
+
+<p>現パスワードを確認する場合には以下のコマンドで確認できる</p>
+
+
+
+<pre class="wp-block-code"><code>cat /var/log/mysqld.log | grep 'temporary password'</code></pre>
+
+
+
+<p>その後も[Y/n]で設定を聞かれるので、yを入力してEnterを押下。</p>
+
+
+
+<p>「New password:」と出たら、新しいパスワードを入力する。</p>
+
+
+
+<p>その後も、また[Y/n]で設定を聞かれるので、yを入力してEnterを押下。</p>
+
+
+
+<p>最後に、『Thanks for using MariaDB！』と表示されれば設定は終了。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc24">MariaDBの基本設定</span></h2>
+
+
+
+<p>文字コードをUTF-8として設定するため、設定ファイルのserver.cnfを編集する。</p>
+
+
+
+<p>まずは、バックアップとる。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo cp -p /etc/my.cnf.d/server.cnf /etc/my.cnf.d/server.cnf.org</code></pre>
+
+
+
+<p>server.cnfを開いて編集する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/my.cnf.d/server.cnf</code></pre>
+
+
+
+<p>[server]ディレクティブに「<strong>character-set-server=utf8</strong>」を追記する。 </p>
+
+
+
+<pre class="wp-block-code"><code>&#91;server]
+↓
+&#91;server]
+character-set-server=utf8 </code></pre>
+
+
+
+<p>設定を反映させるためMariaDBを再起動。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl restart mariadb</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc25">MariaDBへの接続確認</span></h2>
+
+
+
+<p>MariaDBへ接続して確認をする。</p>
+
+
+
+<p>以下の、コマンドで接続する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo mysql -uroot -p&#91;パスワード]</code></pre>
+
+
+
+<p>接続完了すると、以下のようなプロンプトが表示される。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]></code></pre>
+
+
+
+<p>作成されているデータベースを確認するため、以下のSQL文を入力</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.002 sec)</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc26">テスト用のDBを作成</span></h3>
+
+
+
+<p>以下のSQL文で、テスト用のDBを作成する。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]> create database test;
+Query OK, 1 row affected (0.001 sec)</code></pre>
+
+
+
+<p>作成したDBへ接続。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]> use test;
+Database changed</code></pre>
+
+
+
+<p>作成したテスト用のDBの文字コードを確認し、UTF-8になっていることを以下のSQL文で確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;test]> show variables like "chara%";
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | utf8                       |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.001 sec)</code></pre>
+
+
+
+<p>UTF-8になっていることが確認できたので、テスト用で作成したDBは削除しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;test]> drop database test;
+Query OK, 0 rows affected (0.003 sec)</code></pre>
+
+
+
+<p>削除したDBがなくなったことを以下のSQL文で確認する。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.000 sec)</code></pre>
+
+
+
+<p>MariaDB接続を終わる場合は、以下のコマンドで終了する。</p>
+
+
+
+<pre class="wp-block-code"><code>MariaDB &#91;(none)]> quit
+Bye</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc27">最後に</span></h2>
+
+
+
+<p>以上で、CentOS7 + Nginx + PHP7 + MariaDB10の環境が構築が完了。</p>
+
+
+
+<p>これでようやく、PHPによるアプリケーションの実装を始めることができるようになった。</p>The post <a href="https://blog.popweb.dev/server/linux/nginx-php-mariadb/">【さくらVPS】CentOS7+Nginx+PHP7+MariaDBの環境構築</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/nginx-php-mariadb/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>【さくらVPS】Nginxバーチャルホストの設定</title>
+		<link>https://blog.popweb.dev/server/linux/nginx-virtualhost/</link>
+					<comments>https://blog.popweb.dev/server/linux/nginx-virtualhost/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Fri, 03 Jan 2020 04:09:33 +0000</pubDate>
+				<category><![CDATA[Linux]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=629</guid>
+
+					<description><![CDATA[<p>前回の【さくらVPS】Nginxのインストール手順からの続きで バーチャルホスト設定を行なっていく。 目次 Nginxを動作させるシステムユーザーを作成コンテンツディレクトリ作成nginx.confファイルの変更システム [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/linux/nginx-virtualhost/">【さくらVPS】Nginxバーチャルホストの設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>前回の<a href="https://blog.pop-web.net/programming/nginx-install/" class="broken_link">【さくらVPS】Nginxのインストール手順</a>からの続きで</p>
+
+
+
+<p>バーチャルホスト設定を行なっていく。</p>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-20" checked><label class="toc-title" for="toc-checkbox-20">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Nginxを動作させるシステムユーザーを作成</a></li><li><a href="#toc2" tabindex="0">コンテンツディレクトリ作成</a></li><li><a href="#toc3" tabindex="0">nginx.confファイルの変更</a><ol><li><a href="#toc4" tabindex="0">システムユーザーを変更</a></li><li><a href="#toc5" tabindex="0">バージョンの非表示</a></li><li><a href="#toc6" tabindex="0">gzip圧縮の有効</a></li><li><a href="#toc7" tabindex="0">長いホスト名の対応</a></li></ol></li><li><a href="#toc8" tabindex="0">default.confファイルの変更</a></li><li><a href="#toc9" tabindex="0">Nginx再起動</a></li><li><a href="#toc10" tabindex="0">ブラウザで確認</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Nginxを動作させるシステムユーザーを作成</span></h2>
+
+
+
+<p>Nginxを動作させるシステムユーザを新たに作成する。</p>
+
+
+
+<p>デフォルトではNiginxユーザとなっているがセキュリティ上、新たにシステムユーザを作成することとする。</p>
+
+
+
+<p>wwwというユーザー名で作成する。</p>
+
+
+
+<p>シェルとして「/sbin/nologin」を指定しログイン権限を制限。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo useradd -s /sbin/nologin www</code></pre>
+
+
+
+<p>パスワードを設定</p>
+
+
+
+<pre class="wp-block-code"><code>sudo passwd www</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc2">コンテンツディレクトリ作成</span></h2>
+
+
+
+<p>バーチャルホストを設定していくので、URLに応じた各コンテンツを格納するドキュメントルートとなるディレクトリを作成する。</p>
+
+
+
+<p>「/home/www/」の下にドキュメントルートを作成し、ファイル名はドメイン名とする。</p>
+
+
+
+<p>今回は「blog.pop-web.net」というディレクトリ名で作成する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo mkdir /home/www/blog.pop-web.net</code></pre>
+
+
+
+<p>作成したドキュメントルートの中に、テスト用のHTMLファイルを作成しておく。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /home/www/blog.pop-web.net/index.html
+test</code></pre>
+
+
+
+<p>作成したディレクトリは、所有者がrootユーザになっているので、</p>
+
+
+
+<p>「www」ユーザへパーミッションの変更をする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo chown -R www:www /home/www</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc3">nginx.confファイルの変更</span></h2>
+
+
+
+<p>Nginxの全般的な設定ファイルは、「nginx.conf」で行う。ちなみに、サイト毎の設定などは、「default.conf」で行う。</p>
+
+
+
+<p>「nginx.conf」のバックアップをしておく。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo cp -p /etc/nginx/nginx.conf /etc/nginx/nginx.conf.org</code></pre>
+
+
+
+<p>「nginx.conf」を編集していく。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/nginx/nginx.conf</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">システムユーザーを変更</span></h3>
+
+
+
+<p>システムユーザをwwwへ変更。</p>
+
+
+
+<pre class="wp-block-code"><code>user nginx;
+↓
+user www;</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc5">バージョンの非表示</span></h3>
+
+
+
+<p>バージョンを非表示するため「server_tokesn off;」を追加</p>
+
+
+
+<pre class="wp-block-code"><code>http {
+    include /etc/nginx/mime.types;
+↓
+http {
+    server_tokens off;
+    include /etc/nginx/mime.types;</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc6">gzip圧縮の有効</span></h3>
+
+
+
+<p>表示速度が早くするため、サイズを圧縮する機能であるgzipを有効化する。</p>
+
+
+
+<pre class="wp-block-code"><code>#gzip on;
+↓
+gzip on;</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc7">長いホスト名の対応</span></h3>
+
+
+
+<p>長いバーチャルホスト名の場合、エラーになる場合があるのでサイズを大きめに設置する。</p>
+
+
+
+<p>gzip on;の下へ追記。</p>
+
+
+
+<pre class="wp-block-code"><code>server_names_hash_bucket_size 128;</code></pre>
+
+
+
+<p>上記の設定が終わったら上書き保存。</p>
+
+
+
+<p>確認用コマンドで「nginx.conf」に間違いがないかチェック。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful</code></pre>
+
+
+
+<p>上記のように、「syntax is ok」「test is successful」と表示されればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc8">default.confファイルの変更</span></h2>
+
+
+
+<p>default.confファイルにバーチャルホスト設定を編集していく。</p>
+
+
+
+<p>以下のコマンドでdefault.confファイルを開く。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo vi /etc/nginx/conf.d/default.conf</code></pre>
+
+
+
+<p>最終行に以下の内容を追記する。</p>
+
+
+
+<pre class="wp-block-code"><code>server {
+    listen 80;
+    server_name blog.pop-web.net www.blog.pop-web.net;
+    access_log /var/log/nginx/blog.pop-web.net-access.log main;
+    error_log /var/log/nginx/blog.pop-web.net-error.log;
+    root /home/www/blog.pop-web.net;
+    location / {
+        index index.html index.htm;
+    }
+}</code></pre>
+
+
+
+<p>各設定項目の説明は以下のよう。</p>
+
+
+
+<figure class="wp-block-table"><table><thead><tr><th>項目</th><th>説明</th></tr></thead><tbody><tr><td>listen</td><td>バーチャルホストが待ち受けるポートの指定</td></tr><tr><td>server_name</td><td>バーチャルホスト名の設定。www有りとwww無しの両方でアクセスできるようにしておく。</td></tr><tr><td>access_log</td><td>アクセスログの出力先の指定</td></tr><tr><td>error_log</td><td>エラーログの出力先の指定</td></tr><tr><td>root</td><td>ドキュメントルートの指定</td></tr><tr><td>location</td><td>URIのパス単位の設定</td></tr></tbody></table></figure>
+
+
+
+<p>追記したら、確認用コマンドで「default.conf」に間違いがないかチェック。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful</code></pre>
+
+
+
+<p>上記のようにsuccessfulがでればOK。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc9">Nginx再起動</span></h2>
+
+
+
+<p>設定内容を反映させるため、Nginxを再起動する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl restart nginx</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc10">ブラウザで確認</span></h2>
+
+
+
+<p>ブラウザで「blog.pop-web.net」を入力して表示確認する。</p>
+
+
+
+<p>作成したテスト用のHTMLファイルの内容が表示されればOK。</p>
+
+
+
+<p>※この動作確認では、DNS設定の必要で、ドメイン名（blog.pop-web.net）からIPが引けるようにしておく。ドメインをお名前ドットコム等のサービスで取得している場合は、ネームサーバ設定変更で、さくらのVPSのネームサーバを指定しておけば良い。</p>The post <a href="https://blog.popweb.dev/server/linux/nginx-virtualhost/">【さくらVPS】Nginxバーチャルホストの設定</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/linux/nginx-virtualhost/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Python | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/programming/python/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Thu, 14 Jan 2021 11:46:47 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Python | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Pythonの簡易WEBサーバの文字化けを環境変数設定してなおす</title>
+		<link>https://blog.popweb.dev/programming/python/python-webserver/</link>
+					<comments>https://blog.popweb.dev/programming/python/python-webserver/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sat, 24 Nov 2018 22:21:07 +0000</pubDate>
+				<category><![CDATA[Python]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=5</guid>
+
+					<description><![CDATA[<p>Python勉強に使っているのが、【実践力を身につける Pythonの教科書】ってのをひたすらやってる。環境はWindows。 WEBアプリを作ってみようのところで、WEBアプリをブラウザでみると日本語が文字化けした。  [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/programming/python/python-webserver/">Pythonの簡易WEBサーバの文字化けを環境変数設定してなおす</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Python勉強に使っているのが、【実践力を身につける Pythonの教科書】ってのをひたすらやってる。環境はWindows。</p>
+<p>WEBアプリを作ってみようのところで、WEBアプリをブラウザでみると日本語が文字化けした。</p>
+<p>まずは以下のようにコードをっと、、</p>
+<div class="hcb_wrap">
+<pre class="prism line-numbers lang-bash" data-lang="Bash"><code>#!/usr/bin/env python
+
+print("Content-Type: text/html; charset=utf-8")
+
+print("")
+
+print("")
+print("パイソンのお勉強！")
+print("")</code></pre>
+</div>
+<p>それで、コマンドランインからサーバを起動。</p>
+<div class="hcb_wrap">
+<pre class="prism line-numbers lang-bash" data-lang="Bash"><code>python -m http.server --cgi 8080</code></pre>
+</div>
+<p></code><br />
+それでブラウザ上でURLを入れる。</p>
+<div class="hcb_wrap">
+<pre class="prism line-numbers lang-plane" data-lang="Plane Text"><code>http://localhost:8080/cgi-bin/test.py</code></pre>
+</div>
+<p>ここで文字化け。</p>
+<p>プログラムの文字コードをちゃんとUTF-8で保存されているけどなおらず&#8230;</p>
+<p>次に、書籍に書いてある通り環境変数を新規に設定した。</p>
+<p>変数名は「PYTHONIOENCODING」で、値は「utf-8」に。</p>
+<p>しかし、それでも文字化けしたまま…</p>
+<p>数時間がハマったあげく、とりあえず再起動して試すことにした。</p>
+<p>そしたら、解決！</p>
+<p><b>新しい環境変数を追加した場合は、再起動する必要がある！</b></p>
+<p>とりあえずなにかの設定変更しときは、再起動した方が良いということです。</p>The post <a href="https://blog.popweb.dev/programming/python/python-webserver/">Pythonの簡易WEBサーバの文字化けを環境変数設定してなおす</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/programming/python/python-webserver/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

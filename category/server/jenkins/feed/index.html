@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Jenkins | POPWEB</title>
+	<atom:link href="https://blog.popweb.dev/category/server/jenkins/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.popweb.dev</link>
+	<description>Developer, Blogger, Illustrator in Tokyo.</description>
+	<lastBuildDate>Tue, 16 Jun 2020 02:33:45 +0000</lastBuildDate>
+	<language>ja</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.6</generator>
+
+<image>
+	<url>https://storage.googleapis.com/gcs.pop-web.net/2021/01/favicon.ico</url>
+	<title>Jenkins | POPWEB</title>
+	<link>https://blog.popweb.dev</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>さくらVPSのNginxサーバー環境へJenkinsをインストールする方法</title>
+		<link>https://blog.popweb.dev/server/jenkins/jenkins-install/</link>
+					<comments>https://blog.popweb.dev/server/jenkins/jenkins-install/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Sun, 09 Feb 2020 10:04:08 +0000</pubDate>
+				<category><![CDATA[Jenkins]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=652</guid>
+
+					<description><![CDATA[<p>さくらのVPSでJenkinsのインストール手順を説明 前提として、Nginxがインストール済みであること。 Nginxのインストールついては、以前の記事で書いた。 目次 Jenkinsのインストール手順Javaのインス [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/jenkins/jenkins-install/">さくらVPSのNginxサーバー環境へJenkinsをインストールする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>さくらのVPSでJenkinsのインストール手順を説明</p>
+
+
+
+<p>前提として、Nginxがインストール済みであること。</p>
+
+
+
+<p>Nginxのインストールついては、以前の記事で書いた。</p>
+
+
+
+<figure class="wp-block-embed-wordpress wp-block-embed is-type-wp-embed is-provider-yusuke-log"><div class="wp-block-embed__wrapper">
+
+<a rel="noopener" href="https://blog.pop-web.net/server/linux/nginx-install/" title="https://blog.pop-web.net/server/linux/nginx-install/" class="blogcard-wrap external-blogcard-wrap a-wrap cf" target="_blank"><div class="blogcard external-blogcard eb-left cf"><div class="blogcard-label external-blogcard-label"><span class="fa"></span></div><figure class="blogcard-thumbnail external-blogcard-thumbnail"><img fetchpriority="high" decoding="async" src="https://s.wordpress.com/mshots/v1/https%3A%2F%2Fblog.pop-web.net%2Fserver%2Flinux%2Fnginx-install%2F?w=320&#038;h=180" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="320" height="180" /></figure><div class="blogcard-content external-blogcard-content"><div class="blogcard-title external-blogcard-title">https://blog.pop-web.net/server/linux/nginx-install/</div><div class="blogcard-snippet external-blogcard-snippet"></div></div><div class="blogcard-footer external-blogcard-footer cf"><div class="blogcard-site external-blogcard-site"><div class="blogcard-favicon external-blogcard-favicon"><img decoding="async" src="https://www.google.com/s2/favicons?domain=https://blog.pop-web.net/server/linux/nginx-install/" alt="" class="blogcard-favicon-image external-blogcard-favicon-image" width="16" height="16" /></div><div class="blogcard-domain external-blogcard-domain">blog.pop-web.net</div></div></div></div></a>
+</div></figure>
+
+
+
+
+  <div id="toc" class="toc tnt-number tnt-number border-element"><input type="checkbox" class="toc-checkbox" id="toc-checkbox-2" checked><label class="toc-title" for="toc-checkbox-2">目次</label>
+    <div class="toc-content">
+    <ol class="toc-list open"><li><a href="#toc1" tabindex="0">Jenkinsのインストール手順</a><ol><li><a href="#toc2" tabindex="0">Javaのインストール</a></li><li><a href="#toc3" tabindex="0">Jenkinsのインストール</a></li><li><a href="#toc4" tabindex="0">Jenkinsの起動と自動起動の設定</a></li></ol></li><li><a href="#toc5" tabindex="0">8080ポートを開ける</a></li><li><a href="#toc6" tabindex="0">さくらのVPSのパケットフィルタの設定</a></li><li><a href="#toc7" tabindex="0">ブラウザでスタートページを確認する</a></li></ol>
+    </div>
+  </div>
+
+<h2 class="wp-block-heading"><span id="toc1">Jenkinsのインストール手順</span></h2>
+
+
+
+<p>さくらのVPSへSSH接続しておく。</p>
+
+
+
+<h3 class="wp-block-heading"><span id="toc2">Javaのインストール</span></h3>
+
+
+
+<p>JekinsはJavaの実行環境が必要があるためインストールする。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo yum install java-1.8.0-openjdk</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc3">Jenkinsのインストール</span></h3>
+
+
+
+<p><a href="http://pkg.jenkins-ci.org/redhat-stable/">公式サイトの手順</a>をそのまま</p>
+
+
+
+<p>Jenkinsはyumでいきなりインストールすることができない。</p>
+
+
+
+<p>そのため、yumリポジトリと公開鍵を追加する。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</code></pre>
+
+
+
+<pre class="wp-block-code"><code>sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key</code></pre>
+
+
+
+<p>上記が完了したら、以下コマンドでインストールができる</p>
+
+
+
+<pre class="wp-block-code"><code>yum install jenkins</code></pre>
+
+
+
+<h3 class="wp-block-heading"><span id="toc4">Jenkinsの起動と自動起動の設定</span></h3>
+
+
+
+<p>Jenkinsの起動</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl start jenkins</code></pre>
+
+
+
+<p>Jenkinsの自動起動の設定</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl enable jenkins </code></pre>
+
+
+
+<p>自動設定が有効になっているか確認。enabledになっていればOK。</p>
+
+
+
+<pre class="wp-block-code"><code>sudo systemctl is-enabled jenkins
+enabled</code></pre>
+
+
+
+<h2 class="wp-block-heading"><span id="toc5">8080ポートを開ける</span></h2>
+
+
+
+<p>Jenkinsはデフォルトでは8080ポートが使用されるので、ファイアウォールの設定で8080ポートを開けておく</p>
+
+
+
+<pre class="wp-block-code"><code>sudo firewall-cmd --add-port=8080/tcp --zone=public --permanent</code></pre>
+
+
+
+<p>firewalldを再リロード</p>
+
+
+
+<pre class="wp-block-code"><code>sudo firewall-cmd --reload</code></pre>
+
+
+
+<p>以下で設定の確認</p>
+
+
+
+<pre class="wp-block-code"><code>sudo firewall-cmd --list-all</code></pre>
+
+
+
+<p>ports: 8080/tcpの設定が確認できればOK。</p>
+
+
+
+<p>以上でブラウザを起動し、契約IPの8080ポートへアクセスすれば、Jenkinsのスタートページが表示することができる。</p>
+
+
+
+<pre class="wp-block-code"><code> http:&#47;&#47;{契約しているIPアドレス}:8080/</code></pre>
+
+
+
+<p>しかし、これらの設定をしてもタイムアウトでアクセスできない場合がある。</p>
+
+
+
+<p>さくらのVPSの場合、<strong>パケットフィルタの設定で8080ポートへアクセスが拒否されており、Jenkinsスタートページへアクセスできない場合がある。</strong></p>
+
+
+
+<p>そのため、さくらのVPSの管理画面でパケットフィルタの設定を行う。</p>
+
+
+
+<h2 class="wp-block-heading"><span id="toc6">さくらのVPSのパケットフィルタの設定</span></h2>
+
+
+
+<p>さくらのVPSの管理画面でパケットフィルタのタブをクリック</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" width="700" height="42" src="https://blog.pop-web.net/wp-content/uploads/2020/02/da748e4ace07e600dfd09483cfd72f54-700x42.png" alt="" class="wp-image-658" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/02/da748e4ace07e600dfd09483cfd72f54-700x42.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/da748e4ace07e600dfd09483cfd72f54-300x18.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/da748e4ace07e600dfd09483cfd72f54-768x46.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/da748e4ace07e600dfd09483cfd72f54-1200x71.png 1200w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/da748e4ace07e600dfd09483cfd72f54.png 1528w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<p>次に「パケットフィルタの設定へ」をクリックして、設定画面へ。</p>
+
+
+
+<p>「任意の開放ポート設定を追加する」をクリックして8080ポートの接続を許可する。</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="700" height="110" src="https://blog.pop-web.net/wp-content/uploads/2020/02/6967bbc429a86ee09077b8216e0ecedc-700x110.png" alt="" class="wp-image-659" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/02/6967bbc429a86ee09077b8216e0ecedc-700x110.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/6967bbc429a86ee09077b8216e0ecedc-300x47.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/6967bbc429a86ee09077b8216e0ecedc-768x121.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/6967bbc429a86ee09077b8216e0ecedc.png 792w" sizes="(max-width: 700px) 100vw, 700px" /></figure>
+
+
+
+<h2 class="wp-block-heading"><span id="toc7">ブラウザでスタートページを確認する</span></h2>
+
+
+
+<p>ブラウザを起動後、契約IPの8080ポートへアクセスし、Jenkinsのスタートページが確認できればOK。</p>
+
+
+
+<pre class="wp-block-code"><code> http:&#47;&#47;{契約しているIPアドレス}:8080/</code></pre>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" decoding="async" src="https://blog.pop-web.net/wp-content/uploads/2020/02/5d803a6fbe8a8730f7a8fb8c00c8b152-700x317.png" alt="" class="wp-image-660" width="644" height="291" srcset="https://storage.googleapis.com/gcs.pop-web.net/2020/02/5d803a6fbe8a8730f7a8fb8c00c8b152-700x317.png 700w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/5d803a6fbe8a8730f7a8fb8c00c8b152-300x136.png 300w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/5d803a6fbe8a8730f7a8fb8c00c8b152-768x348.png 768w, https://storage.googleapis.com/gcs.pop-web.net/2020/02/5d803a6fbe8a8730f7a8fb8c00c8b152.png 1011w" sizes="(max-width: 644px) 100vw, 644px" /></figure>The post <a href="https://blog.popweb.dev/server/jenkins/jenkins-install/">さくらVPSのNginxサーバー環境へJenkinsをインストールする方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/jenkins/jenkins-install/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Jenkinsでシェルをバックグラウンドで実行し続ける方法</title>
+		<link>https://blog.popweb.dev/server/jenkins/jenkins-shell-background/</link>
+					<comments>https://blog.popweb.dev/server/jenkins/jenkins-shell-background/#respond</comments>
+		
+		<dc:creator><![CDATA[POP]]></dc:creator>
+		<pubDate>Mon, 16 Dec 2019 14:50:52 +0000</pubDate>
+				<category><![CDATA[Jenkins]]></category>
+		<category><![CDATA[サーバー]]></category>
+		<guid isPermaLink="false">https://blog.pop-web.net/?p=607</guid>
+
+					<description><![CDATA[<p>Jenkinsビルド実行時も、モックAPIライブラリのjson-severを起動し続けようと思い、&#38;を最後につけたり、nohupコマンドを使ったりしたが、Jenkinsのジョブが終了するとプロセスがどうしても終了 [&#8230;]</p>
+The post <a href="https://blog.popweb.dev/server/jenkins/jenkins-shell-background/">Jenkinsでシェルをバックグラウンドで実行し続ける方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></description>
+										<content:encoded><![CDATA[<p>Jenkinsビルド実行時も、モックAPIライブラリのjson-severを起動し続けようと思い、&amp;を最後につけたり、nohupコマンドを使ったりしたが、Jenkinsのジョブが終了するとプロセスがどうしても終了してしまう。</p>
+
+
+
+<p>が、<strong>BUILD_ID=dontKillMe</strong>を前につけるとうまくいった。</p>
+
+
+
+<p>以下の感じ。</p>
+
+
+
+<pre class="wp-block-code"><code>BUILD_ID=dontKillMe nohup json-server db.json -p 3001 -H 192.168.33.10 &lt; /dev/null &amp;</code></pre>
+
+
+
+<p>BUILD＿IDの変数の値をなにかしらで上書きしないと、ProcessTreeKillerという仕組みで、ジョブの中で起動したプロセスは、ジョブの終了とともに殺されてしまいます。</p>The post <a href="https://blog.popweb.dev/server/jenkins/jenkins-shell-background/">Jenkinsでシェルをバックグラウンドで実行し続ける方法</a> first appeared on <a href="https://blog.popweb.dev">POPWEB</a>.]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.popweb.dev/server/jenkins/jenkins-shell-background/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
