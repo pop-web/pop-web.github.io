@@ -5,6 +5,8 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 jobs:
   post:
     if: contains(github.event.issue.labels.*.name, 'publish')
@@ -36,3 +38,13 @@ jobs:
           git add -A
           git diff --staged --quiet || git commit -m "Post from issue #${{ github.event.issue.number }}"
           git push
+      - uses: actions/configure-pages@v5
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: latest
+          extended: true
+      - run: hugo
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+      - uses: actions/deploy-pages@v4
