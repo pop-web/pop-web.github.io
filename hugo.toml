@@ -14,3 +14,26 @@ hasCJKLanguage = true
 
 [markup.goldmark.renderer]
   unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[[menu.main]]
+  name = "記事一覧"
+  url = "/posts/"
+  weight = 10
+
+[[menu.main]]
+  name = "カテゴリー"
+  url = "/categories/"
+  weight = 20
+
+[[menu.main]]
+  name = "アーカイブ"
+  url = "/archives/"
+  weight = 30
+
+[[menu.main]]
+  name = "検索"
+  url = "/search/"
+  weight = 40
