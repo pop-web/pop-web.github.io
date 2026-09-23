@@ -1,0 +1,38 @@
+name: Publish from Issue
+on:
+  issues:
+    types: [labeled, edited]
+permissions:
+  contents: write
+  issues: write
+jobs:
+  post:
+    if: contains(github.event.issue.labels.*.name, 'publish')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create post
+        env:
+          TITLE: ${{ github.event.issue.title }}
+          BODY: ${{ github.event.issue.body }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          SLUG="issue-$NUM"
+          DIR="content/posts/$SLUG"
+          mkdir -p "$DIR"
+          {
+            echo "---"
+            echo "title: \"$TITLE\""
+            echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "draft: false"
+            echo "---"
+            echo ""
+            echo "$BODY"
+          } > "$DIR/index.md"
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Post from issue #${{ github.event.issue.number }}"
+          git push
