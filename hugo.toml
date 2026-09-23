@@ -1,0 +1,16 @@
+baseURL = 'https://pop-web.github.io/'
+languageCode = 'ja'
+title = 'POPWEB'
+theme = 'PaperMod'
+hasCJKLanguage = true
+
+[params]
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+
+
+[markup.goldmark.renderer]
+  unsafe = true
